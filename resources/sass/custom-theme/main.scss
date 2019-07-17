@@ -1,0 +1,10 @@
+@import 'footer';
+@import 'blog';
+
+.visitor{
+  .carousel{
+    height: 100%;
+    &-inner{ height: 100%; }
+    &-item{ border-radius: 4px; }
+  }
+}
