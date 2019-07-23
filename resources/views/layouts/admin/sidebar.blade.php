@@ -8,23 +8,29 @@
           <span class="badge badge badge-info badge-pill float-right mr-2">3</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="{{ url('admin/klinik') }}">
+          <i class="ft-plus-square"></i>
+          <span class="menu-title">Klinik</span>
+        </a>
+      </li>
       <li class=" navigation-header">
         <span>Konten</span>
       </li>
       <li class=" nav-item">
-        <a href="#">
+        <a href="{{ url('admin/konten/kategori') }}">
           <i class="ft-list"></i>
           <span class="menu-title">Kategori</span>
         </a>
       </li>
       <li class=" nav-item">
-        <a href="#">
+        <a href="{{ url('admin/konten/konten') }}">
           <i class="ft-file-text"></i>
           <span class="menu-title">Konten</span>
         </a>
       </li>
       <li class=" nav-item">
-        <a href="#">
+        <a href="{{ url('admin/konten/galeri') }}">
           <i class="ft-image"></i>
           <span class="menu-title">Galeri</span>
         </a>
@@ -33,13 +39,13 @@
         <span>Profile</span>
       </li>
       <li class=" nav-item">
-        <a href="#">
+        <a href="{{ url('admin/profile/testimoni') }}">
           <i class="ft-message-circle"></i>
           <span class="menu-title">Testimoni</span>
         </a>
       </li>
       <li class=" nav-item">
-        <a href="#">
+        <a href="{{ url('admin/profile/kontak') }}">
           <i class="ft-phone"></i>
           <span class="menu-title">Kontak</span>
         </a>

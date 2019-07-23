@@ -24,63 +24,60 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/app.css') }}">
   <!-- END MODERN CSS-->
   <!-- BEGIN Page Level CSS-->
-  <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/core/menu/menu-types/vertical-menu-modern.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/core/menu/menu-types/horizontal-menu.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/core/colors/palette-gradient.css') }}">
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/assets/css/style.css') }}">
-  @yield('css')
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/custom-theme.css') }}">
   <!-- END Custom CSS-->
 </head>
-<body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"
-data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
-  <!-- fixed-top-->
-  @include('layouts.admin.header')
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
-  @include('layouts.admin.sidebar')
-
-  <div class="app-content content">
-    <div class="content-wrapper">
-      @if(session()->exists('status'))
-      <div class="alert bg-{{ session('status')['code'] }} alert-icon-left alert-dismissible mb-2" role="alert">
-        <span class="alert-icon"><i class="ft-bell"></i></span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-        <strong>{{ strtoupper(session('status')['code']) }}!</strong> {{ session('status')['message'] }}
-      </div>
-      @elseif($errors->any())
-      <div class="alert bg-warning alert-icon-left alert-dismissible mb-2" role="alert">
-        <span class="alert-icon"><i class="ft-bell"></i></span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-        <strong>warning!</strong> Gagal menyimpan testimoni :
-        <ul>
-          @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-          @endforeach
+<body class="horizontal-layout horizontal-menu 2-columns   menu-expanded" data-open="hover"
+data-menu="horizontal-menu" data-col="2-columns">
+  <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow navbar-static-top navbar-light">
+    <div class="navbar-wrapper">
+      <div class="navbar-header">
+        <ul class="nav navbar-container navbar-nav flex-row">
+          <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
+          <li class="nav-item">
+            <a class="navbar-brand" href="index.html">
+              <img class="brand-logo" alt="modern admin logo" src="{{ asset('theme/modern-admin-1.0/app-assets/images/logo/logo.png') }}">
+              <h3 class="brand-text">Modern Admin | Preview</h3>
+            </a>
+          </li>
         </ul>
       </div>
-      @endif
+      <div class="navbar-container content">
+        <ul class="nav navbar-nav mr-auto float-left"> </ul>
+        <ul class="nav navbar-nav float-right">
+          <li class="nav-item">
+            <a class="mt-1 btn btn-outline-danger" href='{{ url("$route/{$content->id}/edit") }}'>
+              <i class="ft-arrow-left"></i> Kembali
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="visitor app-content content">
+    <div class="content-wrapper">
       <div class="content-body">
         @yield('content')
       </div>
     </div>
   </div>
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
-  <footer class="footer footer-static footer-light navbar-border navbar-shadow">
-    <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
-      <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2018 <a class="text-bold-800 grey darken-2" href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent"
-        target="_blank">PIXINVENT </a>, All rights reserved. </span>
-      <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span>
-    </p>
-  </footer>
+  <!-- footer-->
+  @section('footer')
+    @include('layouts.footer')
+  @show
   <!-- BEGIN VENDOR JS-->
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
   <!-- BEGIN VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
-  <script type="text/javascript" src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/ui/prism.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/charts/jquery.sparkline.min.js') }}"></script>
+  <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/ui/prism.min.js') }}" type="text/javascript"></script>
   <!-- END PAGE VENDOR JS-->
   <!-- BEGIN MODERN JS-->
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/js/core/app-menu.js') }}" type="text/javascript"></script>
@@ -88,13 +85,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
   <!-- END MODERN JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  @yield('js')
-  <script type="text/javascript">
-  $("button[type='submit']").one("click", function () {
-    $(this).html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)
-    $(this).closest('.form').submit()
-  })
-  </script>
+  <script type="text/javascript" src="{{ asset('theme/modern-admin-1.0/app-assets/js/scripts/ui/breadcrumbs-with-stats.js') }}"></script>
   <!-- END PAGE LEVEL JS-->
 </body>
 </html>

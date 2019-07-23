@@ -16,12 +16,14 @@ class CreateContentCategoriesTable extends Migration
         Schema::create('content_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->unsignedInteger('content_type_id');
+            $table->boolean('is_delete')->default(true);
+            // $table->unsignedInteger('content_type_id');
             $table->timestamps();
 
-            $table->foreign('content_type_id')->references('id')->on('content_types')->onDelete('restrict');
+            // $table->foreign('content_type_id')->references('id')->on('content_types')->onDelete('restrict');
         });
     }
 

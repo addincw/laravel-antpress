@@ -10,9 +10,24 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => '/admin'], function () {
+Route::group(['prefix' => '/admin', 'namespace' => 'Admins'], function () {
   Route::get('/', function () {
     return view('pages.admins.index');
+  });
+
+  Route::resource('/klinik', 'ClinicController');
+
+  Route::group(['prefix' => '/konten', 'namespace' => 'Content'], function () {
+    Route::resource('/konten', 'ContentController');
+    Route::resource('/kategori', 'CategoryController');
+    Route::resource('/galeri', 'GalleryController');
+  });
+
+  Route::group(['prefix' => '/profile', 'namespace' => 'Profile'], function () {
+    Route::get('/kontak', 'ContactController@index');
+    Route::post('/kontak', 'ContactController@store');
+
+    Route::resource('/testimoni', 'TestimoniController');
   });
 });
 

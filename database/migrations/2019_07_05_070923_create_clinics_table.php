@@ -19,6 +19,7 @@ class CreateClinicsTable extends Migration
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('slug');
+            $table->boolean('is_published')->default(true);
             $table->timestamps();
         });
     }
