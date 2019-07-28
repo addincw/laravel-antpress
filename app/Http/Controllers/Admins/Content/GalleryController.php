@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admins\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Contents\StoreContent;
+use App\Http\Requests\Contents\StoreContentFile;
+use App\Models\Contents\Content;
 use App\Models\Contents\ContentFile;
 use App\Models\Contents\ContentCategory;
 use App\Models\Contents\ContentTag;
@@ -14,10 +15,30 @@ class GalleryController extends Controller
 {
     private $route = 'admin/konten/galeri';
     private $routeView = 'pages.admins.contents.gallery';
+    private $types = [
+      'banner' => [
+        'name' => 'Banner',
+        'ext' => 'image'
+      ],
+      'image' => [
+        'name' => 'Images',
+        'ext' => 'image'
+      ],
+      'video' => [
+        'name' => 'Videos',
+        'ext' => 'video'
+      ],
+      'promo-video' => [
+        'name' => 'Promo Video',
+        'ext' => 'video'
+      ],
+    ];
+
     private $params = [];
 
     public function __construct ()
     {
+      $this->modelContent = new Content();
       $this->model = new ContentFile();
       $this->params['route'] = $this->route;
       $this->params['routeView'] = $this->routeView;
@@ -27,9 +48,38 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $this->params['galeries'] = $this->model->get();
+      $query = $this->model->query();
+      $selectedContent = $request->content_id ? $request->content_id : NUll;
+      $selectedType = $request->type ? $request->type : 'image';
+      $type = $this->types[$selectedType];
+      $content = $this->modelContent->find($selectedContent);
+
+      try {
+        if ( in_array($selectedType, ['banner', 'promo-video']) ) {
+          $query = $query->where('is_highlight', true);
+        }
+
+        if ( !empty($selectedContent) ) {
+          $query = $query->where('content_id', $selectedContent);
+        }
+
+        $query = $query->where('file_type', 'like', $type['ext']."%");
+        $galeries = $query->paginate(12);
+      } catch (\Exception $e) {
+        session()->flash('status', [
+          'code' => 'danger',
+          'message' => 'tidak dapat menampilkan galeri ' . $type['name'],
+        ]);
+        return redirect()->back();
+      }
+
+      $this->params['contents'] = $this->modelContent->get();
+      $this->params['selectedType'] = $selectedType;
+      $this->params['selectedContent'] = $content;
+      $this->params['types'] = $this->types;
+      $this->params['galeries'] = $galeries;
       return view($this->routeView . '.index', $this->params);
     }
 
@@ -40,7 +90,14 @@ class GalleryController extends Controller
      */
     public function create()
     {
+      $this->params['contents'] = $this->modelContent->get();
       return view($this->routeView . '.create', $this->params);
+    }
+
+    public function createSingle()
+    {
+      $this->params['contents'] = $this->modelContent->get();
+      return view($this->routeView . '.create-single', $this->params);
     }
 
     /**
@@ -49,61 +106,92 @@ class GalleryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreContent $request)
+    public function store(StoreContentFile $request)
     {
       $validated = (object) $request->validated();
-      $thumbnail = null;
-      $creator_image = null;
 
       try {
         DB::beginTransaction();
-        if ($request->hasFile('thumbnail')) {
-          $thumbnail = $request->file('thumbnail')->store('content', 'public');
-        }
 
-        if ($request->hasFile('creator_image')) {
-          $creator_image = $request->file('creator_image')->store('content', 'public');
-        }
+        $content = $this->modelContent->find($validated->content_id);
 
-        $content = $this->model->create([
-          'title' => $validated->title,
-          'slug' => str_replace(' ', '-', $validated->title) . '-' . rand(10,100),
-          'description' => $validated->description,
-          'thumbnail' => $thumbnail,
-          'creator_image' => $creator_image,
-          'creator_name' => $request->creator_name,
-          'creator_title' => $request->creator_title,
-          'is_published' => $request->is_published === 'on' ? 1 : 0,
-          'content_category_id' => $validated->category
-        ]);
+        if ($request->hasFile('file')) {
+          $uploaded = [];
+          foreach ($request->file('file') as $keyFile => $file) {
+            $uploaded[$keyFile] = $file->store('gallery', 'public');
 
-        if (!empty($request->tags)) {
-          foreach ($request->tags as $tagId) {
-            ContentTag::create([
+            ContentFile::create([
+              'file' => $uploaded[$keyFile],
+              'file_type' => $file->file('file')->getMimeType(),
+              'is_highlight' => false,
               'content_id' => $content->id,
-              'tag_id' => $tagId
             ]);
           }
         }
 
         DB::commit();
-        $request->session()->flash('status', [
+        session()->put('status', [
           'code' => 'success',
-          'message' => 'Konten berhasil di tambahkan',
+          'message' => 'file berhasil di tambahkan',
         ]);
       } catch (\Exception $e) {
         DB::rollback();
-        if ($request->hasFile('thumbnail')) {
-          \Storage::disk('public')->delete($thumbnail);
+
+        if ($request->hasFile('file')) {
+          if ($uploaded) {
+            foreach ($uploaded as $key => $value) {
+              \Storage::disk('public')->delete($value);
+            }
+          }
         }
 
-        if ($request->hasFile('creator_image')) {
-          \Storage::disk('public')->delete($creator_image);
+        session()->put('status', [
+          'code' => 'danger',
+          'message' => 'gagal menyimpan file : ' . $e->getMessage(),
+        ]);
+
+        return response()->json($e->getMessage(), 500);
+      }
+
+      return response()->json([], 200);
+    }
+
+    public function storeSingle(StoreContentFile $request)
+    {
+      $validated = (object) $request->validated();
+      $file = null;
+      $fileType = 'image';
+
+      try {
+        DB::beginTransaction();
+        if ($request->hasFile('file')) {
+          $file = $request->file('file')->store('gallery', 'public');
+          $fileType = $request->file('file')->getMimeType();
+        }
+
+        $this->model->create([
+          'title' => $request->title,
+          'description' => $request->description,
+          'file' => $file,
+          'file_type' => $fileType,
+          'is_highlight' => $request->is_highlight === 'on' ? 1 : 0,
+          'content_id' => $validated->content_id,
+        ]);
+
+        DB::commit();
+        $request->session()->flash('status', [
+          'code' => 'success',
+          'message' => 'galeri berhasil di simpan',
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+        if ($request->hasFile('file')) {
+          \Storage::disk('public')->delete($file);
         }
 
         $request->session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menyimpan konten : ' . $e->getMessage(),
+          'message' => 'gagal menyimpan galeri : ' . $e->getMessage(),
         ]);
 
         return redirect()->back();
@@ -132,8 +220,8 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        $this->params['categories'] = ContentCategory::all();
-        $this->params['content'] = $this->model->find($id);
+        $this->params['contents'] = $this->modelContent->get();
+        $this->params['gallery'] = $this->model->find($id);
         return view($this->routeView . '.edit', $this->params);
     }
 
@@ -144,71 +232,47 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreContent $request, $id)
+    public function update(StoreContentFile $request, $id)
     {
       $validated = (object) $request->validated();
-      $content = $this->model->where('id', $id)->first();
-      $thumbnail = $content->thumbnail;
-      $creator_image = $content->creator_image;
+      $gallery = $this->model->where('id', $id)->first();
+      $file = $gallery->file;
+      $fileType = $gallery->file_type;
 
       try {
         DB::beginTransaction();
-        if ($request->hasFile('thumbnail')) {
-          if ($thumbnail) {
-            \Storage::disk('public')->delete($content->thumbnail);
+        if ($request->hasFile('file')) {
+          if ($file) {
+            \Storage::disk('public')->delete($gallery->file);
           }
 
-          $thumbnail = $request->file('thumbnail')->store('content', 'public');
-        }
-        if ($request->hasFile('creator_image')) {
-          if ($creator_image) {
-            \Storage::disk('public')->delete($content->creator_image);
-          }
-
-          $creator_image = $request->file('creator_image')->store('content', 'public');
+          $file = $request->file('file')->store('gallery', 'public');
+          $fileType = $request->file('file')->getMimeType();
         }
 
-        $content->update([
-          'title' => $validated->title,
-          'slug' => str_replace(' ', '-', $validated->title) . '-' . rand(10,100),
-          'description' => $validated->description,
-          'thumbnail' => $thumbnail,
-          'creator_image' => $creator_image,
-          'creator_name' => $request->creator_name,
-          'creator_title' => $request->creator_title,
-          'is_published' => $request->is_published === 'on' ? 1 : 0,
-          'content_category_id' => $validated->category
+        $gallery->update([
+          'title' => $request->title,
+          'description' => $request->description,
+          'file' => $file,
+          'file_type' => $fileType,
+          'is_highlight' => $request->is_highlight === 'on' ? 1 : 0,
+          'content_id' => $validated->content_id,
         ]);
-
-        if (!empty($request->tags)) {
-          if (!empty($content->tags)) { $content->tags()->delete(); }
-
-          foreach ($request->tags as $tagId) {
-            ContentTag::create([
-              'content_id' => $content->id,
-              'tag_id' => $tagId
-            ]);
-          }
-        }
 
         DB::commit();
         $request->session()->flash('status', [
           'code' => 'success',
-          'message' => 'konten berhasil di perbarui',
+          'message' => 'galeri berhasil di perbarui',
         ]);
       } catch (\Exception $e) {
         DB::rollback();
-        if ($request->hasFile('thumbnail')) {
-          \Storage::disk('public')->delete($thumbnail);
-        }
-
-        if ($request->hasFile('creator_image')) {
-          \Storage::disk('public')->delete($creator_image);
+        if ($request->hasFile('file')) {
+          \Storage::disk('public')->delete($file);
         }
 
         $request->session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal memperbarui konten : ' . $e->getMessage(),
+          'message' => 'gagal memperbarui galeri : ' . $e->getMessage(),
         ]);
 
         return redirect()->back();

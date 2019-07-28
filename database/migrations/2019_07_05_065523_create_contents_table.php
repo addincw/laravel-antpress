@@ -19,6 +19,7 @@ class CreateContentsTable extends Migration
             $table->text('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('slug');
+            $table->string('type')->nullable()->comment('[ media ]');
             $table->string('creator_name')->nullable()->default('admin');
             $table->string('creator_title')->nullable()->default('Administrator');
             $table->string('creator_image')->nullable();

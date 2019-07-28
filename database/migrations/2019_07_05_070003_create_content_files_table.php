@@ -15,10 +15,10 @@ class CreateContentFilesTable extends Migration
     {
         Schema::create('content_files', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('file');
-            $table->string('file_type');
+            $table->string('file_type')->default('image')->comment('image / video');
             $table->boolean('is_highlight')->default(false);
             $table->unsignedInteger('content_id');
             $table->timestamps();

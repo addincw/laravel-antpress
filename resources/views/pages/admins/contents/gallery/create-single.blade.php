@@ -1,11 +1,10 @@
 @extends('layouts.admin.main')
 
 @section('content')
-<form class="form" action="{{ url($route . '/' . $gallery->id) }}" method="post" enctype="multipart/form-data">
+<form class="form" action="{{ url($route . '/create-single') }}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
-  {{ method_field('PUT') }}
 
-  @component('pages.admins.contents.gallery._form', ['contents' => $contents, 'gallery' => $gallery]) @endcomponent
+  @component('pages.admins.contents.gallery._form', ['contents' => $contents]) @endcomponent
 </form>
 @endsection
 

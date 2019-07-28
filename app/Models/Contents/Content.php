@@ -34,6 +34,10 @@ class Content extends Model
   {
     return $this->hasMany('App\Models\Contents\ContentTag', 'content_id');
   }
+  public function files ()
+  {
+    return $this->hasMany('App\Models\Contents\ContentFile', 'content_id');
+  }
   public function comments ()
   {
     return $this->hasMany('App\Models\Contents\ContentComment', 'content_id');

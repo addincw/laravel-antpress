@@ -5,235 +5,72 @@
   <div class="card-header">
     <h4 class="card-title">
       Galeri
-      <a class="btn btn-primary white pull-right" href="{{ url($route . '/create') }}">Tambah Galeri <i class="ft-plus"></i> </a>
+
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-primary btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ft-plus"></i> Tambah Galeri</button>
+          <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(103px, 41px, 0px);">
+              <a class="dropdown-item" href="{{ url($route . '/create') }}"><i class="ft-copy"></i> Banyak Galeri </a>
+              <a class="dropdown-item" href="{{ url($route . '/create-single') }}"><i class="ft-square"></i> Single Galeri </a>
+          </div>
+      </div>
+
     </h4>
   </div>
   <div class="card-body">
     <!--Search Navbar-->
     <div id="search-nav">
       <ul class="nav nav-inline">
+        @foreach($types as $typeKey => $type)
         <li class="nav-item">
-          <a class="nav-link" href="search-images.html"><i class="la la-file-image-o"></i> Banner</a>
+          <a
+            class="nav-link @if($typeKey === $selectedType) active @endif"
+            href="{{ url($route . '?type=' . $typeKey) }}"
+          >
+            <i class="la la-file-image-o"></i> {{ $type['name'] }}
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="search-images.html"><i class="la la-file-image-o"></i> Images</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="search-videos.html"><i class="la la-file-video-o"></i> Videos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="search-videos.html"><i class="la la-file-video-o"></i> Promo Video</a>
-        </li>
+        @endforeach
       </ul>
     </div>
     <!--/ Search Navbar-->
+
+    <div class="form-group mt-3 mb-0">
+      <label for="">Tampilkan galeri berdasarkan konten...</label>
+      <select class="select2 form-control form-control-xl input xl" name="content_id">
+        @if(!empty($selectedContent))
+        <option value="{{ $selectedContent->id }}" selected="selected">{{ $selectedContent->title }}</option>
+        @endif
+      </select>
+    </div>
+
     <!--Search Result-->
     <div id="search-results" class="pt-3">
       <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+        @foreach($galeries->chunk(4) as $chunkGaleries)
         <div class="card-deck-wrapper">
-          <div class="card-deck">
+          <div class="card-deck mb-3">
+            @foreach($chunkGaleries as $gallery)
             <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/1.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/1.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
+            itemscope itemtype="http://schema.org/ImageObject" style="height: 200px; overflow: hidden;">
+              <a href="{{ asset('storage/' . $gallery->file) }}" itemprop="contentUrl" data-size="480x360">
+                <img id="{{ $gallery->id }}" class="gallery-thumbnail card-img-top" src="{{ asset('storage/' . $gallery->file) }}"
+                itemprop="thumbnail" height="100%" />
               </a>
+              @if(empty($gallery->title))
               <div class="card-body px-0">
                 <p>
-                  <span class="text-bold-600">Maecenas</span> sollicitudin
-                  <span class="font-small-2 text-muted float-right">720 x 600</span>
+                  <span class="text-bold-600">{{ $gallery->title }}</span>
                 </p>
-                <p class="card-text">Nulla ac vulputate mauris. Nam tincidunt odio purus.</p>
+                <p class="card-text">{{ $gallery->description }}</p>
               </div>
+              @endif
             </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/2.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/2.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Aliquam </span> vel nib
-                  <span class="font-small-2 text-muted float-right">480 x 360</span>
-                </p>
-                <p class="card-text">Phasellus vitae aliquam felis, et bibendum orci.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/3.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/3.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Molestie </span> accumsan
-                  <span class="font-small-2 text-muted float-right">480 x 360</span>
-                </p>
-                <p class="card-text">Maecenas commodo odio sed nibh viverra vestibulum.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/4.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/4.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Nam eu </span> efficitur
-                  <span class="font-small-2 text-muted float-right">500 x 360</span>
-                </p>
-                <p class="card-text">Donec porttitor massa vitae leo rutrum viverra.</p>
-              </div>
-            </figure>
+            @endforeach
           </div>
         </div>
-        <div class="card-deck-wrapper">
-          <div class="card-deck mt-1">
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/5.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/5.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Porttitor </span> donec
-                  <span class="font-small-2 text-muted float-right">560 x 360</span>
-                </p>
-                <p class="card-text">Sed suscipit velit vitae justo pharetra.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/6.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/6.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Velit et </span> interdum
-                  <span class="font-small-2 text-muted float-right">500 x 360</span>
-                </p>
-                <p class="card-text"> Duis auctor velit et interdum maximus.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/7.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/7.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Natoque </span> efficitur
-                  <span class="font-small-2 text-muted float-right">800 x 600</span>
-                </p>
-                <p class="card-text">Cum sociis natoque penatibus et magnis dis.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/8.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/8.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Pharetra </span> enim id
-                  <span class="font-small-2 text-muted float-right">500 x 360</span>
-                </p>
-                <p class="card-text">Mauris imperdiet enim id urna pharetra.</p>
-              </div>
-            </figure>
-          </div>
-        </div>
-        <div class="card-deck-wrapper">
-          <div class="card-deck mt-1">
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/9.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/9.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Integer </span> fermentum
-                  <span class="font-small-2 text-muted float-right">380 x 360</span>
-                </p>
-                <p class="card-text">Vel lacinia cursus, est dui tincidunt sem.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/10.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/10.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Donec congue </span> nec
-                  <span class="font-small-2 text-muted float-right">500 x 360</span>
-                </p>
-                <p class="card-text">Morbi laoreet ultrices mi ut imperdiet.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/11.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/11.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Vivamus </span> eget
-                  <span class="font-small-2 text-muted float-right">500 x 360</span>
-                </p>
-                <p class="card-text">Lorem ipsum dolor sit amet.</p>
-              </div>
-            </figure>
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject">
-              <a href="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/12.jpg') }}" itemprop="contentUrl" data-size="480x360">
-                <img class="gallery-thumbnail card-img-top" src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/12.jpg') }}"
-                itemprop="thumbnail" alt="Image description" />
-              </a>
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">Aenean </span> pharetra
-                  <span class="font-small-2 text-muted float-right">500 x 360</span>
-                </p>
-                <p class="card-text">Ligula ornare velit porttitor viverra et a felis.</p>
-              </div>
-            </figure>
-          </div>
-        </div>
-        <div class="text-center">
-          <nav aria-label="Page navigation">
-            <ul class="pagination pagination-separate pagination-round pagination-flat">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">« Prev</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item active"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">Next »</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        @endforeach
       </div>
+
       <!-- Root element of PhotoSwipe. Must have class pswp. -->
       <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
         <!-- Background of PhotoSwipe.
@@ -255,9 +92,8 @@
               <!--  Controls are self-explanatory. Order can be changed. -->
               <div class="pswp__counter"></div>
               <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-              <button class="pswp__button pswp__button--share" title="Share"></button>
+              <button class="pswp__button pswp__button--edit" title="Edit"> <i class="ft-edit text-white"></i> </button>
               <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-              <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
               <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
               <!-- element will get class pswp__preloader-active when preloader is running -->
               <div class="pswp__preloader">
@@ -284,6 +120,9 @@
       <!--/ PhotoSwipe -->
     </div>
   </div>
+  <div class="card-footer">
+    {!! $galeries->appends(['type' => $selectedType])->links() !!}
+  </div>
 </div>
 
 <form class="form-delete" method="post" style="display: none;">
@@ -293,23 +132,64 @@
 @endsection
 
 @section('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/css/forms/selects/select2.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/gallery/photo-swipe/photoswipe.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/gallery/photo-swipe/default-skin/default-skin.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/pages/search.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/pages/gallery.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/css/extensions/sweetalert.css') }}">
+<style type="text/css">
+.pswp__button--edit{ background: none !important; }
+</style>
 @endsection
 
 @section('js')
+<script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js') }}"
 type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"
 type="text/javascript"></script>
-<script src="{{ asset('theme/modern-admin-1.0/app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js') }}"
 type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+  var baseUrl = "{{ url('/') }}";
+  var currentUrl = "{{ url($route) }}";
+
+  initPhotoSwipeFromDOM('.my-gallery');
+
+  $("select[name='content_id']").select2({
+    ajax: {
+      url: `${baseUrl}/api/content`,
+      data: function (params) {
+        var query = { searchKey: params.term }
+        return query;
+      },
+      processResults: function (data) {
+        return {
+          results: data.results.map((content) => {
+            content.text = content.title
+            return content
+          })
+        }
+      },
+
+    }
+  })
+
+  $("select[name='content_id']").on('change', function () {
+    let query = {
+      "type": "{{ $selectedType }}",
+      "content_id": $(this).val()
+    }
+
+    window.location.href = `${currentUrl}?${$.param(query)}`
+  })
+
+  $(".pswp__button--edit").on('click', function () {
+    window.location.href = `${currentUrl}/${$(this).data('id')}/edit`
+  })
+
   $('.deleteBtn').on('click', function(){
     swal({
             title: "Yakin menghapus data?",
@@ -345,5 +225,210 @@ $(document).ready(function () {
     return false
   });
 })
+
+var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+    // parse slide data (url, title, size ...) from DOM elements
+    // (children of gallerySelector)
+    var parseThumbnailElements = function(el) {
+        var thumbElements = el.childNodes,
+            numNodes = thumbElements.length,
+            items = [],
+            figureEl,
+            linkEl,
+            size,
+            item;
+
+        for(var i = 0; i < numNodes; i++) {
+
+            figureEl = thumbElements[i]; // <figure> element
+
+            // include only element nodes
+            if(figureEl.nodeType !== 1) {
+                continue;
+            }
+
+            linkEl = figureEl.children[0]; // <a> element
+
+            size = linkEl.getAttribute('data-size').split('x');
+
+            // create slide object
+            item = {
+                src: linkEl.getAttribute('href'),
+                w: parseInt(size[0], 10),
+                h: parseInt(size[1], 10)
+            };
+
+
+
+            if(figureEl.children.length > 1) {
+                // <figcaption> content
+                item.title = figureEl.children[1].innerHTML;
+            }
+
+            if(linkEl.children.length > 0) {
+                // <img> thumbnail element, retrieving thumbnail url
+                item.msrc = linkEl.children[0].getAttribute('src');
+            }
+
+            item.el = figureEl; // save link to element for getThumbBoundsFn
+            items.push(item);
+        }
+
+        return items;
+    };
+
+    // find nearest parent element
+    var closest = function closest(el, fn) {
+        return el && ( fn(el) ? el : closest(el.parentNode, fn) );
+    };
+
+    // triggers when user clicks on thumbnail
+    var onThumbnailsClick = function(e) {
+
+        e = e || window.event;
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+        var eTarget = e.target || e.srcElement;
+
+        //for edit form by content_file_id
+        $(".pswp__button--edit").data('id', eTarget.id)
+
+        // find root element of slide
+        var clickedListItem = closest(eTarget, function(el) {
+            return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+        });
+
+        if(!clickedListItem) {
+            return;
+        }
+
+        // find index of clicked item by looping through all child nodes
+        // alternatively, you may define index via data- attribute
+        var clickedGallery = clickedListItem.parentNode,
+            childNodes = clickedListItem.parentNode.childNodes,
+            numChildNodes = childNodes.length,
+            nodeIndex = 0,
+            index;
+
+        for (var i = 0; i < numChildNodes; i++) {
+            if(childNodes[i].nodeType !== 1) {
+                continue;
+            }
+
+            if(childNodes[i] === clickedListItem) {
+                index = nodeIndex;
+                break;
+            }
+            nodeIndex++;
+        }
+
+        if(index >= 0) {
+            // open PhotoSwipe if valid index found
+            openPhotoSwipe( index, clickedGallery );
+        }
+        return false;
+    };
+
+    // parse picture index and gallery index from URL (#&pid=1&gid=2)
+    var photoswipeParseHash = function() {
+        var hash = window.location.hash.substring(1),
+        params = {};
+
+        if(hash.length < 5) {
+            return params;
+        }
+
+        var vars = hash.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            if(!vars[i]) {
+                continue;
+            }
+            var pair = vars[i].split('=');
+            if(pair.length < 2) {
+                continue;
+            }
+            params[pair[0]] = pair[1];
+        }
+
+        if(params.gid) {
+            params.gid = parseInt(params.gid, 10);
+        }
+
+        return params;
+    };
+
+    var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+        var pswpElement = document.querySelectorAll('.pswp')[0],
+            gallery,
+            options,
+            items;
+
+        items = parseThumbnailElements(galleryElement);
+
+        // define options (if needed)
+        options = {
+
+            // define gallery index (for URL)
+            galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+            getThumbBoundsFn: function(index) {
+                // See Options -> getThumbBoundsFn section of documentation for more info
+                var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                    pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                    rect = thumbnail.getBoundingClientRect();
+
+                return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+            }
+
+        };
+
+        // PhotoSwipe opened from URL
+        if(fromURL) {
+            if(options.galleryPIDs) {
+                // parse real index when custom PIDs are used
+                // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                for(var j = 0; j < items.length; j++) {
+                    if(items[j].pid == index) {
+                        options.index = j;
+                        break;
+                    }
+                }
+            } else {
+                // in URL indexes start from 1
+                options.index = parseInt(index, 10) - 1;
+            }
+        } else {
+            options.index = parseInt(index, 10);
+        }
+
+        // exit if index not found
+        if( isNaN(options.index) ) {
+            return;
+        }
+
+        if(disableAnimation) {
+            options.showAnimationDuration = 0;
+        }
+
+        // Pass data to PhotoSwipe and initialize it
+        gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.init();
+    };
+
+    // loop through all gallery elements and bind events
+    var galleryElements = document.querySelectorAll( gallerySelector );
+
+    for(var i = 0, l = galleryElements.length; i < l; i++) {
+        galleryElements[i].setAttribute('data-pswp-uid', i+1);
+        galleryElements[i].onclick = onThumbnailsClick;
+    }
+
+    // Parse URL and open gallery if it contains #&pid=3&gid=1
+    var hashData = photoswipeParseHash();
+    if(hashData.pid && hashData.gid) {
+        openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
+    }
+}
 </script>
 @endsection

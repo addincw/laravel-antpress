@@ -32,7 +32,7 @@
   @yield('css')
   <!-- END Custom CSS-->
 </head>
-<body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"
+<body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar"
 data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <!-- fixed-top-->
   @include('layouts.admin.header')
@@ -42,13 +42,14 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <div class="app-content content">
     <div class="content-wrapper">
       @if(session()->exists('status'))
-      <div class="alert bg-{{ session('status')['code'] }} alert-icon-left alert-dismissible mb-2" role="alert">
+      <div id="alert-notification" class="alert bg-{{ session('status')['code'] }} alert-icon-left alert-dismissible mb-2" role="alert">
         <span class="alert-icon"><i class="ft-bell"></i></span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
         <strong>{{ strtoupper(session('status')['code']) }}!</strong> {{ session('status')['message'] }}
       </div>
+      @php session()->forget('status'); @endphp
       @elseif($errors->any())
       <div class="alert bg-warning alert-icon-left alert-dismissible mb-2" role="alert">
         <span class="alert-icon"><i class="ft-bell"></i></span>
@@ -90,8 +91,13 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <!-- BEGIN PAGE LEVEL JS-->
   @yield('js')
   <script type="text/javascript">
-  $("button[type='submit']").one("click", function () {
-    $(this).html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)
+  let status = "{{ session()->exists('status') }}"
+  if (status || status === 'true') { $("#alert-notification").focus() }
+  
+  $("button[type='submit']").one("click", function (e) {
+    e.preventDefault();
+
+    $(this).html(`<span class="ft-loader spinner spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)
     $(this).closest('.form').submit()
   })
   </script>

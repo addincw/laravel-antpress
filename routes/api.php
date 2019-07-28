@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/tag', 'Api\TagController');
+Route::apiResource('/content', 'Api\Contents\ContentController');

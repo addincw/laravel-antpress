@@ -20,6 +20,9 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins'], function () {
   Route::group(['prefix' => '/konten', 'namespace' => 'Content'], function () {
     Route::resource('/konten', 'ContentController');
     Route::resource('/kategori', 'CategoryController');
+
+    Route::get('/galeri/create-single', 'GalleryController@createSingle');
+    Route::post('/galeri/create-single', 'GalleryController@storeSingle');
     Route::resource('/galeri', 'GalleryController');
   });
 

@@ -55,39 +55,52 @@ class DatabaseSeeder extends Seeder
       $categoryUmum = ContentCategory::where('slug', 'informasi-umum')->first();
       Content::insert([
         [
+          'title' => 'media',
+          'slug' => 'media',
+          'created_at' => date('Y-m-d H:i:s'),
+          'content_category_id' => $categoryUmum->id,
+          'is_delete' => false,
+          'type' => 'media'
+        ],
+        [
           'title' => 'sejarah',
           'slug' => 'sejarah',
-          'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+          'created_at' => date('Y-m-d H:i:s'),
           'content_category_id' => $categoryUmum->id,
-          'is_delete' => false
+          'is_delete' => false,
+          'type' => null
         ],
         [
           'title' => 'visi misi',
           'slug' => 'visi-misi',
-          'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+          'created_at' => date('Y-m-d H:i:s'),
           'content_category_id' => $categoryUmum->id,
-          'is_delete' => false
+          'is_delete' => false,
+          'type' => null
         ],
         [
           'title' => 'fasilitas',
           'slug' => 'fasilitas',
-          'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+          'created_at' => date('Y-m-d H:i:s'),
           'content_category_id' => $categoryUmum->id,
-          'is_delete' => false
+          'is_delete' => false,
+          'type' => null
         ],
         [
           'title' => 'indikator mutu',
           'slug' => 'indikator-mutu',
-          'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+          'created_at' => date('Y-m-d H:i:s'),
           'content_category_id' => $categoryUmum->id,
-          'is_delete' => false
+          'is_delete' => false,
+          'type' => null
         ],
         [
           'title' => 'kontak kami',
           'slug' => 'kontak-kami',
-          'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+          'created_at' => date('Y-m-d H:i:s'),
           'content_category_id' => $categoryUmum->id,
-          'is_delete' => false
+          'is_delete' => false,
+          'type' => null
         ],
       ]);
 
