@@ -5,15 +5,11 @@
     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner" role="listbox">
+    @foreach($banners as $banner)
     <div class="carousel-item active" style="overflow: hidden;">
-      <img src="https://placeimg.com/1000/600/tech" width="100%" alt="First slide">
+      <img src="{{ $banner->file_url }}" width="100%" alt="banner {{ $banner->title }}">
     </div>
-    <div class="carousel-item" style="overflow: hidden;">
-      <img src="https://placeimg.com/1000/600/people" width="100%" alt="Second slide">
-    </div>
-    <div class="carousel-item" style="overflow: hidden;">
-      <img src="https://placeimg.com/1000/600/architecture" width="100%" alt="Third slide">
-    </div>
+    @endforeach
   </div>
   <a class="carousel-control-prev" href="#carousel-example-generic" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

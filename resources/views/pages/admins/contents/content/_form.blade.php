@@ -118,9 +118,11 @@
       <div class="card">
         <div class="card-header">
           <div class="pull-right">
+            @if(!empty($content))
             <a class="btn btn-outline-danger mr-1" style="color: red;" href='{{ url("$route/$content->id") }}'>
               <i class="ft-eye"></i> Pratinjau Halaman
             </a>
+            @endif
             <button type="submit" class="btn btn-success">
               <i class="la la-check-square-o"></i> Save
             </button>

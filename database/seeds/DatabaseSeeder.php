@@ -36,8 +36,8 @@ class DatabaseSeeder extends Seeder
           'is_delete' => false
         ],
         [
-          'title' => 'tim kami',
-          'slug' => 'tim-kami',
+          'title' => 'departemen',
+          'slug' => 'departemen',
           'is_delete' => false
         ],
         [

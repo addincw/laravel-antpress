@@ -23,52 +23,28 @@
     <div class="row">
       <div class="col-md-3">
         <div class="footer last-photos">
-          <h3>Last Photos</h3>
+          <h3>Last Gallery</h3>
           <hr>
           <div class="row">
+              @foreach($recentGalleries as $gallery)
               <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-1.jpg') }}" alt="" class="img-fluid mb-2 rounded">
+                  <img src="{{ $gallery->file_url }}" alt="image {{ $gallery->title }}" class="img-fluid mb-2 rounded">
               </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-2.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-3.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-4.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-5.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-6.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-7.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-8.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
-              <div class="col-4">
-                  <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/backgrounds/bg-9.jpg') }}" alt="" class="img-fluid mb-2 rounded">
-              </div>
+              @endforeach
           </div>
       </div>
       </div>
       <div class="col-md-5">
         <div class="footer">
-          <h3>Lorem ipsum dolor sit amet, consectetur.</h3>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa.</p>
+          <h3>{{ $profile->title }}</h3>
+          <p>{{ $profile->description }}</p>
           <div class="inform mt-3">
             <div class="row">
               <div class="col-1">
                 <i class='ft-map-pin'></i>
               </div>
               <div class="col">
-                <p><b>Gedung Bangkit Lt. Dasar</b><br>
-                  Jl. Lorem ipsum dolor sit amet, Surabaya <br>
-                  Jawa Timur 60282 Indonesia</p>
+                <p>{{ $profile->address }}</p>
                 </div>
               </div>
             </div>
@@ -78,7 +54,7 @@
                   <i class='ft-phone'></i>
                 </div>
                 <div class="col">
-                  <p>0811 2025 200 / 0811 2025 300</p>
+                  <p>{{ $profile->phone }}</p>
                 </div>
               </div>
             </div>
@@ -88,17 +64,7 @@
                   <i class='ft-mail'></i>
                 </div>
                 <div class="col">
-                  <p>support@loremipsum.com</p>
-                </div>
-              </div>
-            </div>
-            <div class="inform">
-              <div class="row">
-                <div class="col-1">
-                  <i class='ft-globe'></i>
-                </div>
-                <div class="col">
-                  <p>www.loremipsum.com</p>
+                  <p>{{ $profile->email }}</p>
                 </div>
               </div>
             </div>

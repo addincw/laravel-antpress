@@ -34,33 +34,23 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins'], function () {
   });
 });
 
-Route::get('/', function () {
-    return view('pages.visitors.index');
-});
-Route::get('/profile/{slug}', function () {
-    return view('pages.visitors.profile');
-});
-Route::group(['prefix' => '/klinik'], function () {
-  Route::get('/', function () {
-    return view('pages.visitors.clinic.index');
+Route::group(['namespace' => 'Visitors'], function () {
+  Route::get('/', 'LandingPageController@index');
+  Route::get('/profile/{slug}', 'ProfileController@show');
+
+  Route::group(['prefix' => '/klinik'], function () {
+    Route::get('/', 'ClinicController@index');
+    Route::get('/{slug}', 'ClinicController@show');
   });
-  Route::get('/{slug}', function () {
-    return view('pages.visitors.clinic._slug');
+
+  Route::group(['prefix' => '/dokter'], function () {
+    Route::get('/', 'DoctorController@index');
+    Route::get('/{slug}', 'DoctorController@show');
   });
-});
-Route::group(['prefix' => '/dokter'], function () {
-  Route::get('/', function () {
-    return view('pages.visitors.doctor.index');
-  });
-  Route::get('/{slug}', function () {
-    return view('pages.visitors.doctor._slug');
-  });
-});
-Route::group(['prefix' => '/blog'], function () {
-  Route::get('/', function () {
-    return view('pages.visitors.blog.index');
-  });
-  Route::get('/{slug}', function () {
-    return view('pages.visitors.blog._slug');
+
+  Route::group(['prefix' => '/blog'], function () {
+    Route::get('/', 'BlogController@index');
+    Route::get('/{slug}', 'BlogController@show');
+    Route::post('/{slug}/comment', 'BlogController@storeComment');
   });
 });

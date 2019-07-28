@@ -3,7 +3,9 @@
     <h1 class="mb-3">{{ $content->title }}</h1>
     <div class="card">
       <div class="card-content">
-        <img class="card-image img-fluid" src="{{ $content->thumbnail_url }}" alt="image-{{ $content->slug }}">
+        <div style="height: 320px; overflow: hidden">
+          <img class="card-image img-fluid" src="{{ $content->thumbnail_url }}" style="width: 100%;" alt="image-{{ $content->slug }}">
+        </div>
         <div class="card-body">
           {!! html_entity_decode($content->description) !!}
         </div>
@@ -11,10 +13,10 @@
     </div>
 
     <h3 class="mt-3 mb-3">Komentar ({{ count($content->comments) }})
-      <a class="pull-right btn btn-primary box-shadow-1 text-white">
+      <button type="button" class="pull-right btn btn-primary box-shadow-1 text-white" data-toggle="modal" data-target="#modalComment">
         Beri Komentar
         <i class="ft-navigation ml-3"></i>
-      </a>
+      </button>
     </h3>
     <div class="card">
       <div class="card-content">
@@ -28,8 +30,8 @@
                 </a>
               </div>
               <div class="media-body">
-                <p class="text-bold-600 mb-0"><a href="#">Jason Ansley</a></p>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.</p>
+                <p class="text-bold-600 mb-0"><a href="#">{{ $comment->name }}</a></p>
+                <p>{{ $comment->body }}</p>
               </div>
             </div>
             @endforeach
@@ -60,7 +62,7 @@
           <h5 class="card-title">Related Post</h5>
         </div>
         <div class="card-body p-0">
-          @component('components.blog.list', ['noThumbnail' => true]) @endcomponent
+          @component('components.blog.list', ['noThumbnail' => true, 'blogs' => $blogs, 'route' => $route]) @endcomponent
         </div>
     </div>
 
@@ -82,6 +84,60 @@
                 </span>
             </div>
         </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade text-left" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel1">Form Komentar</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form" action="{{ url($route . '/' . $content->slug . '/comment') }}" method="post">
+          {{ csrf_field() }}
+
+          <div class="form-group">
+            <label for="fieldName">Name</label>
+            <div class="position-relative has-icon-left">
+              <input type="text" id="fieldName" class="form-control" placeholder="Nama Anda" name="name">
+              <div class="form-control-position">
+                <i class="ft-user"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fieldName">Email</label>
+            <div class="position-relative has-icon-left">
+              <input type="email" id="fieldEmail" class="form-control" placeholder="Email Anda" name="email">
+              <div class="form-control-position">
+                <i class="ft-mail"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fieldDescription">Isi Komentar</label>
+            <div class="position-relative has-icon-left">
+              <textarea id="fieldBody" rows="5" class="form-control" name="body" placeholder="Isi Komentar"></textarea>
+              <div class="form-control-position">
+                <i class="ft-message-circle"></i>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn grey btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Kirim komentar</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

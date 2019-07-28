@@ -3,7 +3,7 @@
 @section('content')
 <!-- Carousel -->
 <div style="height:500px; margin-bottom: 2.2rem">
-  @component('components.carousel') @endcomponent
+  @component('components.carousel', ['banners' => $banners]) @endcomponent
 </div>
 <!--/ Carousel -->
 
@@ -17,15 +17,15 @@
       <div class="card-content">
         <div class="card-body">
           <div class="card-text">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident....</p>
+            <p>{{ $aboutUs->description }}</p>
           </div>
           <button type="button" class="btn btn-primary btn-min-width box-shadow-1 mt-3 mb-1">Read More</button>
         </div>
       </div>
       <div class="card-footer">
         <a class="btn btn-pure" href="#">Visi Misi</a>
-        <a class="btn btn-pure" href="#">Struktur Organisasi</a>
-        <a class="btn btn-pure" href="#">Contact Info</a>
+        <a class="btn btn-pure" href="#">Indikator Mutu</a>
+        <a class="btn btn-pure" href="#">Kontak Kami</a>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@
             <div class="media d-flex">
               <div class="media-body text-left">
                 <h6 class="text-muted">Klinik</h6>
-                <h3>6</h3>
+                <h3>{{ $countClinic }}</h3>
               </div>
               <div class="align-self-center">
                 <i class="ft-clipboard danger font-large-2 float-right"></i>
@@ -104,7 +104,8 @@
 <!-- /registration -->
 <!-- news -->
 <h4 class="mt-3 mb-3">Berita & Info Kesehatan <a class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> </h4>
-@component('components.blog.tile') @endcomponent
+
+@component('components.blog.tile', ['blogs' => $blogs, 'route' => url($route) . '/blog']) @endcomponent
 <!-- /news -->
 <!-- events -->
 <h4 class="mt-3 mb-3">Dokter Kami<a class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> </h4>
@@ -112,7 +113,7 @@
 <!-- /events -->
 @endsection
 @section('footer')
-  @component('components.testimoni') @endcomponent
-  @component('layouts.visitor.footer-complete') @endcomponent
+  @component('components.testimoni', ['testimonies' => $testimonies]) @endcomponent
+  @component('layouts.visitor.footer-complete', ['profile' => $profile, 'recentGalleries' => $recentGalleries]) @endcomponent
   @parent
 @endsection

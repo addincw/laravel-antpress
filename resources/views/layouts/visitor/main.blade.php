@@ -39,6 +39,31 @@ data-menu="horizontal-menu" data-col="2-columns">
 
   <div class="visitor app-content content">
     <div class="content-wrapper">
+
+      @if(session()->exists('status'))
+      <div id="alert-notification" class="alert bg-{{ session('status')['code'] }} alert-icon-left alert-dismissible mb-2" role="alert">
+        <span class="alert-icon"><i class="ft-bell"></i></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <strong>{{ strtoupper(session('status')['code']) }}!</strong> {{ session('status')['message'] }}
+      </div>
+      @php session()->forget('status'); @endphp
+      @elseif($errors->any())
+      <div class="alert bg-warning alert-icon-left alert-dismissible mb-2" role="alert">
+        <span class="alert-icon"><i class="ft-bell"></i></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <strong>warning!</strong> Gagal menyimpan testimoni :
+        <ul>
+          @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+      @endif
+
       <div class="content-body">
         @yield('content')
       </div>

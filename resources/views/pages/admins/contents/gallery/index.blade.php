@@ -121,7 +121,14 @@
     </div>
   </div>
   <div class="card-footer">
-    {!! $galeries->appends(['type' => $selectedType])->links() !!}
+    @php
+    $query['type'] = [$selectedType];
+
+    if($selectedContent) {
+      $query['content_id'] = [$selectedContent->id];
+    }
+    @endphp
+    {!! $galeries->appends($query)->links() !!}
   </div>
 </div>
 

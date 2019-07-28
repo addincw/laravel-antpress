@@ -1,62 +1,85 @@
 <section id="news-feed">
+  @if(!$blogs->isEmpty())
   <div class="row">
+    @if(!empty($blogs[0]))
     <div class="col-md-6">
-
       <!-- Social Card -->
-
       <div class="card news-feed-card-bg text-white">
-
-        <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/17.jpg') }}" alt="" class=" card-img-top img-fluid">
-        <div class="card-img-overlay">
-          <div class="badge badge-danger badge-sm float-left">Social</div>
-          <a href="#">
-            <h2 class="card-title mt-2 text-white">Social Media, Selfies, and Addiction.
-            </h2>
-          </a>
-          <p class="font-small-3 text-left">Selfie-taking is more than just the taking of a
-            photograph and can include the editing of the colour and contrast, changing backgrounds,
-            and
-            adding other effects. </p>
-            <span class="text-white float-right font-small-1">Oct 10, 9:13am</span>
-          </div>
+        <div style="height: 500px; overflow: hidden;">
+          <img src="{{ $blogs[0]->thumbnail_url }}" alt="{{ $blogs[0]->slug }}" class=" card-img-top img-fluid" style="height: 100%">
         </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="row match-height">
-          <div class="col-xl-6 col-lg-6 col-md-6">
-
-            <div class="card" style="height: 305.763px;">
-              <a href="#"><img src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/34.png') }}" alt="" class="card-img-top img-fluid"></a>
-              <div class="card-body">
-                <div class="badge badge-success badge-sm float-left">Health</div>
-                <br>
-                <a href="#" class="text-dark">
-                  <p class="card-title font-small-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                </a>
-                <div class="text-muted">
-                  <p class="float-left text-muted font-small-1">Oct 12, 10:50pm</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6">
-
-            <div class="card" style="height: 305.763px;">
-              <a href="#"><img src="{{ asset('theme/modern-admin-1.0/app-assets/images/gallery/34.png') }}" alt="" class="card-img-top img-fluid"></a>
-              <div class="card-body">
-                <a href="#" class="text-dark">
-                  <p class="card-title font-small-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </a>
-                <div class="text-muted">
-                  <p class="float-left text-muted font-small-1">Oct 12, 10:50pm</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
+        <div class="card-img-overlay">
+          <div class="badge badge-danger badge-sm float-left">{{ $blogs[0]->category->title }}</div>
+          <a href="{{ url($route . '/' . $blogs[0]->slug) }}">
+            <h2 class="card-title mt-2 text-white">{{ $blogs[0]->title }}</h2>
+          </a>
+          <p class="font-small-3 text-left">
+            {!! html_entity_decode(str_limit(strip_tags($blogs[0]->description), 50)) !!}
+            @if (strlen(strip_tags($blogs[0]->description)) > 50)
+              ...
+            @endif
+          </p>
+          <span class="text-white float-right font-small-1">{{ $blogs[0]->created_at->format('d M, Y') }}</span>
         </div>
       </div>
     </div>
-  </section>
+    @endif
+    <div class="col-md-6">
+      <div class="row match-height">
+        @if(!empty($blogs[1]))
+        <div class="col-xl-6 col-lg-6 col-md-6">
+
+          <div class="card" style="height: 305.763px;">
+            <a href="{{ url($route . '/' . $blogs[1]->slug) }}"><img src="{{ $blogs[1]->thumbnail_url }}" alt="{{ $blogs[1]->slug }}" class="card-img-top img-fluid"></a>
+            <div class="card-body">
+              <div class="badge badge-success badge-sm float-left">{{ $blogs[1]->category->title }}</div>
+              <br>
+              <a href="#" class="text-dark">
+                <p class="card-title font-small-3">
+                  {!! html_entity_decode(str_limit(strip_tags($blogs[1]->description), 50)) !!}
+                  @if (strlen(strip_tags($blogs[1]->description)) > 50)
+                    ...
+                  @endif
+                </p>
+              </a>
+              <div class="text-muted">
+                <p class="float-left text-muted font-small-1">{{ $blogs[1]->created_at->format('d M, Y') }}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        @endif
+        @if(!empty($blogs[2]))
+        <div class="col-xl-6 col-lg-6 col-md-6">
+
+          <div class="card" style="height: 305.763px;">
+            <a href="#"><img src="{{ $blogs[2]->thumbnail_url }}" alt="{{ $blogs[2]->slug }}" class="card-img-top img-fluid"></a>
+            <div class="card-body">
+              <a href="{{ url($route . '/' . $blogs[2]->slug) }}" class="text-dark">
+                <p class="card-title font-small-3">
+                  {!! html_entity_decode(str_limit(strip_tags($blogs[2]->description), 50)) !!}
+                  @if (strlen(strip_tags($blogs[2]->description)) > 50)
+                    ...
+                  @endif
+                </p>
+              </a>
+              <div class="text-muted">
+                <p class="float-left text-muted font-small-1">{{ $blogs[2]->created_at->format('d M, Y') }}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        @endif
+      </div>
+    </div>
+  </div>
+  @else
+  <div class="row">
+    <div class="col-12 text-center">
+      <p>Tidak ada berita...</p>
+    </div>
+  </div>
+  @endif
+</section>
