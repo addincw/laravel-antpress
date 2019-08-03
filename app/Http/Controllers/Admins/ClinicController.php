@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreClinic;
 use App\Models\Clinics\Clinic;
+use App\Models\Clinics\ClinicDoctor;
+use App\Models\Doctor;
 
 class ClinicController extends Controller
 {
@@ -38,6 +40,7 @@ class ClinicController extends Controller
      */
     public function create()
     {
+      $this->params['doctors'] = Doctor::where('is_active', true)->get();
       return view($this->routeView . '.create', $this->params);
     }
 
@@ -65,6 +68,16 @@ class ClinicController extends Controller
           'thumbnail' => $thumbnail,
           'is_published' => $request->is_published === 'on' ? 1 : 0
         ]);
+
+        if (count($request->doctors) > 0) {
+          foreach ($request->doctors as $doctor) {
+            ClinicDoctor::create([
+              'clinic_id' => $clinic->id,
+              'doctor_id' => $doctor['doctor_id'],
+              'is_active' => true
+            ]);
+          }
+        }
 
         DB::commit();
         $request->session()->flash('status', [
@@ -109,6 +122,7 @@ class ClinicController extends Controller
     public function edit($id)
     {
         $this->params['clinic'] = $this->model->find($id);
+        $this->params['doctors'] = Doctor::where('is_active', true)->get();
         return view($this->routeView . '.edit', $this->params);
     }
 
@@ -142,6 +156,18 @@ class ClinicController extends Controller
           'thumbnail' => $thumbnail,
           'is_published' => $request->is_published === 'on' ? 1 : 0,
         ]);
+
+        if (count($request->doctors) > 0) {
+          $clinic->doctors()->delete();
+
+          foreach ($request->doctors as $doctor) {
+            ClinicDoctor::create([
+              'clinic_id' => $clinic->id,
+              'doctor_id' => $doctor['doctor_id'],
+              'is_active' => true
+            ]);
+          }
+        }
 
         DB::commit();
         $request->session()->flash('status', [

@@ -12,24 +12,39 @@ use App\Models\Contents\ContentTag;
 
 class ContentController extends Controller
 {
+    private $type = null;
     private $route = 'admin/konten/konten';
     private $routeView = 'pages.admins.contents.content';
     private $params = [];
 
-    public function __construct ()
+    public function __construct (Request $request)
     {
       $this->model = new Content();
       $this->params['route'] = $this->route;
       $this->params['routeView'] = $this->routeView;
+      $this->params['type'] = $request->type ? $request->type : null;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $this->params['contents'] = $this->model->with(['category'])->get();
+      $types = ['media', 'blog'];
+
+      $contents = $this->model->query();
+
+      if ($this->params['type']) {
+        $contents = $contents
+                    ->where('type', $this->params['type']);
+      }else {
+        $contents = $contents
+                    ->whereNotIn('type', $types)
+                    ->orWhere('type', null);
+      }
+
+      $this->params['contents'] = $contents->get();
       return view($this->routeView . '.index', $this->params);
     }
 
@@ -70,12 +85,13 @@ class ContentController extends Controller
           'title' => $validated->title,
           'slug' => str_replace(' ', '-', $validated->title) . '-' . rand(10,100),
           'description' => $validated->description,
+          'type' => $request->type,
           'thumbnail' => $thumbnail,
           'creator_image' => $creator_image,
           'creator_name' => $request->creator_name,
           'creator_title' => $request->creator_title,
           'is_published' => $request->is_published === 'on' ? 1 : 0,
-          'content_category_id' => $validated->category
+          'content_category_id' => $validated->category,
         ]);
 
         if (!empty($request->tags)) {
@@ -110,7 +126,7 @@ class ContentController extends Controller
         return redirect()->back();
       }
 
-      return redirect($this->route);
+      return redirect($this->route . "?type=" . $request->type);
     }
 
     /**

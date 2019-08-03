@@ -23,17 +23,22 @@
         <div class="card-body">
           @if(!empty($content->comments))
             @foreach($content->comments as $comment)
-            <div class="media">
-              <div class="media-left mr-1">
-                <a href="#">
-                  <span class="avatar avatar-online"><img src="{{ asset('theme/modern-admin-1.0/app-assets/images/portrait/small/avatar-s-1.png') }}" alt="avatar"></span>
-                </a>
-              </div>
-              <div class="media-body">
-                <p class="text-bold-600 mb-0"><a href="#">{{ $comment->name }}</a></p>
-                <p>{{ $comment->body }}</p>
-              </div>
-            </div>
+            <div class="media-list media-bordered">
+							<div class="media" style="margin-bottom: 15px;">
+								<span class="media-left">
+									<img class="media-object" src="{{ asset('theme/modern-admin-1.0/app-assets/images/portrait/small/avatar-s-1.png') }}" alt="Generic placeholder image" style="width: 64px;height: 64px;">
+								</span>
+								<div class="media-body">
+									<h5 class="media-heading mb-0 text-bold-600">
+											{{ $comment->name }}
+									</h5>
+									<div class="media-notation mb-1">
+										{{ $comment->created_at->format('d M, Y') }}
+									</div>
+									{{ $comment->body }}
+								</div>
+							</div>
+						</div>
             @endforeach
           @endif
         </div>

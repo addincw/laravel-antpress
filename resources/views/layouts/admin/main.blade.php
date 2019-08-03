@@ -47,7 +47,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <strong>{{ strtoupper(session('status')['code']) }}!</strong> {{ session('status')['message'] }}
+        <strong>{{ strtoupper(session('status')['code']) }}!</strong> {!! html_entity_decode(session('status')['message']) !!}
       </div>
       @php session()->forget('status'); @endphp
       @elseif($errors->any())
@@ -56,7 +56,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
-        <strong>warning!</strong> Gagal menyimpan testimoni :
+        <strong>warning!</strong> Gagal menyimpan :
         <ul>
           @foreach ($errors->all() as $error)
               <li>{{ $error }}</li>
@@ -93,7 +93,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <script type="text/javascript">
   let status = "{{ session()->exists('status') }}"
   if (status || status === 'true') { $("#alert-notification").focus() }
-  
+
   $("button[type='submit']").one("click", function (e) {
     e.preventDefault();
 

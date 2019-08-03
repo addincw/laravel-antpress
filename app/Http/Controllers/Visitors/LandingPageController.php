@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contents\Content;
 use App\Models\Clinics\Clinic;
 use App\Models\Contents\ContentFile;
+use App\Models\Doctor;
 use App\Models\Profile;
 use App\Models\Testimoni;
 
@@ -23,6 +24,7 @@ class LandingPageController extends Controller
   }
   public function index ()
   {
+    $doctors = Doctor::query()->where('is_active', true);
     // content_files: is_highlight true, type image
     $this->params['banners'] = ContentFile::where('is_highlight', true)
                                ->where('file_type', 'like', 'image%')
@@ -31,11 +33,9 @@ class LandingPageController extends Controller
     // content: tentang kami
     $this->params['aboutUs'] = Content::where('slug', 'sejarah')->first();
 
-    // count clinic
+    // count
     $this->params['countClinic'] = Clinic::all()->count();
-
-    // count staff
-    //
+    $this->params['countDoctor'] = $doctors->get()->count();
 
     // content: type blog
     $this->params['blogs'] = Content::where('is_published', true)
@@ -43,6 +43,9 @@ class LandingPageController extends Controller
                              ->orderBy('created_at', 'desc')
                              ->limit(3)
                              ->get();
+
+    // doctors
+    $this->params['doctors'] = $doctors->limit(4)->get();
 
     // testimoni
     $this->params['testimonies'] = Testimoni::all();

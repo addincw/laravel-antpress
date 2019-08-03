@@ -4,66 +4,39 @@
 <div class="card">
   <div class="card-header">
     <h4 class="card-title">
-      Konten
-      <a class="btn btn-primary white pull-right" href="{{ url($route . '/create?type=' .$type) }}">Tambah Konten <i class="ft-plus"></i> </a>
+      Dokter
+      <a class="btn btn-primary white pull-right" href="{{ url($route . '/create') }}">Tambah Dokter <i class="ft-plus"></i> </a>
     </h4>
   </div>
   <div class="card-body">
-    <div class="media-list list-group">
-      @foreach($contents as $content)
-			<div class="list-group-item list-group-item-action media">
-        <span class="media-left">
-          <img class="media-object" src="{{ $content->thumbnail_url }}" alt="{{ $content->slug }}" style="width: 84px;height: 84px;">
-        </span>
-        <span class="media-body" style="color: black !important;">
-          <strong style="font-size:20px;">{{ $content->title }}</strong>
-          <br>
-          <span>{{ date('d M Y', strtotime($content->created_at)) }}</span>
-        </span>
-        <div class="media-right">
-          <a href='{{ url("$route/$content->id/edit") }}' class="btn btn-sm btn-icon btn-pure info"><i class="ft-edit"></i></a>
-          @if($content->is_delete)
-          <a href="{{ url($route . '/' . $content->id) }}" class="btn btn-sm btn-icon btn-pure danger deleteBtn"><i class="ft-trash"></i></a>
-          @endif
-        </div>
-			</div>
-      @endforeach
-		</div>
-
-    <div class="table-responsive" style="display: none;">
+    <div class="table-responsive">
       <table id="recent-orders" class="table table-striped table-bordered table-hover table-xl mb-0">
         <thead>
           <tr>
-            <th class="">Tanggal Post</th>
-            <th class="">Name</th>
-            <th class="">Category</th>
+            <th class="">Dokter</th>
+            <th class="">Spesialis</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($contents as $content)
+          @foreach($doctors as $doctor)
           <tr>
-            <td class="text-truncate">
-              {{ date('d M Y', strtotime($content->created_at)) }}
-            </td>
             <td class="text-truncate">
               <div style="display: flex; align-items: center;">
                 <span class="avatar mr-2">
-                  <img class="box-shadow-2" src="{{ $content->thumbnail_url }}" alt="avatar">
+                  <img class="box-shadow-2" src="{{ $doctor->image_url }}" alt="avatar">
                 </span>
                 <span>
-                  <strong>{{ $content->title }}</strong>
+                  <strong>{{ $doctor->name }}</strong>
                 </span>
               </div>
             </td>
             <td class="text-truncate">
-              {{ $content->category->title }}
+              {{ $doctor->specialist }}
             </td>
             <td class="text-truncate text-center">
-              <a href='{{ url("$route/$content->id/edit") }}' class="btn btn-sm btn-icon btn-pure info"><i class="ft-edit"></i></a>
-              @if($content->is_delete)
-              <a href="{{ url($route . '/' . $content->id) }}" class="btn btn-sm btn-icon btn-pure danger deleteBtn"><i class="ft-trash"></i></a>
-              @endif
+              <a href='{{ url("$route/$doctor->id/edit") }}' class="btn btn-sm btn-icon btn-pure info"><i class="ft-edit"></i></a>
+              <a href="{{ url($route . '/' . $doctor->id) }}" class="btn btn-sm btn-icon btn-pure danger deleteBtn"><i class="ft-trash"></i></a>
             </td>
           </tr>
           @endforeach
@@ -73,7 +46,7 @@
   </div>
 </div>
 
-<form class="form-delete" method="post" style="display: none;">
+<form class="form" method="post" style="display: none;">
   {{ csrf_field() }}
   @method('DELETE')
 </form>
@@ -113,8 +86,8 @@ $(document).ready(function () {
         .then((isConfirm) => {
             if (isConfirm) {
               let deleteLink = $(this).attr("href")
-              $("form.form-delete").attr("action", deleteLink)
-              $("form.form-delete").submit();
+              $("form.form").attr("action", deleteLink)
+              $("form.form").submit();
             }
             swal.close();
         });

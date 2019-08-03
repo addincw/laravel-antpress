@@ -10,39 +10,25 @@
         </div>
 
         <div class="collapse-icon accordion-icon-rotate">
-  				<div id="headingCollapse1" class="card-header border-bottom-blue-grey border-bottom-lighten-4">
-  					<a data-toggle="collapse" href="#collapse1" aria-expanded="false" aria-controls="collapse1" class="card-title lead collapsed text-dark">Thumbnail Klinik</a>
-  				</div>
-  				<div id="collapse1" role="tabpanel" aria-labelledby="headingCollapse1" class="collapse" aria-expanded="false">
-  					<div class="card-content">
-  						<div class="card-body">
-                <div class="form-group">
-          				<label>Preview</label>
-                  <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-                    @if(!empty($clinic))
-                    <a href="{{ asset('img/' . $clinic->thumbnail) }}" itemprop="contentUrl" data-size="480x360">
-                        <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ $clinic->thumbnail_url }}" itemprop="thumbnail" alt="Image-{{ $clinic->slug }}">
-                    </a>
-                    @else
-                    <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
-                    @endif
-                  </figure>
-          			</div>
-                <div class="form-group">
-                  <input type="file" class="form-control" id="fieldPhoto" name="thumbnail" onchange="previewImage('fieldPhoto')">
-                </div>
-  						</div>
-  					</div>
-  				</div>
-  				<div id="headingCollapse12" class="card-header border-bottom-blue-grey border-bottom-lighten-4">
-  					<a data-toggle="collapse" href="#collapse12" aria-expanded="false" aria-controls="collapse12" class="card-title lead collapsed text-dark">Daftar Dokter</a>
-  				</div>
-  				<div id="collapse12" role="tabpanel" aria-labelledby="headingCollapse12" class="collapse" aria-expanded="false">
-  					<div class="card-content">
-  						<div class="card-body">
-  						</div>
-  					</div>
-  				</div>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-group">
+                <label>Thumbnail Klinik</label>
+                <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+                  @if(!empty($clinic))
+                  <a href="{{ asset('img/' . $clinic->thumbnail) }}" itemprop="contentUrl" data-size="480x360">
+                      <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ $clinic->thumbnail_url }}" itemprop="thumbnail" alt="Image-{{ $clinic->slug }}">
+                  </a>
+                  @else
+                  <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
+                  @endif
+                </figure>
+              </div>
+              <div class="form-group">
+                <input type="file" class="form-control" id="fieldPhoto" name="thumbnail" onchange="previewImage('fieldPhoto')">
+              </div>
+            </div>
+          </div>
           <div class="card-content">
             <div class="card-body">
               <div class="float-right">
@@ -57,7 +43,7 @@
 		</div>
 
 		<div class="col-md-9">
-      <div class="card">
+      <div class="card" style="min-height: 330px;">
         <div class="card-header">
           <div class="pull-right">
             <button type="submit" class="btn btn-success">
@@ -76,6 +62,32 @@
           </div>
 
           <textarea id="fieldDescription" name="description">@if($clinic) {{ html_entity_decode($clinic->description) }} @endif</textarea>
+
+          <h4 class="form-section mt-5"><i class="ft-user-plus"></i> Daftar Dokter</h4>
+          <div class="doctor-repeater">
+            <div data-repeater-list="doctors">
+              <div data-repeater-item style="display: none;">
+                <div class="row mb-1">
+                  <div class="col-9 col-xl-10">
+                    <input type="hidden" name="clinic_doctor_id">
+                    <select class="form-control select2" name="doctor_id" style="width: 100%;"  data-placeholder="Pilih dokter..">
+                      <option value=""></option>
+                      @foreach($doctors as $doctor)
+                      <option value="{{ $doctor->id }}">{{ $doctor->name }} ({{ $doctor->specialist }})</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="col-2 col-xl-1">
+                    <button type="button" data-repeater-delete class="btn btn-icon btn-danger mr-1"><i class="ft-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="button" data-repeater-create class="btn btn-primary">
+              <i class="ft-plus"></i> Tambah Dokter
+            </button>
+          </div>
+
         </div>
       </div>
 		</div>
@@ -98,6 +110,8 @@
 type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/editors/codemirror/mode/xml/xml.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js') }}"
+type="text/javascript"></script>
 
 <script type="text/javascript">
 var baseUrl = "{{ url('/') }}"
@@ -156,76 +170,25 @@ function previewImage (field) {
   };
 };
 
-function createTag (data) {
-  return new Promise(function (resolve, reject) {
-    $.ajax({
-      url: `${baseUrl}/api/tag`,
-      type: "POST",
-      data: { tag: data },
-      success: function (result) {
-        resolve(result)
-      },
-      error: function (err) {
-        console.log(`[createTag] error : ${err}`)
-        reject(err)
-      }
-    });
-  })
-}
-
 $(document).ready(function () {
-  @if(!empty($clinic->tags))
-    @foreach($clinic->tags as $tag)
-    var data = {
-        id: "{{ $tag->tag_id }}",
-        text: "{{ $tag->tag->name }}"
-    };
-    var newOption = new Option(data.text, data.id, true, true);
-    $('#fieldTag').append(newOption).trigger('change');
-    console.log(`added : ${data}`)
-    @endforeach
-  @endif
+  var $repeater = $(".doctor-repeater").repeater({
+    initEmpty: true
+  });
 
-  $("#fieldTag").select2({
-    tags: true,
-    ajax: {
-      url: `${baseUrl}/api/tag`,
-      data: function (params) {
-        var query = { searchKey: params.term }
-        return query;
-      },
-      processResults: function (data) {
-        return {
-          results: data.results.map((tag) => {
-            tag.text = tag.name
-            return tag
-          })
-        }
-      }
-    }
-  }).on('change', function (e) {
-      let isNew = $(this).find('[data-select2-tag="true"]');
-
-      if(isNew.length){
-          var r = confirm("do you want to create a tag?");
-      		if (r) {
-            createTag(isNew.val())
-              .then(function (tag) {
-                  isNew.replaceWith('<option selected value="'+tag.id+'">'+tag.name+'</option>');
-              })
-              .catch(function (err) {
-                  $('.select2-selection__choice:last').remove();
-                  $('.select2-search__field').val(isNew.val()).focus()
-              })
-
-          } else {
-            $('.select2-selection__choice:last').remove();
-      			$('.select2-search__field').val(isNew.val()).focus()
-          }
-      }
-    });
-
+  $(".select2").select2();
   $('#fieldDescription').summernote();
+
+  var doctorList = []
+  <?php if(!empty($clinic) && !empty($clinic->doctors)): ?>
+  doctorList = JSON.parse(`<?php echo (object) $clinic->doctors; ?>`)
+
+  $repeater.setList(doctorList.map((doctor) => {
+    return {
+      clinic_doctor_id: doctor.id,
+      doctor_id: doctor.doctor_id
+    }
+  }))
+  <?php endif; ?>
 })
 </script>
 @endsection

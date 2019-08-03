@@ -5,6 +5,6 @@
   {{ csrf_field() }}
   {{ method_field('PUT') }}
 
-  @component($routeView . '._form', ['clinic' => $clinic]) @endcomponent
+  @component($routeView . '._form', ['clinic' => $clinic, 'doctors' => $doctors]) @endcomponent
 </form>
 @endsection

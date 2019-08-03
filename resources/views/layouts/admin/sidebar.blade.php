@@ -9,6 +9,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a href="{{ url('admin/dokter') }}">
+          <i class="ft-user-plus"></i>
+          <span class="menu-title">Dokter</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a href="{{ url('admin/klinik') }}">
           <i class="ft-plus-square"></i>
           <span class="menu-title">Klinik</span>
@@ -27,6 +33,12 @@
         <a href="{{ url('admin/konten/konten') }}">
           <i class="ft-file-text"></i>
           <span class="menu-title">Konten</span>
+        </a>
+      </li>
+      <li class=" nav-item">
+        <a href="{{ url('admin/konten/konten?type=blog') }}">
+          <i class="la la-newspaper-o"></i>
+          <span class="menu-title">Blog</span>
         </a>
       </li>
       <li class=" nav-item">

@@ -11,8 +11,8 @@
   </div>
 </div>
 
-  @component('components.carousel-doctor') @endcomponent
-  @component('components.carousel-doctor') @endcomponent
+  @component('components.carousel-doctor', ['doctors' => $doctors]) @endcomponent
+  @component('components.carousel-doctor', ['doctors' => $doctors]) @endcomponent
 @endsection
 
 @section('footer')

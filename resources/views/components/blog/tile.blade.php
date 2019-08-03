@@ -8,10 +8,11 @@
         <div style="height: 500px; overflow: hidden;">
           <img src="{{ $blogs[0]->thumbnail_url }}" alt="{{ $blogs[0]->slug }}" class=" card-img-top img-fluid" style="height: 100%">
         </div>
-        <div class="card-img-overlay">
+        <div class="card-img-overlay" style="background: #4a4a4a4a;">
           <div class="badge badge-danger badge-sm float-left">{{ $blogs[0]->category->title }}</div>
+          <span class="text-white float-right font-small-1">{{ $blogs[0]->created_at->format('d M, Y') }}</span>
           <a href="{{ url($route . '/' . $blogs[0]->slug) }}">
-            <h2 class="card-title mt-2 text-white">{{ $blogs[0]->title }}</h2>
+            <h2 class="mt-3 text-white" style="font-weight: bold;">{{ $blogs[0]->title }}</h2>
           </a>
           <p class="font-small-3 text-left">
             {!! html_entity_decode(str_limit(strip_tags($blogs[0]->description), 50)) !!}
@@ -19,7 +20,6 @@
               ...
             @endif
           </p>
-          <span class="text-white float-right font-small-1">{{ $blogs[0]->created_at->format('d M, Y') }}</span>
         </div>
       </div>
     </div>
@@ -29,13 +29,15 @@
         @if(!empty($blogs[1]))
         <div class="col-xl-6 col-lg-6 col-md-6">
 
-          <div class="card" style="height: 305.763px;">
-            <a href="{{ url($route . '/' . $blogs[1]->slug) }}"><img src="{{ $blogs[1]->thumbnail_url }}" alt="{{ $blogs[1]->slug }}" class="card-img-top img-fluid"></a>
+          <div class="card" style="height: 100%;">
+            <div style="height: 300px; overflow: hidden;">
+              <img src="{{ $blogs[1]->thumbnail_url }}" alt="{{ $blogs[1]->slug }}" class="card-img-top img-fluid" style="height: 100%;">
+            </div>
             <div class="card-body">
               <div class="badge badge-success badge-sm float-left">{{ $blogs[1]->category->title }}</div>
               <br>
-              <a href="#" class="text-dark">
-                <p class="card-title font-small-3">
+              <a href="{{ url('/blog' . $blogs[1]->slug) }}" class="text-dark">
+                <p class="card-title mt-1" style="font-weight: bold;">
                   {!! html_entity_decode(str_limit(strip_tags($blogs[1]->description), 50)) !!}
                   @if (strlen(strip_tags($blogs[1]->description)) > 50)
                     ...
@@ -53,11 +55,11 @@
         @if(!empty($blogs[2]))
         <div class="col-xl-6 col-lg-6 col-md-6">
 
-          <div class="card" style="height: 305.763px;">
+          <div class="card" style="height: 100%;">
             <a href="#"><img src="{{ $blogs[2]->thumbnail_url }}" alt="{{ $blogs[2]->slug }}" class="card-img-top img-fluid"></a>
             <div class="card-body">
               <a href="{{ url($route . '/' . $blogs[2]->slug) }}" class="text-dark">
-                <p class="card-title font-small-3">
+                <p class="card-title mt-1" style="font-weight: bold;">
                   {!! html_entity_decode(str_limit(strip_tags($blogs[2]->description), 50)) !!}
                   @if (strlen(strip_tags($blogs[2]->description)) > 50)
                     ...

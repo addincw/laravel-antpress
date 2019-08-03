@@ -19,13 +19,13 @@
           <div class="card-text">
             <p>{{ $aboutUs->description }}</p>
           </div>
-          <button type="button" class="btn btn-primary btn-min-width box-shadow-1 mt-3 mb-1">Read More</button>
+          <a href="{{ url('/profile/sejarah') }}" class="btn btn-primary btn-min-width box-shadow-1 mt-3 mb-1">Read More</a>
         </div>
       </div>
       <div class="card-footer">
-        <a class="btn btn-pure" href="#">Visi Misi</a>
-        <a class="btn btn-pure" href="#">Indikator Mutu</a>
-        <a class="btn btn-pure" href="#">Kontak Kami</a>
+        <a class="btn btn-pure" href="{{ url('/profile/visi-misi') }}">Visi Misi</a>
+        <a class="btn btn-pure" href="{{ url('/profile/indikator-mutu') }}">Indikator Mutu</a>
+        <a class="btn btn-pure" href="{{ url('/profile/kontak-kami') }}">Kontak Kami</a>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
             <div class="media d-flex">
               <div class="media-body text-left">
                 <h6 class="text-muted">Dokter</h6>
-                <h3>30</h3>
+                <h3>{{ $countDoctor }}</h3>
               </div>
               <div class="align-self-center">
                 <i class="ft-users primary font-large-2 float-right"></i>
@@ -103,13 +103,16 @@
 </div>
 <!-- /registration -->
 <!-- news -->
-<h4 class="mt-3 mb-3">Berita & Info Kesehatan <a class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> </h4>
+<h4 class="mt-3 mb-3">
+  Berita & Info Kesehatan
+  <a href="{{ url('/blog') }}" class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> 
+</h4>
 
 @component('components.blog.tile', ['blogs' => $blogs, 'route' => url($route) . '/blog']) @endcomponent
 <!-- /news -->
 <!-- events -->
 <h4 class="mt-3 mb-3">Dokter Kami<a class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> </h4>
-@component('components.carousel-doctor') @endcomponent
+@component('components.carousel-doctor', ['doctors' => $doctors]) @endcomponent
 <!-- /events -->
 @endsection
 @section('footer')

@@ -15,6 +15,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins'], function () {
     return view('pages.admins.index');
   });
 
+  Route::resource('/dokter', 'DoctorController');
   Route::resource('/klinik', 'ClinicController');
 
   Route::group(['prefix' => '/konten', 'namespace' => 'Content'], function () {

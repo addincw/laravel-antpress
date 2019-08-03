@@ -115,7 +115,7 @@
 		</div>
 
 		<div class="col-md-9">
-      <div class="card">
+      <div class="card" style="min-height: 330px;">
         <div class="card-header">
           <div class="pull-right">
             @if(!empty($content))
