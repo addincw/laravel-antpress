@@ -15,14 +15,13 @@ class CreateClinicDoctorsTable extends Migration
     {
         Schema::create('clinic_doctors', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('name');
-          $table->string('job');
-          $table->text('description')->nullable();
-          $table->string('thumbnail')->nullable();
           $table->unsignedInteger('clinic_id');
+          $table->unsignedInteger('doctor_id');
+          $table->boolean('is_active')->default(true);
           $table->timestamps();
 
           $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('restrict');
+          $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('restrict');
         });
     }
 
