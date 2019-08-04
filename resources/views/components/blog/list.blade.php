@@ -15,7 +15,7 @@
       @endif
       <div class="media-body media-search">
         <div class="badge badge-success badge-sm">{{ $blog->category->title }}</div>
-        <p class="lead mb-0 mt-2">
+        <p class="lead mb-0 mt-1">
           <a href="{{ url($route . '/' . $blog->slug) }}"><span class="text-bold-600">{{ $blog->title }}</a>
         </p>
         <p>

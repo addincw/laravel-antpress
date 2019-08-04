@@ -5,7 +5,7 @@
     <div class="col-md-6">
       <!-- Social Card -->
       <div class="card news-feed-card-bg text-white">
-        <div style="height: 500px; overflow: hidden;">
+        <div style="height: 450px; overflow: hidden;">
           <img src="{{ $blogs[0]->thumbnail_url }}" alt="{{ $blogs[0]->slug }}" class=" card-img-top img-fluid" style="height: 100%">
         </div>
         <div class="card-img-overlay" style="background: #4a4a4a4a;">
@@ -55,6 +55,8 @@
           <div class="card" style="height: 100%;">
             <a href="#"><img src="{{ $blogs[2]->thumbnail_url }}" alt="{{ $blogs[2]->slug }}" class="card-img-top img-fluid"></a>
             <div class="card-body">
+              <div class="badge badge-success badge-sm float-left">{{ $blogs[2]->category->title }}</div>
+              <br>
               <a href="{{ url($route . '/' . $blogs[2]->slug) }}" class="text-dark">
                 <p class="card-title mt-1" style="font-weight: bold;">
                   {{ $blogs[2]->title }}

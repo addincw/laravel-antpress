@@ -1,4 +1,4 @@
-<section class="row">
+<section class="row match-height">
   @foreach($doctors as $doctor)
     <div class="col-xl-3 col-md-6 col-12">
         <div class="card">

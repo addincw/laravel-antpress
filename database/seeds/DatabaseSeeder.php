@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Faker\Factory as FakerFactory;
 
 use \App\Models\Profile;
+use \App\Models\Contents\ContentFile;
 use \App\Models\Contents\ContentCategory;
 use \App\Models\Contents\Content;
 
@@ -19,11 +20,11 @@ class DatabaseSeeder extends Seeder
     {
       $faker = FakerFactory::create();
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-      Profile::truncate();
-      ContentCategory::truncate();
-      Content::truncate();
 
-      factory(Profile::class)->create();
+      ContentFile::truncate();
+      Content::truncate();
+      ContentCategory::truncate();
+
       ContentCategory::insert([
         [
           'title' => 'pelayanan & penunjang',
@@ -53,10 +54,11 @@ class DatabaseSeeder extends Seeder
       ]);
 
       $categoryUmum = ContentCategory::where('slug', 'informasi-umum')->first();
+
       Content::insert([
         [
-          'title' => 'media',
-          'slug' => 'media',
+          'title' => 'umum',
+          'slug' => 'umum',
           'created_at' => date('Y-m-d H:i:s'),
           'content_category_id' => $categoryUmum->id,
           'is_delete' => false,

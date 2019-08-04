@@ -17,7 +17,7 @@
       <div class="card-content">
         <div class="card-body">
           <div class="card-text">
-            <p>{{ $aboutUs->description }}</p>
+            <p>{!! html_entity_decode($aboutUs->description) !!}</p>
           </div>
           <a href="{{ url('/profile/sejarah') }}" class="btn btn-primary btn-min-width box-shadow-1 mt-3 mb-1">Read More</a>
         </div>

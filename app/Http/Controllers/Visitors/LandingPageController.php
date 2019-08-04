@@ -56,7 +56,7 @@ class LandingPageController extends Controller
     // content files: type image order by created at
     $this->params['recentGalleries'] = ContentFile::where('file_type', 'like', 'image%')
                                        ->orderBy('created_at', 'desc')
-                                       ->limit(9);
+                                       ->limit(9)->get();
 
     return view($this->routeView . '.index', $this->params);
   }

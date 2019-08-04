@@ -33,7 +33,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('css/custom-theme.css') }}">
   <!-- END Custom CSS-->
 </head>
-<body class="horizontal-layout horizontal-menu 2-columns   menu-expanded" data-open="hover"
+<body class="horizontal-layout horizontal-menu 2-columns menu-expanded" data-open="hover"
 data-menu="horizontal-menu" data-col="2-columns">
   <!-- fixed-top-->
   @include('layouts.visitor.navbar')

@@ -7,7 +7,7 @@
       <img class="card-image img-fluid" src="{{ $content->thumbnail_url }}" alt="image-{{ $content->slug }}" width="100%">
     </div>
     <div class="card-body">
-      <p>{{ $content->description }}</p>
+      <p>{!! html_entity_decode($content->description) !!}</p>
     </div>
   </div>
 </div>

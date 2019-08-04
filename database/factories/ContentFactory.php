@@ -3,12 +3,26 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\Contents\Content::class, function (Faker $faker) {
-    $category = App\Models\Contents\ContentCategory::inRandomOrder()->limit(10)->first();
+    $file = $faker->image('public/storage/content', 640, 480, null, true);
+    $file = str_replace('public/storage/content\\', '/content/', $file);
+    $fileCreator = $faker->image('public/storage/content', 480, 480, null, true);
+    $fileCreator = str_replace('public/storage/content\\', '/content/', $fileCreator);
+
+    $category = App\Models\Contents\ContentCategory::inRandomOrder()
+                ->limit(10)
+                ->where('is_delete', true)
+                ->first();
+
     $title = $faker->title;
     return [
       'title' => $title,
-      'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
+      'thumbnail' => $file,
+      'description' => $faker->paragraph($nbSentences = 15, $variableNbSentences = true),
       'slug' => str_replace(' ', '-', $title) . '-' . rand(10,100),
-      'content_category_id' => $category->id
+      'content_category_id' => $category->id,
+      'type' => 'blog',
+      'creator_name' => $faker->name,
+      'creator_title' => $faker->jobTitle,
+      'creator_image' => $fileCreator,
     ];
 });
