@@ -9,6 +9,11 @@ use App\Models\Contents\Content;
 
 class ContentController extends Controller
 {
+    private $response = [
+      'message' => '',
+      'data' => null
+    ];
+
     public function __construct ()
     {
       $this->model = new Content();
@@ -18,7 +23,7 @@ class ContentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function getAll(Request $request)
     {
       $contents = $this->model;
       $where = "1=1";
@@ -41,6 +46,16 @@ class ContentController extends Controller
       return response()->json($response, 200);
     }
 
+    public function index (Request $request)
+    {
+      $contents = Content::where('type', 'blog')
+                                ->where('is_published', true)
+                                ->paginate(10);
+
+      $response = array_merge($this->response, $contents->toArray());
+      return response()->json($response, 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -60,7 +75,23 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-        //
+      $where = strpos($id, "-") ? "slug = '{$id}'" : "id = $id";
+
+      try {
+        $content = Content::whereRaw($where)->first();
+
+        if (!$content) {
+          $this->response['message'] = 'data tidak ditemukan';
+          return response()->json($this->response, 404);
+        }
+
+        $this->response['data'] = $content;
+      } catch (\Exception $e) {
+        $this->response['message'] = 'terjadi kesalahan server';
+        return response()->json($this->response, 500);
+      }
+
+      return response()->json($this->response, 200);
     }
 
     /**

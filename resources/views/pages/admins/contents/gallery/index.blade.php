@@ -166,7 +166,7 @@ $(document).ready(function () {
 
   $("select[name='content_id']").select2({
     ajax: {
-      url: `${baseUrl}/api/content`,
+      url: `${baseUrl}/api/content/getAll`,
       data: function (params) {
         var query = { searchKey: params.term }
         return query;

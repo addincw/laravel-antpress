@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/tag', 'Api\TagController');
+Route::get('/content/all', 'Api\Contents\ContentController@getAll');
 Route::apiResource('/content', 'Api\Contents\ContentController');
