@@ -9,13 +9,10 @@
             <h3 class="brand-text">Modern Admin</h3>
           </a>
         </li>
-        <li class="nav-item d-md-none">
-          <a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a>
-        </li>
       </ul>
     </div>
     <div class="navbar-container content">
-      <div class="collapse navbar-collapse" id="navbar-mobile">
+      <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav mr-auto float-left"> </ul>
         <ul class="nav navbar-nav float-right">
           <li class="nav-item">
@@ -71,7 +68,7 @@ ft-info"></i><span>Profile</span></a>
             <a class="dropdown-item" href="{{ url('/') }}">Fasilitas</a>
           </li>
           <li class="">
-            <a class="dropdown-item" href="{{ url('/klinik') }}">Layanan</a>
+            <a class="dropdown-item" href="{{ url('/layanan') }}">Layanan</a>
           </li>
         </ul>
       </li>
@@ -86,7 +83,7 @@ ft-info"></i><span>Profile</span></a>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url('/blog') }}"><i class="ft-image"></i>
+        <a class="nav-link" href="{{ url('/galeri') }}"><i class="ft-image"></i>
           <span>Galeri</span>
         </a>
       </li>

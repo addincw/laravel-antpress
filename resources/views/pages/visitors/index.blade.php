@@ -105,13 +105,16 @@
 <!-- news -->
 <h4 class="mt-3 mb-3">
   Berita & Info Kesehatan
-  <a href="{{ url('/blog') }}" class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> 
+  <a href="{{ url('/blog') }}" class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a>
 </h4>
 
 @component('components.blog.tile', ['blogs' => $blogs, 'route' => url($route) . '/blog']) @endcomponent
 <!-- /news -->
 <!-- events -->
-<h4 class="mt-3 mb-3">Dokter Kami<a class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a> </h4>
+<h4 class="mt-3 mb-3">
+  Dokter Kami
+  <a href="{{ url('/dokter') }}" class="float-right btn btn-primary box-shadow-1 text-white">Tampilkan lebih banyak</a>
+</h4>
 @component('components.carousel-doctor', ['doctors' => $doctors]) @endcomponent
 <!-- /events -->
 @endsection

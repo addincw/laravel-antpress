@@ -17,4 +17,9 @@ class Doctor extends Model
       return asset("/img/no-image.png");
     }
   }
+
+  public function clinics ()
+  {
+    return $this->hasMany('App\Models\Clinics\ClinicDoctor', 'doctor_id');
+  }
 }

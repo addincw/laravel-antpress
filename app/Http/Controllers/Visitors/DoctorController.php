@@ -14,20 +14,12 @@ use App\Models\Testimoni;
 
 class DoctorController extends Controller
 {
-  private $route = '/';
+  private $route = '/dokter';
   private $routeView = 'pages.visitors.doctor';
   private $params = [];
 
   public function __construct ()
   {
-    $this->params['route'] = $this->route;
-  }
-
-  public function index ()
-  {
-    // doctors
-    $this->params['doctors'] = Doctor::query()->where('is_active', true)->get();
-
     // testimoni
     $this->params['testimonies'] = Testimoni::all();
 
@@ -39,6 +31,21 @@ class DoctorController extends Controller
                                        ->orderBy('created_at', 'desc')
                                        ->limit(9);
 
+  }
+
+  public function index ()
+  {
+    // doctors
+    $this->params['doctors'] = Doctor::query()->where('is_active', true)->get();
+
+
     return view($this->routeView . '.index', $this->params);
+  }
+
+  public function show ($id)
+  {
+    $this->params['doctor'] = Doctor::find($id);
+
+    return view($this->routeView . '._slug', $this->params);
   }
 }

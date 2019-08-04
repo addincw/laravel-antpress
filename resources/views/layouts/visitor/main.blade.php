@@ -19,6 +19,7 @@
   <!-- BEGIN VENDOR CSS-->
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/vendors.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/css/ui/prism.min.css') }}">
+  @yield('css')
   <!-- END VENDOR CSS-->
   <!-- BEGIN MODERN CSS-->
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/app.css') }}">
@@ -76,6 +77,8 @@ data-menu="horizontal-menu" data-col="2-columns">
   <!-- BEGIN VENDOR JS-->
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
   <!-- BEGIN VENDOR JS-->
+  @yield('js')
+
   <!-- BEGIN PAGE VENDOR JS-->
   <script type="text/javascript" src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/ui/jquery.sticky.js') }}"></script>
   <script type="text/javascript" src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/charts/jquery.sparkline.min.js') }}"></script>

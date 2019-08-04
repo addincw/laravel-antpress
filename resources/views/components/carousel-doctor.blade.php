@@ -10,10 +10,8 @@
                     <h4 class="card-title">{{ $doctor->name }}</h4>
                     <h6 class="card-subtitle text-muted">{{ $doctor->specialist }}</h6>
                 </div>
-                <div class="text-center">
-                    <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-facebook"><span class="la la-facebook"></span></a>
-                    <a href="#" class="btn btn-social-icon mr-1 mb-1 btn-outline-twitter"><span class="la la-twitter"></span></a>
-                    <a href="#" class="btn btn-social-icon mb-1 btn-outline-linkedin"><span class="la la-linkedin font-medium-4"></span></a>
+                <div class="card-footer">
+                    <a href="{{ url('/dokter/' . $doctor->id) }}" class="btn btn-block btn-outline-primary"><span class="ft-user"></span> lihat profil</a>
                 </div>
             </div>
         </div>

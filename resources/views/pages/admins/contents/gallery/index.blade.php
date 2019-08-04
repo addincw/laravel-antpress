@@ -156,7 +156,6 @@
 type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"
 type="text/javascript"></script>
-type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {

@@ -119,10 +119,9 @@ class GalleryController extends Controller
           $uploaded = [];
           foreach ($request->file('file') as $keyFile => $file) {
             $uploaded[$keyFile] = $file->store('gallery', 'public');
-
             ContentFile::create([
               'file' => $uploaded[$keyFile],
-              'file_type' => $file->file('file')->getMimeType(),
+              'file_type' => $file->getMimeType(),
               'is_highlight' => false,
               'content_id' => $content->id,
             ]);
@@ -136,7 +135,6 @@ class GalleryController extends Controller
         ]);
       } catch (\Exception $e) {
         DB::rollback();
-
         if ($request->hasFile('file')) {
           if ($uploaded) {
             foreach ($uploaded as $key => $value) {
@@ -144,7 +142,6 @@ class GalleryController extends Controller
             }
           }
         }
-
         session()->put('status', [
           'code' => 'danger',
           'message' => 'gagal menyimpan file : ' . $e->getMessage(),

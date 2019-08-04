@@ -8,8 +8,13 @@ class ClinicDoctor extends Model
 {
     protected $guarded = [];
 
+    public function clinic ()
+    {
+      return $this->belongsTo('App\Models\Clinics\Clinic', 'clinic_id');
+    }
+
     public function doctor ()
     {
-      return $this->hasMany('App\Models\Doctor', 'doctor_id');
+      return $this->belongsTo('App\Models\Doctor', 'doctor_id');
     }
 }

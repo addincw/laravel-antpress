@@ -38,10 +38,7 @@
               <br>
               <a href="{{ url('/blog' . $blogs[1]->slug) }}" class="text-dark">
                 <p class="card-title mt-1" style="font-weight: bold;">
-                  {!! html_entity_decode(str_limit(strip_tags($blogs[1]->description), 50)) !!}
-                  @if (strlen(strip_tags($blogs[1]->description)) > 50)
-                    ...
-                  @endif
+                  {{ $blogs[1]->title }}
                 </p>
               </a>
               <div class="text-muted">
@@ -60,10 +57,7 @@
             <div class="card-body">
               <a href="{{ url($route . '/' . $blogs[2]->slug) }}" class="text-dark">
                 <p class="card-title mt-1" style="font-weight: bold;">
-                  {!! html_entity_decode(str_limit(strip_tags($blogs[2]->description), 50)) !!}
-                  @if (strlen(strip_tags($blogs[2]->description)) > 50)
-                    ...
-                  @endif
+                  {{ $blogs[2]->title }}
                 </p>
               </a>
               <div class="text-muted">

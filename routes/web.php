@@ -39,7 +39,7 @@ Route::group(['namespace' => 'Visitors'], function () {
   Route::get('/', 'LandingPageController@index');
   Route::get('/profile/{slug}', 'ProfileController@show');
 
-  Route::group(['prefix' => '/klinik'], function () {
+  Route::group(['prefix' => '/layanan'], function () {
     Route::get('/', 'ClinicController@index');
     Route::get('/{slug}', 'ClinicController@show');
   });
@@ -54,4 +54,6 @@ Route::group(['namespace' => 'Visitors'], function () {
     Route::get('/{slug}', 'BlogController@show');
     Route::post('/{slug}/comment', 'BlogController@storeComment');
   });
+
+  Route::get('/galeri', 'GalleryController@index');
 });

@@ -21,10 +21,6 @@ class ClinicController extends Controller
   public function __construct ()
   {
     $this->params['route'] = $this->route;
-  }
-
-  public function index ()
-  {
     // testimoni
     $this->params['testimonies'] = Testimoni::all();
 
@@ -35,7 +31,18 @@ class ClinicController extends Controller
     $this->params['recentGalleries'] = ContentFile::where('file_type', 'like', 'image%')
                                        ->orderBy('created_at', 'desc')
                                        ->limit(9);
+  }
 
+  public function index ()
+  {
+    $this->params['clinics'] = Clinic::where('is_published', true)->get();
     return view($this->routeView . '.index', $this->params);
+  }
+
+  public function show ($id)
+  {
+    $this->params['clinic'] = Clinic::find($id);
+
+    return view($this->routeView . '._slug', $this->params);
   }
 }
