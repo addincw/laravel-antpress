@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Visitors;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Visitors\MainController;
 
 use App\Http\Requests\Contents\StoreContentFile;
 
@@ -12,32 +12,20 @@ use App\Models\Contents\Content;
 use App\Models\Contents\ContentFile;
 use App\Models\Contents\ContentCategory;
 use App\Models\Contents\ContentTag;
-use App\Models\Profile;
-use App\Models\Testimoni;
 
-class GalleryController extends Controller
+class GalleryController extends MainController
 {
-    private $route = 'galeri';
-    private $routeView = 'pages.visitors.gallery';
-    private $params = [];
+    protected $route = 'galeri';
+    protected $routeView = 'pages.visitors.gallery';
 
     public function __construct ()
     {
+      parent::__construct();
       $this->modelContent = new Content();
       $this->model = new ContentFile();
 
       $this->params['route'] = $this->route;
       $this->params['routeView'] = $this->routeView;
-      // testimoni
-      $this->params['testimonies'] = Testimoni::all();
-
-      // profile
-      $this->params['profile'] = Profile::first();
-
-      // content files: type image order by created at
-      $this->params['recentGalleries'] = ContentFile::where('file_type', 'like', 'image%')
-                                         ->orderBy('created_at', 'desc')
-                                         ->limit(9)->get();
     }
     /**
      * Display a listing of the resource.

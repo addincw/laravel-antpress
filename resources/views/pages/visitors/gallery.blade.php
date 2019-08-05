@@ -351,7 +351,7 @@ initPhotoSwipeFromDOM('.my-gallery');
 
 $("select[name='content_id']").select2({
   ajax: {
-    url: `${baseUrl}/api/content`,
+    url: `${baseUrl}/api/content/all`,
     data: function (params) {
       var query = { searchKey: params.term }
       return query;

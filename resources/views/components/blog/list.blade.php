@@ -1,16 +1,14 @@
 <?php $noThumbnail = !empty($noThumbnail) ? $noThumbnail : false; ?>
 <?php $blogs = !empty($blogs) ? $blogs : false; ?>
-<ul class="blog__media-list media-list media-bordered">
+<ul class="blog-list media-list media-bordered">
   @if($blogs->isEmpty())
   <li class="media">Tidak ada berita...</li>
   @else
     @foreach($blogs as $blog)
-    <li class="media" style="margin-bottom: 15px;">
+    <li class="media">
       @if(!$noThumbnail)
       <div class="media-left">
-        <a href="#">
-          <img class="media-object width-150" src="{{ $blog->thumbnail_url }}" alt="Generic placeholder image">
-        </a>
+        <img class="media-object width-150" src="{{ $blog->thumbnail_url }}" alt="Generic placeholder image">
       </div>
       @endif
       <div class="media-body media-search">

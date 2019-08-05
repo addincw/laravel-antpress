@@ -5,10 +5,12 @@
     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner" role="listbox">
+    <?php $init = 0; ?>
     @foreach($banners as $banner)
-    <div class="carousel-item active" style="overflow: hidden;">
+    <div class="carousel-item @if($init == 0) active @endif">
       <img src="{{ $banner->file_url }}" width="100%" alt="banner {{ $banner->title }}">
     </div>
+    <?php $init = 1; ?>
     @endforeach
   </div>
   <a class="carousel-control-prev" href="#carousel-example-generic" role="button" data-slide="prev">

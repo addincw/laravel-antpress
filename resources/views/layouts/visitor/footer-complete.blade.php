@@ -6,12 +6,12 @@
           <div class="col-md-8">
             <h3>Download Sekarang</h3>
             <p>Lebih update dengan menggunakan aplikasi kami.</p>
-            <div class="download-image mt-3">
+            <div class="download-btn-image mt-3">
               <img src="{{ asset('img/google.png') }}" alt="">
             </div>
           </div>
           <div class="col-md-4">
-            <img src="{{ asset('img/download-i.png') }}" />
+            <img class="download-image" src="{{ asset('img/download-i.png') }}" />
           </div>
         </div>
       </div>

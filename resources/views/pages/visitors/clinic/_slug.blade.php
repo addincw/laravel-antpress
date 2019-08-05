@@ -6,13 +6,13 @@
 		<div class="card-body">
 			<div class="card-content">
 				<div class="row">
-					<div class="col-5">
+					<div class="col-md-5">
 						<div class="align-items-center" style="max-height: 300px; overflow: hidden;">
 							<!-- <div class="badge badge-success round position-absolute m-2">-50%</div> -->
 							<img class="img-fluid mb-1" src="{{ $clinic->thumbnail_url }}" alt="Card image cap" width="100%">
 						</div>
 					</div>
-					<div class="col-7">
+					<div class="col-md-7">
 						<div class="title-area clearfix">
 							<h2 class="product-title float-left"><strong>{{ $clinic->title }}</strong></h2>
 						</div>

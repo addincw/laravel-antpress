@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Visitors;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Visitors\MainController;
 
 use App\Http\Requests\Contents\StoreContentComment;
 
@@ -12,25 +12,15 @@ use App\Models\Contents\ContentCategory;
 use App\Models\Profile;
 use App\Models\Testimoni;
 
-class BlogController extends Controller
+class BlogController extends MainController
 {
-  private $route = '/blog';
-  private $routeView = 'pages.visitors.blog';
-  private $params = [];
+  protected $route = '/blog';
+  protected $routeView = 'pages.visitors.blog';
 
   public function __construct ()
   {
+    parent::__construct();
     $this->params['route'] = $this->route;
-    // testimoni
-    $this->params['testimonies'] = Testimoni::all();
-
-    // profile
-    $this->params['profile'] = Profile::first();
-
-    // content files: type image order by created at
-    $this->params['recentGalleries'] = ContentFile::where('file_type', 'like', 'image%')
-                                       ->orderBy('created_at', 'desc')
-                                       ->limit(9)->get();
   }
   public function index (Request $request)
   {

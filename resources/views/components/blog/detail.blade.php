@@ -1,10 +1,13 @@
-<div class="row">
+<div class="blog-detail row">
   <div class="col-md-8">
-    <h1 class="mb-3">{{ $content->title }}</h1>
+    <div class="header-section mb-3">
+      <p class="header-section__title"> {{ $content->title }} </p>
+    </div>
+
     <div class="card">
       <div class="card-content">
-        <div style="height: 320px; overflow: hidden">
-          <img class="card-image img-fluid" src="{{ $content->thumbnail_url }}" style="width: 100%;" alt="image-{{ $content->slug }}">
+        <div class="blog-detail__thumbnail">
+          <img class="card-image img-fluid" src="{{ $content->thumbnail_url }}" width="100%" alt="image-{{ $content->slug }}">
         </div>
         <div class="card-body">
           {!! html_entity_decode($content->description) !!}
@@ -12,12 +15,15 @@
       </div>
     </div>
 
-    <h3 class="mt-3 mb-3">Komentar ({{ count($content->comments) }})
+    <div class="header-section mb-3">
+      <p class="header-section__title"> Komentar ({{ count($content->comments) }}) </p>
+
       <button type="button" class="pull-right btn btn-primary box-shadow-1 text-white" data-toggle="modal" data-target="#modalComment">
         Beri Komentar
         <i class="ft-navigation ml-3"></i>
       </button>
-    </h3>
+    </div>
+    
     <div class="card">
       <div class="card-content">
         <div class="card-body">

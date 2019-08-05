@@ -1,14 +1,14 @@
-<section id="news-feed">
+<section class="blog-tile">
   @if(!$blogs->isEmpty())
   <div class="row">
     @if(!empty($blogs[0]))
     <div class="col-md-6">
       <!-- Social Card -->
-      <div class="card news-feed-card-bg text-white">
-        <div style="height: 450px; overflow: hidden;">
-          <img src="{{ $blogs[0]->thumbnail_url }}" alt="{{ $blogs[0]->slug }}" class=" card-img-top img-fluid" style="height: 100%">
+      <div class="blog-tile__main card text-white">
+        <div class="blog-tile__main__thumbnail">
+          <img src="{{ $blogs[0]->thumbnail_url }}" alt="{{ $blogs[0]->slug }}" class=" card-img-top img-fluid" width="100%">
         </div>
-        <div class="card-img-overlay" style="background: #4a4a4a4a;">
+        <div class="blog-tile__main__overlay card-img-overlay">
           <div class="badge badge-danger badge-sm float-left">{{ $blogs[0]->category->title }}</div>
           <span class="text-white float-right font-small-1">{{ $blogs[0]->created_at->format('d M, Y') }}</span>
           <a href="{{ url($route . '/' . $blogs[0]->slug) }}">

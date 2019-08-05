@@ -3,34 +3,20 @@
 namespace App\Http\Controllers\Visitors;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Visitors\MainController;
 
 use App\Models\Contents\Content;
 use App\Models\Clinics\Clinic;
-use App\Models\Contents\ContentFile;
 use App\Models\Doctor;
-use App\Models\Profile;
-use App\Models\Testimoni;
 
-class DoctorController extends Controller
+class DoctorController extends MainController
 {
-  private $route = '/dokter';
-  private $routeView = 'pages.visitors.doctor';
-  private $params = [];
+  protected $route = '/dokter';
+  protected $routeView = 'pages.visitors.doctor';
 
   public function __construct ()
   {
-    // testimoni
-    $this->params['testimonies'] = Testimoni::all();
-
-    // profile
-    $this->params['profile'] = Profile::first();
-
-    // content files: type image order by created at
-    $this->params['recentGalleries'] = ContentFile::where('file_type', 'like', 'image%')
-                                       ->orderBy('created_at', 'desc')
-                                       ->limit(9)->get();
-
+    parent::__construct();
   }
 
   public function index ()
