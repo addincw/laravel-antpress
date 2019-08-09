@@ -122,11 +122,12 @@
   </div>
   <div class="card-footer">
     @php
-    $query['type'] = [$selectedType];
+    $query['type'] = $selectedType;
 
     if($selectedContent) {
-      $query['content_id'] = [$selectedContent->id];
+      $query['content_id'] = $selectedContent->id;
     }
+
     @endphp
     {!! $galeries->appends($query)->links() !!}
   </div>

@@ -21,7 +21,7 @@
           <span>{{ date('d M Y', strtotime($content->created_at)) }}</span>
         </span>
         <div class="media-right">
-          <a href='{{ url("$route/$content->id/edit") }}' class="btn btn-sm btn-icon btn-pure info"><i class="ft-edit"></i></a>
+          <a href='{{ url("$route/$content->id/edit?type=$type") }}' class="btn btn-sm btn-icon btn-pure info"><i class="ft-edit"></i></a>
           @if($content->is_delete)
           <a href="{{ url($route . '/' . $content->id) }}" class="btn btn-sm btn-icon btn-pure danger deleteBtn"><i class="ft-trash"></i></a>
           @endif
@@ -30,46 +30,6 @@
       @endforeach
 		</div>
 
-    <div class="table-responsive" style="display: none;">
-      <table id="recent-orders" class="table table-striped table-bordered table-hover table-xl mb-0">
-        <thead>
-          <tr>
-            <th class="">Tanggal Post</th>
-            <th class="">Name</th>
-            <th class="">Category</th>
-            <th class="text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($contents as $content)
-          <tr>
-            <td class="text-truncate">
-              {{ date('d M Y', strtotime($content->created_at)) }}
-            </td>
-            <td class="text-truncate">
-              <div style="display: flex; align-items: center;">
-                <span class="avatar mr-2">
-                  <img class="box-shadow-2" src="{{ $content->thumbnail_url }}" alt="avatar">
-                </span>
-                <span>
-                  <strong>{{ $content->title }}</strong>
-                </span>
-              </div>
-            </td>
-            <td class="text-truncate">
-              {{ $content->category->title }}
-            </td>
-            <td class="text-truncate text-center">
-              <a href='{{ url("$route/$content->id/edit") }}' class="btn btn-sm btn-icon btn-pure info"><i class="ft-edit"></i></a>
-              @if($content->is_delete)
-              <a href="{{ url($route . '/' . $content->id) }}" class="btn btn-sm btn-icon btn-pure danger deleteBtn"><i class="ft-trash"></i></a>
-              @endif
-            </td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
   </div>
 </div>
 

@@ -144,6 +144,7 @@
 		</div>
 	</div>
 
+  <input type="hidden" name="type" value="{{ $type }}">
 </div>
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/css/editors/summernote.css') }}">
@@ -245,7 +246,6 @@ $(document).ready(function () {
     };
     var newOption = new Option(data.text, data.id, true, true);
     $('#fieldTag').append(newOption).trigger('change');
-    console.log(`added : ${data}`)
     @endforeach
   @endif
 

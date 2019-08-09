@@ -126,7 +126,7 @@ class ContentController extends Controller
         return redirect()->back();
       }
 
-      return redirect($this->route . "?type=" . $request->type);
+      return redirect($this->route . "?type=" . $this->params['type']);
     }
 
     /**
@@ -167,6 +167,7 @@ class ContentController extends Controller
       $content = $this->model->where('id', $id)->first();
       $thumbnail = $content->thumbnail;
       $creator_image = $content->creator_image;
+      $slug = str_replace(' ', '-', $validated->title);
 
       try {
         DB::beginTransaction();
@@ -184,10 +185,13 @@ class ContentController extends Controller
 
           $creator_image = $request->file('creator_image')->store('content', 'public');
         }
+        if ($content->is_delete) {
+          $slug .= '-' . rand(10,100);
+        }
 
         $content->update([
           'title' => $validated->title,
-          'slug' => str_replace(' ', '-', $validated->title) . '-' . rand(10,100),
+          'slug' => $slug,
           'description' => $validated->description,
           'thumbnail' => $thumbnail,
           'creator_image' => $creator_image,
@@ -231,7 +235,7 @@ class ContentController extends Controller
         return redirect()->back();
       }
 
-      return redirect($this->route);
+      return redirect($this->route . "?type=" . $this->params['type']);
     }
 
     /**
