@@ -36,7 +36,7 @@
             <div class="card-body">
               <div class="badge badge-success badge-sm float-left">{{ $blogs[1]->category->title }}</div>
               <br>
-              <a href="{{ url('/blog' . $blogs[1]->slug) }}" class="text-dark">
+              <a href="{{ url($route . '/' . $blogs[1]->slug) }}" class="text-dark">
                 <p class="card-title mt-1" style="font-weight: bold;">
                   {{ $blogs[1]->title }}
                 </p>

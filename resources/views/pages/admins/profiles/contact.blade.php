@@ -15,12 +15,29 @@
     </h4>
   </div>
   <div class="card-body">
-    <form class="form" action="{{ url($route) }}" method="post">
+    <form class="form" action="{{ url($route) }}" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       @if($profile)
       <input type="hidden" name="id" value="{{ $profile->id }}">
       @endif
 			<div class="form-body">
+        <div class="form-group">
+          <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+            @if(!empty($profile))
+            <a href="{{ asset('img/profile/' . $profile->logo) }}" itemprop="contentUrl" data-size="480x360">
+              <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ $profile->logo_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
+            </a>
+            @else
+            <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
+            @endif
+          </figure>
+        </div>
+
+        <div class="form-group">
+          <label for="">Logo</label>
+          <input type="file" class="form-control" id="fieldPhoto" name="logo" onchange="previewImage()">
+        </div>
+
 				<div class="form-group">
 					<label for="fieldName">Name</label>
 					<div class="position-relative has-icon-left">
@@ -125,8 +142,24 @@
   </div>
 </div>
 @endsection
+
+@section('css')
+<style type="text/css">
+.img-thumbnail{ width: 30%; }
+</style>
+@endsection
+
 @section('js')
 <script type="text/javascript">
+  function previewImage() {
+    var oFReader = new FileReader();
+     oFReader.readAsDataURL(document.getElementById("fieldPhoto").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+      document.getElementById("fieldPhotoPreview").src = oFREvent.target.result;
+    };
+  };
+
   $(document).ready(function () {
     $("input, textarea").attr("readonly", true)
     $("button[type='submit']").css("display", "none")

@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => '/admin', 'namespace' => 'Admins'], function () {
+Route::group(['prefix' => '/admin', 'namespace' => 'Admins', 'middleware' => 'IsAdminAuthenticated'], function () {
   Route::get('/', function () {
     return view('pages.admins.index');
   });

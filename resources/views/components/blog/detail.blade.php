@@ -23,7 +23,7 @@
         <i class="ft-navigation ml-3"></i>
       </button>
     </div>
-    
+
     <div class="card">
       <div class="card-content">
         <div class="card-body">
@@ -58,7 +58,7 @@
         <div class="card-header">
             <h4 class="text-white"><i class="ft-award white mt-1 mr-1"></i> created by</h4>
         </div>
-        <div class="card-body pt-0" style="display: flex; align-items: center;">
+        <div class="blog-detail__author card-body pt-0">
             <img src="{{ $content->creator_image_url }}" alt="image {{ $content->creator_name }}" class="img-fluid rounded-circle width-50 mr-3">
             <div>
               <h3 class="white">{{ $content->creator_name }}</h3>

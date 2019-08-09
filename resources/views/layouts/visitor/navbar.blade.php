@@ -5,8 +5,8 @@
         <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         <li class="nav-item">
           <a class="navbar-brand" href="index.html">
-            <img class="brand-logo" alt="modern admin logo" src="{{ asset('theme/modern-admin-1.0/app-assets/images/logo/logo.png') }}">
-            <h3 class="brand-text">Modern Admin</h3>
+            <img class="brand-logo" alt="modern admin logo" src="{{ $profile->logo_url }}">
+            <h3 class="brand-text">{{ $profile->title }}</h3>
           </a>
         </li>
       </ul>

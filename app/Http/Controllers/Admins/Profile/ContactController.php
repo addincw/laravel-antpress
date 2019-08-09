@@ -20,13 +20,21 @@ class ContactController extends Controller
   public function store (Request $request)
   {
     try {
+      $profile = Profile::find($request->id);
+      $logo = !empty($profile) ? $profile->logo : null;
+
       $request->session()->flash('status', [
         'code' => 'success',
         'message' => 'Kontak berhasil di perbarui',
       ]);
 
-      if (!empty($request->id)) {
-        Profile::find($request->id)->update([
+
+      if ($request->hasFile('logo')) {
+        $logo = $request->file('logo')->store('profile', 'public');
+      }
+
+      if (!empty($profile)) {
+        $profile->update([
           'title' => $request->name,
           'description' => $request->description,
           'phone' => $request->phone,
@@ -35,7 +43,8 @@ class ContactController extends Controller
           'facebook' => $request->facebook,
           'twitter' => $request->twitter,
           'instagram' => $request->instagram,
-          'youtube' => $request->youtube
+          'youtube' => $request->youtube,
+          'logo' => $logo,
         ]);
 
         return redirect($this->route);
@@ -50,7 +59,8 @@ class ContactController extends Controller
         'facebook' => $request->facebook,
         'twitter' => $request->twitter,
         'instagram' => $request->instagram,
-        'youtube' => $request->youtube
+        'youtube' => $request->youtube,
+        'logo' => $logo,
       ]);
     } catch (\Exception $e) {
       $request->session()->flash('status', [

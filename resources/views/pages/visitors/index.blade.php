@@ -22,13 +22,13 @@
           <div class="card-body">
             <div class="card-text">
               <p>
-                {!! html_entity_decode(str_limit(strip_tags($aboutUs->description), 500)) !!}
+                {!! html_entity_decode(str_limit(strip_tags($aboutUs->description), 640)) !!}
                 @if (strlen(strip_tags($aboutUs->description)) > 500)
                 ...
                 @endif
               </p>
             </div>
-            <a href="{{ url('/profile/sejarah') }}" class="btn btn-primary btn-min-width box-shadow-1 mt-3 mb-1">Read More</a>
+            <a href="{{ url('/profile/sejarah') }}" class="btn btn-primary btn-min-width box-shadow-1 mt-3 mb-2">Read More</a>
           </div>
         </div>
         <div class="card-footer">
@@ -104,7 +104,7 @@
       <div class="card-body pt-3">
         <div class="row">
           <div class="col-5 registration__thumbnail">
-            <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/elements/01.png') }}" alt="element 01" width="190">
+            <img src="{{ asset('img/registration-online.jpg') }}" alt="registration-online">
           </div>
           <div class="col-md-7 registration__desc">
             <h2 class="card-title mt-2 text-white">Daftar Online</h2>

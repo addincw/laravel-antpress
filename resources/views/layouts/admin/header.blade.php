@@ -5,8 +5,10 @@
         <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         <li class="nav-item mr-auto">
           <a class="navbar-brand" href="index.html">
-            <img class="brand-logo" alt="modern admin logo" src="{{ asset('theme/modern-admin-1.0/app-assets/images/logo/logo.png') }}">
-            <h3 class="brand-text">Modern Admin</h3>
+            <!-- <img class="brand-logo" alt="modern admin logo" src="{{ request()->profile->logo_url }}"> -->
+            <h3 class="brand-text" data-tooltip="{{ request()->profile->title }}">
+              {!! html_entity_decode(str_limit(strip_tags(request()->profile->title), 15)) !!}
+            </h3>
           </a>
         </li>
         <li class="nav-item d-none d-md-block float-right"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i></a></li>
@@ -23,13 +25,13 @@
           <li class="dropdown dropdown-user nav-item">
             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
               <span class="mr-1">Hello,
-                <span class="user-name text-bold-700">John Doe</span>
+                <span class="user-name text-bold-700">Administrator</span>
               </span>
               <span class="avatar avatar-online">
-                <img src="{{ asset('theme/modern-admin-1.0/app-assets/images/portrait/small/avatar-s-19.png') }}" alt="avatar"><i></i></span>
+                <img src="{{ asset('img/no-image.png') }}" alt="avatar"><i></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+              <a class="dropdown-item" href="{{ url('admin/profile/kontak') }}"><i class="ft-user"></i> Edit Profile / Kontak</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
             </div>

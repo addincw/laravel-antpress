@@ -7,9 +7,7 @@
   <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
   <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
   <meta name="author" content="PIXINVENT">
-  <title>Fixed Navigation - Modern Admin - Clean Bootstrap 4 Dashboard HTML Template + Bitcoin
-    Dashboard
-  </title>
+  <title>Admin | {{ request()->profile->title }}</title>
   <link rel="apple-touch-icon" href="{{ asset('theme/modern-admin-1.0/app-assets/images/ico/apple-icon-120.png') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('theme/modern-admin-1.0/app-assets/images/ico/favicon.ico') }}">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
@@ -94,7 +92,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   let status = "{{ session()->exists('status') }}"
   if (status || status === 'true') { $("#alert-notification").focus() }
 
-  $("button[type='submit']").one("click", function (e) {
+  $("button[type='submit']").on("click", function (e) {
     e.preventDefault();
 
     $(this).html(`<span class="ft-loader spinner spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)

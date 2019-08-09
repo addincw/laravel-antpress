@@ -33,6 +33,13 @@ $small-screen: "screen and (max-width : 425px)";
       .card{ border-radius: 0px; }
     }
 
+    &__thumbnail{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{ margin-top: -25px; }
+    }
+
     .card{
       overflow: hidden;
       height: 250px;
@@ -81,6 +88,12 @@ $small-screen: "screen and (max-width : 425px)";
 
     &-detail{
       &__thumbnail{ @extend %card-thumbnail }
+      &__author{
+        display: flex;
+        align-items: center;
+
+        img{ border: 3px solid white; }
+      }
     }
 
     &-list {
