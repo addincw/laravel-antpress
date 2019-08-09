@@ -92,7 +92,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   let status = "{{ session()->exists('status') }}"
   if (status || status === 'true') { $("#alert-notification").focus() }
 
-  $("button[type='submit']").on("click", function (e) {
+  $("button[type='submit']").once("click", function (e) {
     e.preventDefault();
 
     $(this).html(`<span class="ft-loader spinner spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)
