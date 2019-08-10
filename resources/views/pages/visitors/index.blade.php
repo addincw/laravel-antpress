@@ -104,7 +104,7 @@
       <div class="card-body pt-3">
         <div class="row">
           <div class="col-5 registration__thumbnail">
-            <img src="{{ asset('img/registration-online.jpg') }}" alt="registration-online">
+            <img src="{{ asset('img/registration-online.png') }}" alt="registration-online">
           </div>
           <div class="col-md-7 registration__desc">
             <h2 class="card-title mt-2 text-white">Daftar Online</h2>

@@ -8,8 +8,7 @@
   <meta name="keywords" content="{{ str_replace(" ", "-", $profile->title) }}">
   <meta name="author" content="{{ $profile->title }}">
   <title>{{ $profile->title }} </title>
-  <link rel="apple-touch-icon" href="{{ asset('theme/modern-admin-1.0/app-assets/images/ico/apple-icon-120.png') }}">
-  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('theme/modern-admin-1.0/app-assets/images/ico/favicon.ico') }}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ $profile->logo_url }}">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
   rel="stylesheet">
   <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"

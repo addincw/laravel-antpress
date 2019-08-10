@@ -9,6 +9,14 @@
   margin-right: 2.2rem;
 }
 
+.visitor .header-navbar .navbar-header .navbar-brand {
+  padding: 0px 0px 17px;
+}
+
+.visitor .header-navbar .navbar-header .navbar-brand .brand-logo {
+  width: 100%;
+}
+
 .visitor .banner {
   height: 500px;
   margin-bottom: 2.2rem;

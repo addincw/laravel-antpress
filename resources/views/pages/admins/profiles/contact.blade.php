@@ -22,9 +22,10 @@
       @endif
 			<div class="form-body">
         <div class="form-group">
+          <label for="">Logo</label>
           <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
             @if(!empty($profile))
-            <a href="{{ asset('img/profile/' . $profile->logo) }}" itemprop="contentUrl" data-size="480x360">
+            <a href="{{ asset('img/profile/' . $profile->logo) }}" itemprop="contentUrl">
               <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ $profile->logo_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
             </a>
             @else
@@ -34,8 +35,24 @@
         </div>
 
         <div class="form-group">
-          <label for="">Logo</label>
           <input type="file" class="form-control" id="fieldPhoto" name="logo" onchange="previewImage()">
+        </div>
+
+        <div class="form-group">
+          <label for="">Logo Full</label>
+          <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+            @if(!empty($profile))
+            <a href="{{ asset('img/profile/' . $profile->logo_full) }}" itemprop="contentUrl">
+              <img id="fieldPhotoPreviewFull" class="img-thumbnail img-fluid" src="{{ $profile->logo_full_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
+            </a>
+            @else
+            <img id="fieldPhotoPreviewFull" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
+            @endif
+          </figure>
+        </div>
+
+        <div class="form-group">
+          <input type="file" class="form-control" id="fieldPhotoFull" name="logo_full" onchange="previewImageFull()">
         </div>
 
 				<div class="form-group">
@@ -157,6 +174,14 @@
 
     oFReader.onload = function(oFREvent) {
       document.getElementById("fieldPhotoPreview").src = oFREvent.target.result;
+    };
+  };
+  function previewImageFull() {
+    var oFReader = new FileReader();
+     oFReader.readAsDataURL(document.getElementById("fieldPhotoFull").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+      document.getElementById("fieldPhotoPreviewFull").src = oFREvent.target.result;
     };
   };
 

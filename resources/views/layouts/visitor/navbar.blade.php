@@ -5,8 +5,7 @@
         <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         <li class="nav-item">
           <a class="navbar-brand" href="index.html">
-            <img class="brand-logo" alt="modern admin logo" src="{{ $profile->logo_url }}">
-            <h3 class="brand-text">{{ $profile->title }}</h3>
+            <img class="brand-logo" alt="modern admin logo" src="{{ $profile->logo_full_url }}">
           </a>
         </li>
       </ul>
@@ -16,17 +15,17 @@
         <ul class="nav navbar-nav mr-auto float-left"> </ul>
         <ul class="nav navbar-nav float-right">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ $profile->facebook | '#' }}">
               <i class="ficon ft-facebook"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ $profile->twitter | '#' }}">
               <i class="ficon ft-twitter"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ $profile->instagram | '#' }}">
               <i class="ficon ft-instagram"></i>
             </a>
           </li>

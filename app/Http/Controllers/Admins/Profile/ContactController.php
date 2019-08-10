@@ -22,6 +22,7 @@ class ContactController extends Controller
     try {
       $profile = Profile::find($request->id);
       $logo = !empty($profile) ? $profile->logo : null;
+      $logoFull = !empty($profile) ? $profile->logo_full : null;
 
       $request->session()->flash('status', [
         'code' => 'success',
@@ -31,6 +32,9 @@ class ContactController extends Controller
 
       if ($request->hasFile('logo')) {
         $logo = $request->file('logo')->store('profile', 'public');
+      }
+      if ($request->hasFile('logo_full')) {
+        $logoFull = $request->file('logo_full')->store('profile', 'public');
       }
 
       if (!empty($profile)) {
@@ -45,6 +49,7 @@ class ContactController extends Controller
           'instagram' => $request->instagram,
           'youtube' => $request->youtube,
           'logo' => $logo,
+          'logo_full' => $logoFull,
         ]);
 
         return redirect($this->route);
@@ -61,6 +66,7 @@ class ContactController extends Controller
         'instagram' => $request->instagram,
         'youtube' => $request->youtube,
         'logo' => $logo,
+        'logo_full' => $logoFull,
       ]);
     } catch (\Exception $e) {
       $request->session()->flash('status', [

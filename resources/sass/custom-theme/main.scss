@@ -7,6 +7,10 @@ $small-screen: "screen and (max-width : 425px)";
 .visitor{
   .wrapper{ margin-left: 2.2rem; margin-right: 2.2rem; }
 
+  .header-navbar .navbar-header .navbar-brand{ padding: 0px 0px 17px; }
+
+  .header-navbar .navbar-header .navbar-brand .brand-logo{ width: 100%; }
+
   .banner{
     height:500px;
     margin-bottom: 2.2rem;
