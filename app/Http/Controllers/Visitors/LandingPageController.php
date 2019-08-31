@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Visitors\MainController;
 
 use App\Models\Testimoni;
+use App\Models\Faq;
 use App\Models\Contents\Content;
 use App\Models\Contents\ContentFile;
 use App\Models\Clinics\Clinic;
@@ -36,10 +37,6 @@ class LandingPageController extends MainController
     // content: tentang kami
     $this->params['aboutUs'] = Content::where('slug', 'sejarah')->first();
 
-    // count
-    $this->params['countClinic'] = Clinic::all()->count();
-    $this->params['countDoctor'] = $doctors->get()->count();
-
     // content: type blog
     $this->params['blogs'] = Content::where('is_published', true)
                              ->where('type', 'blog')
@@ -47,8 +44,17 @@ class LandingPageController extends MainController
                              ->limit(3)
                              ->get();
 
+    // contentFIle: type video
+    $this->params['video'] = ContentFile::where('file_type', 'video')
+                             ->where('is_highlight', true)
+                             ->first();
+
     // doctors
     $this->params['doctors'] = $doctors->limit(4)->get();
+    
+    // faqs
+    $this->params['faqs'] = Faq::limit(4)->get();
+
 
     return view($this->routeView . '.index', $this->params);
   }

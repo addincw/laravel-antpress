@@ -22,8 +22,14 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins', 'middleware' => 'Is
     Route::resource('/konten', 'ContentController');
     Route::resource('/kategori', 'CategoryController');
 
-    Route::get('/galeri/create-single', 'GalleryController@createSingle');
-    Route::post('/galeri/create-single', 'GalleryController@storeSingle');
+    Route::get('/galeri/single', 'GalleryController@createSingle');
+    Route::post('/galeri/single', 'GalleryController@storeSingle');
+
+    Route::get('/galeri/video', 'GalleryController@createVideo');
+    Route::post('/galeri/video', 'GalleryController@storeVideo');
+    Route::get('/galeri/video/{id}/edit', 'GalleryController@editVideo');
+    Route::put('/galeri/video/{id}', 'GalleryController@updateVideo');
+
     Route::resource('/galeri', 'GalleryController');
   });
 
@@ -32,12 +38,15 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins', 'middleware' => 'Is
     Route::post('/kontak', 'ContactController@store');
 
     Route::resource('/testimoni', 'TestimoniController');
+
+    Route::resource('/faq', 'FaqController');
   });
 });
 
 Route::group(['namespace' => 'Visitors'], function () {
   Route::get('/', 'LandingPageController@index');
   Route::get('/profile/{slug}', 'ProfileController@show');
+  Route::get('/faq/{id}', 'FaqController@show');
 
   Route::group(['prefix' => '/layanan'], function () {
     Route::get('/', 'ClinicController@index');

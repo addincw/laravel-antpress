@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admins\Content;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contents\StoreContentFile;
 use App\Models\Contents\Content;
@@ -98,6 +99,19 @@ class GalleryController extends Controller
     {
       $this->params['contents'] = $this->modelContent->get();
       return view($this->routeView . '.create-single', $this->params);
+    }
+
+    public function createVideo()
+    {
+      $this->params['contents'] = $this->modelContent->get();
+      return view($this->routeView . '.create-video', $this->params);
+    }
+
+    public function editVideo($id)
+    {
+      $this->params['contents'] = $this->modelContent->get();
+      $this->params['gallery'] = $this->model->find($id);
+      return view($this->routeView . '.create-video', $this->params);
     }
 
     /**
@@ -197,6 +211,86 @@ class GalleryController extends Controller
       return redirect($this->route);
     }
 
+    public function storeVideo(Request $request)
+    {
+      $fileType = 'video';
+
+      $validator = Validator::make($request->all(), [
+          'title' => 'required',
+          'file' => 'required',
+          'content_id' => 'required',
+      ]);
+
+      if ($validator->fails()) {
+          return redirect()->back()->withErrors($validator);
+      }
+
+      try {
+        DB::beginTransaction();
+
+        $this->model->create([
+          'title' => $request->title,
+          'file' => $request->file,
+          'file_type' => $fileType,
+          'is_highlight' => $request->is_highlight === 'on' ? 1 : 0,
+          'content_id' => $request->content_id,
+        ]);
+
+        DB::commit();
+        $request->session()->flash('status', [
+          'code' => 'success',
+          'message' => 'galeri berhasil di simpan',
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+
+        $request->session()->flash('status', [
+          'code' => 'danger',
+          'message' => 'gagal menyimpan galeri : ' . $e->getMessage(),
+        ]);
+
+        return redirect()->back();
+      }
+
+      return redirect($this->route . '?type=video');
+    }
+
+    public function updateVideo($id, Request $request)
+    {
+      $fileType = 'video';
+
+      try {
+        $gallery = $this->model->where('id', $id)->first();
+
+        DB::beginTransaction();
+
+        $gallery->update([
+          'title' => $request->title,
+          'file' => $request->file,
+          'file_type' => $fileType,
+          'is_highlight' => $request->is_highlight === 'on' ? 1 : 0,
+          'content_id' => $request->content_id,
+        ]);
+
+        DB::commit();
+        $request->session()->flash('status', [
+          'code' => 'success',
+          'message' => 'galeri berhasil di update',
+        ]);
+      } catch (\Exception $e) {
+        DB::rollback();
+
+        $request->session()->flash('status', [
+          'code' => 'danger',
+          'message' => 'gagal mengupdate galeri : ' . $e->getMessage(),
+        ]);
+
+        return redirect()->back();
+      }
+
+      return redirect($this->route . '?type=video');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -286,37 +380,30 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-      $content = $this->model->find($id);
-      $name = $content->title;
-
-      if (!$content->is_delete) {
-        session()->flash('status', [
-          'code' => 'danger',
-          'message' => 'menghapus data tidak diizinkan',
-        ]);
-
-        return redirect()->back();
-      }
+      $gallery = $this->model->find($id);
+      $name = $gallery->title;
+      $type = $gallery->type;
 
       try {
-        \Storage::disk('public')->delete($content->thumbnail);
-        \Storage::disk('public')->delete($content->creator_image);
-        if ($content->tags()) { $content->tags()->delete(); }
-        $content->delete();
+        if($type !== 'video' && !empty($gallery->file)) {
+          \Storage::disk('public')->delete($gallery->file);
+        }
+
+        $gallery->delete();
 
         session()->flash('status', [
           'code' => 'success',
-          'message' => 'Konten dari '.$name.' berhasil di hapus',
+          'message' => 'gallery dari '.$name.' berhasil di hapus',
         ]);
       } catch (\Exception $e) {
         session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menghapus konten '.$name.' : ' . $e->getMessage(),
+          'message' => 'gagal menghapus gallery '.$name.' : ' . $e->getMessage(),
         ]);
 
         return redirect()->back();
       }
 
-      return redirect($this->route);
+      return redirect($this->route . '?type=' . $type);
     }
 }

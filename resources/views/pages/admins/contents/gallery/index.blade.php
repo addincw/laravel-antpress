@@ -10,7 +10,8 @@
         <button type="button" class="btn btn-primary btn-min-width dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ft-plus"></i> Tambah Galeri</button>
           <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(103px, 41px, 0px);">
               <a class="dropdown-item" href="{{ url($route . '/create') }}"><i class="ft-copy"></i> Banyak Galeri </a>
-              <a class="dropdown-item" href="{{ url($route . '/create-single') }}"><i class="ft-square"></i> Single Galeri </a>
+              <a class="dropdown-item" href="{{ url($route . '/single') }}"><i class="ft-square"></i> Single Galeri </a>
+              <a class="dropdown-item" href="{{ url($route . '/video') }}"><i class="ft-video"></i> Video </a>
           </div>
       </div>
 
@@ -50,21 +51,46 @@
         <div class="card-deck-wrapper">
           <div class="card-deck mb-3">
             @foreach($chunkGaleries as $gallery)
-            <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject" style="height: 200px; overflow: hidden;">
-              <a href="{{ asset('storage/' . $gallery->file) }}" itemprop="contentUrl" data-size="480x360">
-                <img id="{{ $gallery->id }}" class="gallery-thumbnail card-img-top" src="{{ asset('storage/' . $gallery->file) }}"
-                itemprop="thumbnail" height="100%" />
-              </a>
-              @if(empty($gallery->title))
-              <div class="card-body px-0">
-                <p>
-                  <span class="text-bold-600">{{ $gallery->title }}</span>
-                </p>
-                <p class="card-text">{{ $gallery->description }}</p>
+
+              @if($gallery->file_type === 'video')
+              <div class="card" style="border: 1px solid rgba(62, 57, 107, 0.19) !important;">
+                <div class="card-content">
+                  <div class="card-header">
+                    <h4 class="card-title">{{ $gallery->title }}</h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                      <ul class="list-inline mb-0">
+                        <li>
+                          <a class="video__button--edit info" data-id="{{ $gallery->id }}"><i class="ft-edit"></i></a>
+                        </li>
+                        <li>
+                          <a class="deleteBtn danger" href="{{ url($route . '/' . $gallery->id) }}"><i class="ft-trash"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="embed-responsive embed-responsive-item embed-responsive-16by9">
+                    <iframe class="img-thumbnail" src="{{ $gallery->file }}"  allowfullscreen=""> </iframe>
+                  </div>
+                </div>
               </div>
+              @else
+              <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
+              itemscope itemtype="http://schema.org/ImageObject" style="height: 200px; overflow: hidden;">
+                <a href="{{ asset('storage/' . $gallery->file) }}" itemprop="contentUrl" data-size="480x360">
+                  <img id="{{ $gallery->id }}" class="gallery-thumbnail card-img-top" src="{{ asset('storage/' . $gallery->file) }}"
+                  itemprop="thumbnail" height="100%" />
+                </a>
+                @if(empty($gallery->title))
+                <div class="card-body px-0">
+                  <p>
+                    <span class="text-bold-600">{{ $gallery->title }}</span>
+                  </p>
+                  <p class="card-text">{{ $gallery->description }}</p>
+                </div>
+                @endif
+              </figure>
               @endif
-            </figure>
             @endforeach
           </div>
         </div>
@@ -92,6 +118,7 @@
               <!--  Controls are self-explanatory. Order can be changed. -->
               <div class="pswp__counter"></div>
               <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+              <button class="pswp__button pswp__button--delete" title="Delete"> <i class="ft-trash text-white"></i> </button>
               <button class="pswp__button pswp__button--edit" title="Edit"> <i class="ft-edit text-white"></i> </button>
               <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
               <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
@@ -147,7 +174,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/pages/gallery.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/css/extensions/sweetalert.css') }}">
 <style type="text/css">
-.pswp__button--edit{ background: none !important; }
+.pswp__button--edit, .pswp__button--delete{ background: none !important; }
 </style>
 @endsection
 
@@ -159,9 +186,10 @@ type="text/javascript"></script>
 type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
+var baseUrl = "{{ url('/') }}";
+var currentUrl = "{{ url($route) }}";
+
 $(document).ready(function () {
-  var baseUrl = "{{ url('/') }}";
-  var currentUrl = "{{ url($route) }}";
 
   initPhotoSwipeFromDOM('.my-gallery');
 
@@ -193,11 +221,11 @@ $(document).ready(function () {
     window.location.href = `${currentUrl}?${$.param(query)}`
   })
 
-  $(".pswp__button--edit").on('click', function () {
-    window.location.href = `${currentUrl}/${$(this).data('id')}/edit`
+  $(".pswp__button--edit, .video__button--edit").on('click', function () {
+    window.location.href = `${currentUrl}/video/${$(this).data('id')}/edit`
   })
 
-  $('.deleteBtn').on('click', function(){
+  $('.deleteBtn, .pswp__button--delete').on('click', function(){
     swal({
             title: "Yakin menghapus data?",
             text: "Data yang sudah dihapus, tidak dapat dikembalikan!",
@@ -222,7 +250,7 @@ $(document).ready(function () {
         })
         .then((isConfirm) => {
             if (isConfirm) {
-              let deleteLink = $(this).attr("href")
+              let deleteLink = $(this).attr("href") 
               $("form.form-delete").attr("action", deleteLink)
               $("form.form-delete").submit();
             }
@@ -300,6 +328,8 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         //for edit form by content_file_id
         $(".pswp__button--edit").data('id', eTarget.id)
+        //for delete form by content_file_id
+        $(".pswp__button--delete").attr('href', `${currentUrl}/${eTarget.id}`)
 
         // find root element of slide
         var clickedListItem = closest(eTarget, function(el) {

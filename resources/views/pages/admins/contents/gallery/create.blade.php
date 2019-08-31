@@ -61,7 +61,7 @@ Dropzone.options.formDropzone = { // The camelized version of the ID of the form
   maxFiles: 100,
   addRemoveLinks: true,
   dictRemoveFile: " Hapus",
-  acceptedFiles: "image/*, video/*",
+  acceptedFiles: "image/*",
   // The setting up of the dropzone
   init: function () {
     const myDropzone = this

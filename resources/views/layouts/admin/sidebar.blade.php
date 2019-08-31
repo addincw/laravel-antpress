@@ -57,6 +57,12 @@
         </a>
       </li>
       <li class=" nav-item">
+        <a href="{{ url('admin/profile/faq') }}">
+          <i class="ft-help-circle"></i>
+          <span class="menu-title">FAQ</span>
+        </a>
+      </li>
+      <li class=" nav-item">
         <a href="{{ url('admin/profile/kontak') }}">
           <i class="ft-phone"></i>
           <span class="menu-title">Kontak</span>

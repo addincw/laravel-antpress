@@ -84,7 +84,7 @@
   }
 
   .visitor .registration .card-body {
-    padding-top: 0px;
+    padding-top: 1rem !important;
   }
 }
 
@@ -207,6 +207,21 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.video {
+  margin-bottom: 30px;
+}
+
+.video__content {
+  width: 100%;
+  height: 600px;
+}
+
+@media screen and (max-width: 425px) {
+  .video__content {
+    height: 300px;
+  }
 }
 
 .testimoni {
@@ -428,5 +443,12 @@
 
 .footer-kwtix .footer .inform p {
   margin-left: 10px;
+}
+
+@media screen and (max-width: 425px) {
+  .footer-kwtix .footer {
+    margin-bottom: 3rem;
+    text-align: left !important;
+  }
 }
 

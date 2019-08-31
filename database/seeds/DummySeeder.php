@@ -69,8 +69,8 @@ class DummySeeder extends Seeder
 
       //primary content
       foreach ($this->primaryContents as $primaryContent) {
-        $file = $faker->image('public/storage/content', 640, 480, null, true);
-        $file = str_replace('public/storage/content\\', '/content/', $file);
+        $file = $faker->image('storage/app/public/content', 640, 480, null, true);
+        $file = str_replace('storage/app/public/content\\', '/content/', $file);
 
         Content::where('slug', $primaryContent)->update([
           'description' => $faker->randomHtml(2,3),

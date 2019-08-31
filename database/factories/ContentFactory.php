@@ -3,10 +3,10 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\Contents\Content::class, function (Faker $faker) {
-    $file = $faker->image('public/storage/content', 640, 480, null, true);
-    $file = str_replace('public/storage/content\\', '/content/', $file);
-    $fileCreator = $faker->image('public/storage/content', 480, 480, null, true);
-    $fileCreator = str_replace('public/storage/content\\', '/content/', $fileCreator);
+    $file = $faker->image('storage/app/public/content', 640, 480, null, true);
+    $file = str_replace('storage/app/public/content\\', '/content/', $file);
+    $fileCreator = $faker->image('storage/app/public/content', 480, 480, null, true);
+    $fileCreator = str_replace('storage/app/public/content\\', '/content/', $fileCreator);
 
     $category = App\Models\Contents\ContentCategory::inRandomOrder()
                 ->limit(10)
