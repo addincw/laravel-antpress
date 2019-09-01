@@ -17,12 +17,13 @@
                 <select id="fieldContent" class="form-control" name="content_id">
                   <option value="">pilih konten</option>
                   @foreach($contents as $content)
-                  <option
-                  value="{{ $content->id }}"
-                  @if(!empty($gallery) && $content->id === $gallery->content_id)
-                  selected
-                  @endif
-                  >{{ $content->title }}</option>
+                  <?php
+                      $isEdit = !empty($gallery) && $content->id == $gallery->content_id;
+                      $isAutoSelected = !empty($selectedContentId) && $content->id == $selectedContentId;
+                  ?>
+                  <option value="{{ $content->id }}" @if( $isEdit || $isAutoSelected ) selected @endif>
+                      {{ $content->title }}
+                  </option>
                   @endforeach
                 </select>
               </div>

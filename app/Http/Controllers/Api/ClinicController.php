@@ -1,59 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Api\Contents;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Contents\Content;
+use App\Models\Clinics\Clinic;
 
-class ContentController extends Controller
+class ClinicController extends Controller
 {
     private $response = [
       'message' => '',
       'data' => null
     ];
 
-    public function __construct ()
+    public function __construct () 
     {
-      $this->model = new Content();
-    }
+        $this->model = new Clinic();
+    } 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAll(Request $request)
+    public function index()
     {
-      $contents = $this->model;
-      $where = "1=1";
-      $response = [];
-
-      if ($request->searchKey) {
-        $where .= " and title like '%{$request->searchKey}%'";
-      }
-
-      try {
-        $results = $contents->whereRaw($where)
-                   ->get()
-                   ->makeHidden(['created_at', 'updated_at']);
-
-        $response['results'] = $results;
-      } catch (\Exception $e) {
-        return response(['message' => $e->getMessage()], 500);
-      }
-
-      return response()->json($response, 200);
-    }
-
-    public function index (Request $request)
-    {
-      $contents = Content::where('type', 'blog')
-                                ->where('is_published', true)
-                                ->paginate(10);
-
-      $response = array_merge($this->response, $contents->toArray());
-      return response()->json($response, 200);
+        $clinics = $this->model->paginate(10);
+        $response = array_merge($this->response, $clinics->toArray());
+        return response()->json($response, 200);
     }
 
     /**
@@ -75,19 +49,17 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-      $where = "slug = '{$id}' or id = '{$id}'";
-
       try {
-        $content = Content::whereRaw($where)->with(['files:id,content_id,title,description,file,file_type'])->first();
+        $clinic = $this->model->find($id);
 
-        if (!$content) {
+        if (!$clinic) {
           $this->response['message'] = 'data tidak ditemukan';
           return response()->json($this->response, 404);
         }
 
-        $this->response['data'] = $content;
+        $this->response['data'] = $clinic;
       } catch (\Exception $e) {
-        $this->response['message'] = 'terjadi kesalahan server' . $e->getMessage();
+        $this->response['message'] = 'terjadi kesalahan server';
         return response()->json($this->response, 500);
       }
 

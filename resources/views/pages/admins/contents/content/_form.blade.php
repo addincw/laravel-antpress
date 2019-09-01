@@ -101,6 +101,34 @@
   						</div>
   					</div>
   				</div>
+
+          @if(!empty($content))
+          <div class="card-content">
+            <div class="card-body">
+              <?php 
+              $displayCountFiles = 'none';
+              $countFoto = 0;
+              $countVideo = 0;
+
+              if($content->files->count() > 0){
+                $displayCountFiles = 'block';
+                $countFoto = $content->files()->where('file_type', 'like', 'image%')->count();
+                $countVideo = $content->files()->where('file_type', 'like', 'video%')->count();
+              }
+              ?>
+              <p style="display: {{ $displayCountFiles }}"><strong>{{ $countFoto }} foto, {{ $countVideo }} video.</strong></p>
+              <div class="btn-group" style="width:100%">
+                <button type="button" style="width:100%" class="btn btn-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ft-paperclip mr-1"></i> Tambah Galeri</button>
+                <div class="dropdown-menu" x-placement="bottom-start" style="width: 100%; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(103px, 41px, 0px);">
+                    <a class="dropdown-item" target="_blank" href="{{ url('admin/konten/galeri/create?content_id=' . $content->id) }}"><i class="ft-copy"></i> Banyak Galeri </a>
+                    <a class="dropdown-item" target="_blank" href="{{ url('admin/konten/galeri/single?content_id=' . $content->id) }}"><i class="ft-square"></i> Single Galeri </a>
+                    <a class="dropdown-item" target="_blank" href="{{ url('admin/konten/galeri/video?content_id=' . $content->id) }}"><i class="ft-video"></i> Video </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          @endif
+
           <div class="card-content">
             <div class="card-body">
               <div class="float-right">
@@ -115,7 +143,8 @@
 		</div>
 
 		<div class="col-md-9">
-      <div class="card" style="min-height: 330px;">
+      <?php $minHeight = (!empty($content)) ? ($content->files->count() > 0) ? '442px' : '410px' : '330px'; ?>
+      <div class="card" style="min-height:  {{ $minHeight }};">
         <div class="card-header">
           <div class="pull-right">
             @if(!empty($content))

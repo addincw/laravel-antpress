@@ -25,7 +25,6 @@ class DummySeeder extends Seeder
     {
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
       ClinicDoctor::truncate();
-      Profile::truncate();
       Doctor::truncate();
       Clinic::truncate();
 
@@ -61,7 +60,6 @@ class DummySeeder extends Seeder
       factory(Content::class, 10)->create();
       factory(ContentFile::class, 20)->create();
       factory(Testimoni::class, 4)->create();
-      factory(Profile::class)->create();
       factory(Clinic::class, 8)->create();
       factory(Doctor::class, 20)->create()->each(function ($doctor) {
           $doctor->clinics()->save(factory(ClinicDoctor::class)->make());

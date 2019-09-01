@@ -21,10 +21,13 @@ class DatabaseSeeder extends Seeder
       $faker = FakerFactory::create();
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
+      Profile::truncate();
       ContentFile::truncate();
       Content::truncate();
       ContentCategory::truncate();
 
+      factory(Profile::class)->create();
+      
       ContentCategory::insert([
         [
           'title' => 'pelayanan & penunjang',

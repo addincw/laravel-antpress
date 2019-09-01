@@ -14,7 +14,11 @@
         <select id="fieldContent" class="form-control">
           <option value="">pilih konten</option>
           @foreach($contents as $content)
-          <option value="{{ $content->id }}">{{ $content->title }}</option>
+          <option 
+            value="{{ $content->id }}"
+            @if(!empty($selectedContentId) && ($selectedContentId == $content->id))
+            selected
+            @endif> {{ $content->title }}</option>
           @endforeach
         </select>
         <p class="block-tag text-left" style="display: none;">
@@ -46,6 +50,10 @@
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/extensions/dropzone.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+    @if(!empty($selectedContentId))
+      $("input[name='content_id']").val('{{ $selectedContentId }}')
+    @endif
+    
     $("#fieldContent").on('change', function () {
       $("input[name='content_id']").val($(this).val())
       $("#fieldContent").removeClass("border-danger")

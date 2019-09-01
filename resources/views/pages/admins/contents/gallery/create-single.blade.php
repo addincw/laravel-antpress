@@ -4,7 +4,10 @@
 <form class="form" action="{{ url($route . '/single') }}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
 
-  @component('pages.admins.contents.gallery._form', ['contents' => $contents]) @endcomponent
+  @component('pages.admins.contents.gallery._form', [
+    'contents' => $contents,
+    'selectedContentId' => $selectedContentId
+  ]) @endcomponent
 </form>
 @endsection
 

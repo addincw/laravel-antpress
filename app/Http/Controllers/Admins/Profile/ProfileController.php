@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
 
-class ContactController extends Controller
+class ProfileController extends Controller
 {
-  private $route = 'admin/profile/kontak';
+  private $route = 'admin/profile/profile';
 
   public function index ()
   {
     $params['route'] = $this->route;
     $params['profile'] = Profile::first();
-    return view('pages.admins.profiles.contact', $params);
+    return view('pages.admins.profiles.profile', $params);
   }
 
   public function store (Request $request)
@@ -42,6 +42,9 @@ class ContactController extends Controller
           'title' => $request->name,
           'description' => $request->description,
           'phone' => $request->phone,
+          'whatsapp' => $request->whatsapp,
+          'telegram' => $request->telegram,
+          'emergency_call' => $request->emergency_call,
           'address' => $request->address,
           'email' => $request->email,
           'facebook' => $request->facebook,
@@ -59,6 +62,9 @@ class ContactController extends Controller
         'title' => $request->name,
         'description' => $request->description,
         'phone' => $request->phone,
+        'whatsapp' => $request->whatsapp,
+        'telegram' => $request->telegram,
+        'emergency_call' => $request->emergency_call,
         'address' => $request->address,
         'email' => $request->email,
         'facebook' => $request->facebook,

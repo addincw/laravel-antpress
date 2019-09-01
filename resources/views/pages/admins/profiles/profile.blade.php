@@ -86,9 +86,39 @@
 				</div>
 
 				<div class="form-group">
+					<label for="fieldWA">Whatsapp</label>
+					<div class="position-relative has-icon-left">
+						<input type="number" id="fieldWA" class="form-control" placeholder="Whatsapp Perusahaan" name="whatsapp" value="{{ $profile ? $profile->whatsapp : '' }}">
+						<div class="form-control-position">
+							<i class="la-whatsapp"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="fieldTele">Telegram</label>
+					<div class="position-relative has-icon-left">
+						<input type="number" id="fieldTele" class="form-control" placeholder="Telegram Perusahaan" name="telegram" value="{{ $profile ? $profile->telegram : '' }}">
+						<div class="form-control-position">
+							<i class="ft-navigation"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="fieldEmergency">Emergency Call</label>
+					<div class="position-relative has-icon-left">
+						<input type="number" id="fieldEmergency" class="form-control" placeholder="Emergency Call Perusahaan" name="emergency_call" value="{{ $profile ? $profile->emergency_call : '' }}">
+						<div class="form-control-position">
+							<i class="la-ambulance"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
 					<label for="fieldAddress">Address</label>
 					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $profile ? $profile->address : '' }}">
+						<input type="number" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $profile ? $profile->address : '' }}">
 						<div class="form-control-position">
 							<i class="ft-map-pin"></i>
 						</div>

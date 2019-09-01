@@ -64,7 +64,7 @@ ft-info"></i><span>Profile</span></a>
       <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="ft-grid"></i><span>Fasilitas & Layanan</span></a>
         <ul class="dropdown-menu">
           <li class="">
-            <a class="dropdown-item" href="{{ url('/') }}">Fasilitas</a>
+            <a class="dropdown-item" href="{{ url('/profile/fasilitas') }}">Fasilitas</a>
           </li>
           <li class="">
             <a class="dropdown-item" href="{{ url('/layanan') }}">Layanan</a>

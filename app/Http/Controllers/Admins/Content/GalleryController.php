@@ -89,20 +89,23 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+      $this->params['selectedContentId'] = !empty($request->content_id) ? $request->content_id : NULL;
       $this->params['contents'] = $this->modelContent->get();
       return view($this->routeView . '.create', $this->params);
     }
 
-    public function createSingle()
+    public function createSingle(Request $request)
     {
+      $this->params['selectedContentId'] = !empty($request->content_id) ? $request->content_id : NULL;
       $this->params['contents'] = $this->modelContent->get();
       return view($this->routeView . '.create-single', $this->params);
     }
 
-    public function createVideo()
+    public function createVideo(Request $request)
     {
+      $this->params['selectedContentId'] = !empty($request->content_id) ? $request->content_id : NULL;
       $this->params['contents'] = $this->modelContent->get();
       return view($this->routeView . '.create-video', $this->params);
     }

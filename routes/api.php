@@ -13,10 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group(['namespace' => 'Api'], function () {
+    Route::get('/profile', 'ProfileController@index');
+    
+    Route::apiResource('/tag', 'TagController');
+    
+    Route::get('/content/all', 'Contents\ContentController@getAll');
+    Route::apiResource('/content', 'Contents\ContentController');
+    
+    Route::apiResource('/doctor', 'DoctorController');
 
-Route::apiResource('/tag', 'Api\TagController');
-Route::get('/content/all', 'Api\Contents\ContentController@getAll');
-Route::apiResource('/content', 'Api\Contents\ContentController');
+    Route::apiResource('/clinic', 'ClinicController');
+});

@@ -34,8 +34,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins', 'middleware' => 'Is
   });
 
   Route::group(['prefix' => '/profile', 'namespace' => 'Profile'], function () {
-    Route::get('/kontak', 'ContactController@index');
-    Route::post('/kontak', 'ContactController@store');
+    Route::get('/profile', 'ProfileController@index');
+    Route::post('/profile', 'ProfileController@store');
 
     Route::resource('/testimoni', 'TestimoniController');
 

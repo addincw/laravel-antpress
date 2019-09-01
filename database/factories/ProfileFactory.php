@@ -3,13 +3,16 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\Profile::class, function (Faker $faker) {
-    $name = $faker->company;
+    $name = 'inidokterku';
     return [
       'title' => $name,
-      'description' => $faker->sentence($nbWords = 12, $variableNbWords = true),
-      'phone' => $faker->phoneNumber,
-      'address' => "$faker->streetAddress. $faker->city, $faker->state. $faker->postcode.",
-      'email' => $faker->email,
+      'description' => '',
+      'phone' => '',
+      'whatsapp' => '',
+      'telegram' => '',
+      'emergency_call' => '',
+      'address' => '',
+      'email' => $name . '@gmail.com',
       'facebook' => $name . '@facebook',
       'twitter' => $name . '@twitter',
       'instagram' => $name . '@instagram',

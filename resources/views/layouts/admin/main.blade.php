@@ -27,6 +27,7 @@
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/assets/css/style.css') }}">
+  @stack('css')
   @yield('css')
   <!-- END Custom CSS-->
 </head>
@@ -86,6 +87,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/js/scripts/customizer.js') }}" type="text/javascript"></script>
   <!-- END MODERN JS-->
   <!-- BEGIN PAGE LEVEL JS-->
+  @stack('js')
   @yield('js')
   <script type="text/javascript">
   let status = "{{ session()->exists('status') }}"

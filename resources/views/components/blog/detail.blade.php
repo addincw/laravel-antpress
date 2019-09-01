@@ -73,7 +73,9 @@
           <h5 class="card-title">Related Post</h5>
         </div>
         <div class="card-body p-0">
-          @component('components.blog.list', ['noThumbnail' => true, 'blogs' => $blogs, 'route' => $route]) @endcomponent
+          @if(!empty($blogs))
+            @component('components.blog.list', ['noThumbnail' => true, 'blogs' => $blogs, 'route' => $route]) @endcomponent
+          @endif
         </div>
     </div>
 
@@ -110,6 +112,7 @@ aria-hidden="true">
         </button>
       </div>
       <div class="modal-body">
+        <?php $route = !empty($route) ? $route : ''; ?>
         <form class="form" action="{{ url($route . '/' . $content->slug . '/comment') }}" method="post">
           {{ csrf_field() }}
 

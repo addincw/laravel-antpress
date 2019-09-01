@@ -63,7 +63,7 @@
         </a>
       </li>
       <li class=" nav-item">
-        <a href="{{ url('admin/profile/kontak') }}">
+        <a href="{{ url('admin/profile/profile') }}">
           <i class="ft-phone"></i>
           <span class="menu-title">Kontak</span>
         </a>

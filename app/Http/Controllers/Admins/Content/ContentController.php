@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contents\StoreContent;
 use App\Models\Contents\Content;
+use App\Models\Contents\ContentFile;
 use App\Models\Contents\ContentCategory;
 use App\Models\Contents\ContentTag;
 
@@ -16,6 +17,16 @@ class ContentController extends Controller
     private $route = 'admin/konten/konten';
     private $routeView = 'pages.admins.contents.content';
     private $params = [];
+    private $types = [
+      'image' => [
+        'name' => 'Images',
+        'ext' => 'image'
+      ],
+      'video' => [
+        'name' => 'Videos',
+        'ext' => 'video'
+      ],
+    ];
 
     public function __construct (Request $request)
     {
@@ -147,10 +158,26 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $this->params['categories'] = ContentCategory::all();
+        $this->params['types'] = $this->types;
+        $this->params['typeFile'] = 'video';
         $this->params['content'] = $this->model->find($id);
+
+
+        $query = ContentFile::query();
+        $query = $query->where('content_id', $id);
+        
+        if ( empty($request->type_file) ) {
+          $this->params['typeFile'] = 'image';
+          $query = $query->where('file_type', 'like', "image%");
+        }else{
+          $this->params['typeFile'] = $request->type_file;
+          $query = $query->where('file_type', 'like', $request->type_file . "%");
+        }
+        
+        $this->params['galeries'] = $query->paginate(12);
         return view($this->routeView . '.edit', $this->params);
     }
 
