@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['namespace' => 'Api'], function () {
+    Route::get('/banner', 'Contents\GalleryController@getHighlightImage');
+
     Route::get('/profile', 'ProfileController@index');
     
     Route::apiResource('/tag', 'TagController');
