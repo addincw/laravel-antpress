@@ -17,6 +17,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins', 'middleware' => 'Is
 
   Route::resource('/dokter', 'DoctorController');
   Route::resource('/klinik', 'ClinicController');
+  Route::resource('/jadwal-praktik', 'ScheduleController');
+  Route::resource('/ijin-dokter', 'DoctorAbsentController');
 
   Route::group(['prefix' => '/konten', 'namespace' => 'Content'], function () {
     Route::resource('/konten', 'ContentController');
@@ -31,6 +33,12 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admins', 'middleware' => 'Is
     Route::put('/galeri/video/{id}', 'GalleryController@updateVideo');
 
     Route::resource('/galeri', 'GalleryController');
+  });
+
+  Route::group(['prefix' => '/registration', 'namespace' => 'Registration'], function () {
+    Route::resource('/debitur', 'DebiturController');
+    
+    Route::resource('/setting', 'SettingController');
   });
 
   Route::group(['prefix' => '/profile', 'namespace' => 'Profile'], function () {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Clinics\Clinic;
+use App\Models\Clinics\ClinicDoctor;
 
 class ClinicController extends Controller
 {
@@ -58,6 +59,35 @@ class ClinicController extends Controller
         }
 
         $this->response['data'] = $clinic;
+      } catch (\Exception $e) {
+        $this->response['message'] = 'terjadi kesalahan server';
+        return response()->json($this->response, 500);
+      }
+
+      return response()->json($this->response, 200);
+    }
+
+    public function getClinicDoctors($clinicId)
+    {
+      $data = [];
+      try {
+        $clinics = ClinicDoctor::where('clinic_id', $clinicId)
+                  ->with(['doctor:id,name'])
+                  ->get();
+
+        foreach($clinics as $clinic) {
+          $data[] = [
+            'id' => $clinic->id,
+            'text' => $clinic->doctor->name
+          ];
+        }          
+
+        if (count($data) <= 0) {
+          $this->response['message'] = 'data tidak ditemukan';
+          return response()->json($this->response, 404);
+        }
+
+        $this->response['data'] = $data;
       } catch (\Exception $e) {
         $this->response['message'] = 'terjadi kesalahan server';
         return response()->json($this->response, 500);

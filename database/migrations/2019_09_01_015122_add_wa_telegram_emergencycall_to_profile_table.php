@@ -14,9 +14,9 @@ class AddWaTelegramEmergencycallToProfileTable extends Migration
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->integer('whatsapp')->nullable();
-            $table->integer('telegram')->nullable();
-            $table->integer('emergency_call')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('emergency_call')->nullable();
         });
     }
 

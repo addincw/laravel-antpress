@@ -20,6 +20,33 @@
           <span class="menu-title">Klinik</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="{{ url('admin/jadwal-praktik') }}">
+          <i class="ft-watch"></i>
+          <span class="menu-title">Jadwal Praktik</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url('admin/ijin-dokter') }}">
+          <i class="ft-feather"></i>
+          <span class="menu-title">Ijin Dokter</span>
+        </a>
+      </li>
+      <li class=" navigation-header">
+        <span>Setting Registrasi</span>
+      </li>
+      <li class=" nav-item">
+        <a href="{{ url('admin/registration/debitur') }}">
+          <i class="ft-list"></i>
+          <span class="menu-title">Debitur</span>
+        </a>
+      </li>
+      <li class=" nav-item">
+        <a href="{{ url('admin/registration/setting') }}">
+          <i class="ft-settings"></i>
+          <span class="menu-title">Setting</span>
+        </a>
+      </li>
       <li class=" navigation-header">
         <span>Konten</span>
       </li>

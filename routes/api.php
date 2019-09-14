@@ -25,5 +25,6 @@ Route::group(['namespace' => 'Api'], function () {
     
     Route::apiResource('/doctor', 'DoctorController');
 
+    Route::get('/clinic/{clinic_id}/doctors', 'ClinicController@getClinicDoctors');
     Route::apiResource('/clinic', 'ClinicController');
 });

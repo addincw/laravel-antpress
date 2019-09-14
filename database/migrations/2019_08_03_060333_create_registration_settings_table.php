@@ -15,10 +15,10 @@ class CreateRegistrationSettingsTable extends Migration
     {
         Schema::create('registration_settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('hour_start')->nullable();
-            $table->integer('minutes start')->nullable();
-            $table->integer('hour_end')->nullable();
-            $table->integer('minutes_end')->nullable();
+            $table->string('hour_start')->nullable();
+            $table->string('minutes_start')->nullable();
+            $table->string('hour_end')->nullable();
+            $table->string('minutes_end')->nullable();
             $table->boolean('by_clinic')->nullable();
             $table->boolean('by_doctor')->nullable();
             $table->date('start_date')->nullable();
