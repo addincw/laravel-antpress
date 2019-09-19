@@ -28,6 +28,7 @@ class StoreSetting extends FormRequest
           'end_time' => 'required',
           'start_date' => 'required',
           'debitur_id' => 'required',
+          'before_dday' => 'required'
       ];
     }
 }

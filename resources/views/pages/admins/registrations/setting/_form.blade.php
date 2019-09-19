@@ -1,5 +1,24 @@
 <?php $setting = !empty($setting) ? $setting : NUll; ?>
 <div class="form-body">
+  <div class="form-group">
+    <label>Hari Mulai Pendaftaran</label>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <span class="ft-sun"></span>
+        </span>
+      </div>
+      <select class="form-control" name="before_dday" width="100%" data-placeholder="Pilih hari mulai pendaftaran">
+        <option></option>
+        @for($day=1; $day <=30; $day++)
+        <option value="{{ $day }}" @if(!empty($setting) && $setting->before_dday == $day) selected @endif>h - {{ $day }}</option>
+        @endfor
+      </select>
+    </div>
+    <small class="text-muted">Dihitung sebelum hari - h.
+    </small>
+  </div>
+
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">

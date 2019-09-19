@@ -94,7 +94,8 @@ class SettingController extends Controller
           'by_clinic' => $byClinic,
           'by_doctor' => $byDoctor,
           'start_date' => $start_date,
-          'debitur_id' => $validated->debitur_id
+          'debitur_id' => $validated->debitur_id,
+          'before_dday' => $validated->before_dday
         ]);
 
         $request->session()->flash('status', [
@@ -177,7 +178,8 @@ class SettingController extends Controller
           'by_clinic' => $byClinic,
           'by_doctor' => $byDoctor,
           'start_date' => $start_date,
-          'debitur_id' => $validated->debitur_id
+          'debitur_id' => $validated->debitur_id,
+          'before_dday' => $validated->before_dday
         ]);
 
         $request->session()->flash('status', [
