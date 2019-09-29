@@ -19,7 +19,12 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('/profile', 'ProfileController@index');
     
     Route::apiResource('/tag', 'TagController');
+
+    Route::get('/category', 'Contents\ContentController@getCategories');
     
+    Route::get('/content/{id}/related', 'Contents\ContentController@relatedContents');
+    Route::post('/content/{id}/comment', 'Contents\ContentController@storeContentcomment');
+    Route::get('/content/{id}/comment', 'Contents\ContentController@commentsByContentId');
     Route::get('/content/all', 'Contents\ContentController@getAll');
     Route::apiResource('/content', 'Contents\ContentController');
     
