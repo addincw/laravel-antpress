@@ -24,7 +24,7 @@
           <li class="dropdown dropdown-user nav-item">
             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
               <span class="mr-1">Hello,
-                <span class="user-name text-bold-700">Administrator</span>
+                <span class="user-name text-bold-700">{{ Auth::user()->name }}</span>
               </span>
               <span class="avatar avatar-online">
                 <img src="{{ asset('img/no-image.png') }}" alt="avatar"><i></i></span>
@@ -32,7 +32,7 @@
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="{{ url('admin/profile/profile') }}"><i class="ft-user"></i> Edit Profile / Kontak</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
+              <a class="dropdown-item" href="{{ url('admin/logout') }}"><i class="ft-power"></i> Logout</a>
             </div>
           </li>
         </ul>

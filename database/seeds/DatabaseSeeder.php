@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as FakerFactory;
 
+use \App\User;
+
 use \App\Models\Day;
 use \App\Models\Profile;
 use \App\Models\Contents\ContentFile;
@@ -23,6 +25,7 @@ class DatabaseSeeder extends Seeder
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
       Day::truncate();
+      User::truncate();
       Profile::truncate();
       ContentFile::truncate();
       Content::truncate();
@@ -38,6 +41,7 @@ class DatabaseSeeder extends Seeder
         [ 'name' => 'Sabtu']
       ]);
 
+      factory(User::class)->create();
       factory(Profile::class)->create();
       
       ContentCategory::insert([

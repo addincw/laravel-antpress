@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 
 class IsAdminAuthenticated
@@ -14,12 +15,20 @@ class IsAdminAuthenticated
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        $request->merge([
-          'profile' => Profile::first()
-        ]);
+        if (Auth::guard($guard)->check()) {
+          $request->merge([
+            'profile' => Profile::first()
+          ]);
 
-        return $next($request);
+          return $next($request);
+        }
+        
+        $request->session()->flash('status', [
+          'code' => 'danger',
+          'message' => 'anda belum login',
+        ]);
+        return redirect('/admin/login');
     }
 }
