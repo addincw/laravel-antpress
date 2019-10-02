@@ -66,7 +66,7 @@ class ContentController extends Controller
       // filter by category
       if ($request->category !== 'all'){
         $category = ContentCategory::where('slug', urldecode($request->category))->first();
-        $query = $query->where('content_Category_id', $category->id);
+        $query = $query->where('content_category_id', $category->id);
       }
 
       $contents = $query->with(['category:id,title'])
@@ -96,7 +96,7 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-      $where = "slug = '{$id}' or id = '{$id}'";
+      $where = "slug = '{$id}' or id = ".(int) $id."";
 
       try {
         $content = Content::whereRaw($where)->with([
