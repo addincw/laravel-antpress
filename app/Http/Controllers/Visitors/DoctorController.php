@@ -19,10 +19,33 @@ class DoctorController extends MainController
     parent::__construct();
   }
 
-  public function index ()
+  public function index (Request $request)
   {
+    $filter = [];
+    $where = '1=1';
+    $this->params['filterSpecialist'] = '';
+    $this->params['filterName'] = '';
+
+    if($request->submit === 'with_filter') {
+
+      if(!empty($request->doctor_name)) {
+        $filter[] = 'lower(name) like lower("%' . $request->doctor_name . '%")';
+        $this->params['filterName'] = $request->doctor_name;
+      }
+
+      if(!empty($request->doctor_specialist)) {
+        $filter[] = 'lower(specialist) like lower("%' . $request->doctor_specialist . '%")';
+        $this->params['filterSpecialist'] = $request->doctor_specialist;
+      }
+
+      $where = '(' . implode(' and ', $filter) . ')';
+    }
+
     // doctors
-    $this->params['doctors'] = Doctor::query()->where('is_active', true)->get();
+    $this->params['doctors'] = Doctor::query()
+                                  ->where('is_active', true)
+                                  ->whereRaw($where)
+                                  ->get();
 
 
     return view($this->routeView . '.index', $this->params);

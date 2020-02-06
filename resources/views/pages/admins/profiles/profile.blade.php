@@ -88,9 +88,9 @@
 				<div class="form-group">
 					<label for="fieldWA">Whatsapp</label>
 					<div class="position-relative has-icon-left">
-						<input type="number" id="fieldWA" class="form-control" placeholder="Whatsapp Perusahaan" name="whatsapp" value="{{ $profile ? $profile->whatsapp : '' }}">
+						<input type="text" id="fieldWA" class="form-control" placeholder="Whatsapp Perusahaan" name="whatsapp" value="{{ $profile ? $profile->whatsapp : '' }}">
 						<div class="form-control-position">
-							<i class="la-whatsapp"></i>
+							<i class="la la-whatsapp"></i>
 						</div>
 					</div>
 				</div>
@@ -108,9 +108,9 @@
 				<div class="form-group">
 					<label for="fieldEmergency">Emergency Call</label>
 					<div class="position-relative has-icon-left">
-						<input type="number" id="fieldEmergency" class="form-control" placeholder="Emergency Call Perusahaan" name="emergency_call" value="{{ $profile ? $profile->emergency_call : '' }}">
+						<input type="text" id="fieldEmergency" class="form-control" placeholder="Emergency Call Perusahaan" name="emergency_call" value="{{ $profile ? $profile->emergency_call : '' }}">
 						<div class="form-control-position">
-							<i class="la-ambulance"></i>
+							<i class="la la-ambulance"></i>
 						</div>
 					</div>
 				</div>

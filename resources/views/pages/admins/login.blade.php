@@ -11,8 +11,10 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/vendors/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/fonts/feather/style.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/fonts/feather/fonts/feather.ttf') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/fonts/line-awesome/css/line-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/vendors/css/forms/icheck/icheck.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/vendors/css/forms/icheck/custom.css') }}">
     <!-- END: Vendor CSS-->
@@ -76,13 +78,13 @@
                             {{ csrf_field() }}
                             <fieldset class="form-group position-relative has-icon-left mb-0">
                                 <input type="text" class="form-control" id="user-name" name="username" placeholder="Your Username" required="">
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="padding-top: 10px">
                                     <i class="la la-user"></i>
                                 </div>
                             </fieldset>
                             <fieldset class="form-group position-relative has-icon-left">
                                 <input type="password" class="form-control" id="user-password" name="password" placeholder="Enter Password" required="">
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="padding-top: 10px">
                                     <i class="la la-key"></i>
                                 </div>
                             </fieldset>

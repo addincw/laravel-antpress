@@ -44,8 +44,7 @@ role="navigation" data-menu="menu-wrapper">
           <span>Home</span>
         </a>
       </li>
-      <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="
-ft-info"></i><span>Profile</span></a>
+      <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="ft-user"></i><span>Profile</span></a>
         <ul class="dropdown-menu">
           <li class="">
             <a class="dropdown-item" href="{{ url('/profile/sejarah') }}">Sejarah</a>

@@ -38,6 +38,7 @@
         <div class="footer">
           <h3>{{ $profile->title }}</h3>
           <p>{{ $profile->description }}</p>
+
           <div class="inform mt-3">
             <div class="row">
               <div class="col-1">
@@ -48,7 +49,8 @@
                 </div>
               </div>
             </div>
-            <div class="inform">
+
+            <div class="inform mt-1">
               <div class="row">
                 <div class="col-1">
                   <i class='ft-phone'></i>
@@ -58,13 +60,36 @@
                 </div>
               </div>
             </div>
-            <div class="inform">
+
+            <div class="inform mt-1">
               <div class="row">
                 <div class="col-1">
                   <i class='ft-mail'></i>
                 </div>
                 <div class="col">
                   <p>{{ $profile->email }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="inform mt-5">
+              <h3>Social Media</h3>
+
+              <div class="row mt-2">
+                <div class="nav-item">
+                  <a class="nav-link" href="{{ $profile->facebook | '#' }}">
+                    <i class="ficon ft-facebook"></i>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a class="nav-link" href="{{ $profile->twitter | '#' }}">
+                    <i class="ficon ft-twitter"></i>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a class="nav-link" href="{{ $profile->instagram | '#' }}">
+                    <i class="ficon ft-instagram"></i>
+                  </a>
                 </div>
               </div>
             </div>

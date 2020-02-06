@@ -2,10 +2,9 @@
   <div class="main-menu-content">
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
       <li class="nav-item">
-        <a href="index.html">
+        <a href="{{ url('admin') }}">
           <i class="la la-home"></i>
           <span class="menu-title">Dashboard</span>
-          <span class="badge badge badge-info badge-pill float-right mr-2">3</span>
         </a>
       </li>
       <li class="nav-item">
@@ -72,6 +71,15 @@
         <a href="{{ url('admin/konten/galeri') }}">
           <i class="ft-image"></i>
           <span class="menu-title">Galeri</span>
+        </a>
+      </li>
+      <li class=" navigation-header">
+        <span>Kritik dan Saran</span>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url('admin/kritik-saran') }}">
+          <i class="ft-mail"></i>
+          <span class="menu-title">Kritik dan Saran</span>
         </a>
       </li>
       <li class=" navigation-header">

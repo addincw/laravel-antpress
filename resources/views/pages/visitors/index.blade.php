@@ -132,9 +132,45 @@
 @endsection
 
 @section('footer')
-  @component('components.testimoni', [
-    'testimonies' => $testimonies
-  ]) @endcomponent
+  <div class="row wrapper mb-5">
+    <div class="col-md-6">
+      
+      <h3 class="form-section mb-3"><i class="ft-mail"></i> Kritik & Saran</h3>
+
+      <form method="POST" action="{{ url('kritik-saran') }}">
+        @csrf
+
+        <div class="form-group">
+          <label for="userinput5">Email</label>
+          <input class="form-control border-primary" type="email" placeholder="email" name="email">
+        </div>
+
+        <div class="form-group">
+          <label for="userinput5">Name</label>
+          <input class="form-control border-primary" type="name" placeholder="name" name="name">
+        </div>
+
+        <div class="form-group">
+          <label for="userinput8">Kritik & Saran</label>
+          <textarea id="userinput8" rows="5" class="form-control border-primary" name="critic_suggestion" placeholder="Kritik & Saran"></textarea>
+        </div>
+
+        <div class="form-actions text-right">
+          <button type="submit" class="btn btn-primary">
+            <i class="la la-check-square-o"></i> Save
+          </button>
+        </div>
+      </form>
+
+
+    </div>
+
+    <div class="col-md-6">
+        @component('components.testimoni', [
+          'testimonies' => $testimonies
+        ]) @endcomponent
+    </div>
+  </div>
 
   @component('layouts.visitor.footer-complete', [
     'profile' => $profile,

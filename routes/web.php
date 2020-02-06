@@ -48,6 +48,8 @@ Route::group(['prefix' => '/admin'], function () {
       Route::resource('/setting', 'SettingController');
     });
 
+    Route::resource('/kritik-saran', 'CriticSuggestionController');
+
     Route::group(['prefix' => '/profile', 'namespace' => 'Profile'], function () {
       Route::get('/profile', 'ProfileController@index');
       Route::post('/profile', 'ProfileController@store');
@@ -80,5 +82,8 @@ Route::group(['namespace' => 'Visitors'], function () {
     Route::post('/{slug}/comment', 'BlogController@storeComment');
   });
 
+
   Route::get('/galeri', 'GalleryController@index');
 });
+
+Route::post('/kritik-saran', 'Admins\CriticSuggestionController@store');
