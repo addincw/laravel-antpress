@@ -64,6 +64,17 @@
             <div class="inform mt-1">
               <div class="row">
                 <div class="col-1">
+                  <i class='la la-ambulance'></i>
+                </div>
+                <div class="col">
+                  <p>{{ $profile->emergency_call }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="inform mt-1">
+              <div class="row">
+                <div class="col-1">
                   <i class='ft-mail'></i>
                 </div>
                 <div class="col">
@@ -89,6 +100,11 @@
                 <div class="nav-item">
                   <a class="nav-link" href="{{ $profile->instagram | '#' }}">
                     <i class="ficon ft-instagram"></i>
+                  </a>
+                </div>
+                <div class="nav-item">
+                  <a class="nav-link" href="{{ !empty($profile->whatsapp) ? $profile->whatsapp  : '#' }}">
+                    <i class="ficon la la-whatsapp "></i>
                   </a>
                 </div>
               </div>

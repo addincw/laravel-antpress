@@ -76,7 +76,7 @@ Route::group(['namespace' => 'Visitors'], function () {
     Route::get('/{slug}', 'DoctorController@show');
   });
 
-  Route::group(['prefix' => '/blog'], function () {
+  Route::group(['prefix' => '/event-blog'], function () {
     Route::get('/', 'BlogController@index');
     Route::get('/{slug}', 'BlogController@show');
     Route::post('/{slug}/comment', 'BlogController@storeComment');

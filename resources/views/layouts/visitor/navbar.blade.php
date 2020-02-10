@@ -29,6 +29,11 @@
               <i class="ficon ft-instagram"></i>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ !empty($profile->whatsapp) ? $profile->whatsapp : '#' }}">
+              <i class="ficon la la-whatsapp"></i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -76,8 +81,8 @@ role="navigation" data-menu="menu-wrapper">
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url('/blog') }}"><i class="la la-newspaper-o"></i>
-          <span>Blog</span>
+        <a class="nav-link" href="{{ url('/event-blog') }}"><i class="la la-newspaper-o"></i>
+          <span>Event & Berita</span>
         </a>
       </li>
       <li class="nav-item">
