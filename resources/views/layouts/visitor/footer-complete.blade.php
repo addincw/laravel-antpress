@@ -88,22 +88,22 @@
 
               <div class="row mt-2">
                 <div class="nav-item">
-                  <a class="nav-link" href="{{ $profile->facebook | '#' }}">
+                  <a class="nav-link" href="{{ $profile->facebook }}">
                     <i class="ficon ft-facebook"></i>
                   </a>
                 </div>
                 <div class="nav-item">
-                  <a class="nav-link" href="{{ $profile->twitter | '#' }}">
+                  <a class="nav-link" href="{{ $profile->twitter }}">
                     <i class="ficon ft-twitter"></i>
                   </a>
                 </div>
                 <div class="nav-item">
-                  <a class="nav-link" href="{{ $profile->instagram | '#' }}">
+                  <a class="nav-link" href="{{ $profile->instagram }}">
                     <i class="ficon ft-instagram"></i>
                   </a>
                 </div>
                 <div class="nav-item">
-                  <a class="nav-link" href="{{ !empty($profile->whatsapp) ? $profile->whatsapp  : '#' }}">
+                  <a class="nav-link" href="{{ $profile->whatsapp }}">
                     <i class="ficon la la-whatsapp "></i>
                   </a>
                 </div>
