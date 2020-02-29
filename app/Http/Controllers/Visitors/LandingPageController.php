@@ -55,6 +55,9 @@ class LandingPageController extends MainController
     // faqs
     $this->params['faqs'] = Faq::limit(4)->get();
 
+    //filters
+    $this->params['filterSpecialist'] = '';
+    $this->params['filterName'] = '';
 
     return view($this->routeView . '.index', $this->params);
   }

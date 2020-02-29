@@ -15,9 +15,52 @@
   <a href="{{ url('/dokter') }}" class="float-right btn btn-primary box-shadow-1 text-white"> lebih banyak</a>
 </div>
 
-@component('components.carousel-doctor', [
-'doctors' => $doctors
-]) @endcomponent
+<div class="row">
+  <div class="col-md-3">
+      
+    <div class="card">
+      <div class="card-header card-title">
+        <i class="ft-search mr-1"></i> Filter Dokter  
+      </div>
+
+      <form method="get" action="{{ url('/dokter') }}">
+       
+        <div class="card-body">
+          <fieldset>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3"><i class="ft-briefcase"></i></span>
+              </div>
+              <input type="text" class="form-control" name="doctor_specialist" placeholder="Specialisasi Dokter" aria-describedby="basic-addon3" value="{{ $filterSpecialist }}">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3"><i class="la la-user"></i></span>
+              </div>
+              <input type="text" class="form-control" name="doctor_name" placeholder="Nama Dokter" aria-describedby="basic-addon3" value="{{ $filterName }}">
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary btn-block" name="submit" value="with_filter"> Cari </button>
+          <button type="submit" class="btn btn-block" name="submit" value="without_filter"> Reset </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <div class="col-md-9">
+    @component('components.carousel-doctor', [
+      'doctors' => $doctors
+    ]) @endcomponent
+  </div>
+</div>
 
 <!-- registration -->
 <section class="registration registration--outwrapper mt-2">
