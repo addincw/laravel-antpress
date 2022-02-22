@@ -36,11 +36,24 @@
         <div class="card-deck-wrapper">
           <div class="card-deck mb-3">
             @foreach($chunkGaleries as $gallery)
+            <?php 
+              $defaultWidth = '100%';
+              $thumbnailLink = asset('storage/' . $gallery->file);
+              $thumbnailUrl = asset('storage/' . $gallery->file);
+              
+              if($gallery->file_type === 'video') {
+                $defaultWidth = '480px';
+                $videoId = Illuminate\Support\Str::after($gallery->file, 'embed/');
+
+                $thumbnailLink = $gallery->file;
+                $thumbnailUrl = "https://img.youtube.com/vi/{$videoId}/0.jpg";
+              }
+            ?>
             <figure class="card card-img-top border-grey border-lighten-2" itemprop="associatedMedia"
-            itemscope itemtype="http://schema.org/ImageObject" style="height: 200px; overflow: hidden;">
-              <a href="{{ asset('storage/' . $gallery->file) }}" itemprop="contentUrl" data-size="480x360">
-                <img id="{{ $gallery->id }}" class="gallery-thumbnail card-img-top" src="{{ asset('storage/' . $gallery->file) }}"
-                itemprop="thumbnail" height="100%" />
+            itemscope itemtype="http://schema.org/ImageObject" style="height: 360px; overflow: hidden; position: relative">
+              <a href="{{ $thumbnailLink }}" itemprop="contentUrl" data-size="480x360">
+                <img id="{{ $gallery->id }}" class="gallery-thumbnail card-img-top" src="{{ $thumbnailUrl }}"
+                itemprop="thumbnail" height="100%"  style="max-width: {{ $defaultWidth }}" />
               </a>
               @if(empty($gallery->title))
               <div class="card-body px-0">
@@ -50,11 +63,34 @@
                 <p class="card-text">{{ $gallery->description }}</p>
               </div>
               @endif
+              @if($gallery->file_type === 'video')
+              <div class="overlay-video">
+                <div class="overlay-video__icon-container">
+                  <i class="overlay-video__icon la la-youtube-play"></i>
+                </div>
+              </div>
+              @endif
             </figure>
             @endforeach
           </div>
         </div>
         @endforeach
+      </div>
+
+      <div class="modal fade" id="modalVideo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel1">Preview Video</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <iframe class="img-thumbnail" width="100%" allowfullscreen=""> </iframe>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Root element of PhotoSwipe. Must have class pswp. -->
@@ -129,6 +165,36 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/gallery/photo-swipe/default-skin/default-skin.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/pages/search.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/modern-admin-1.0/app-assets/css/pages/gallery.css') }}">
+<style>
+  .overlay-video{
+    position: absolute; 
+    top: 0px; 
+    left: 0px; 
+    width: 480px; 
+    height: 360px; 
+    background: #00000087;
+  }
+  @media only screen and (max-width: 425px) {
+    .overlay-video{
+      width: 290px;
+      height: 217px; 
+    }
+  }
+  .overlay-video__icon-container{
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+  }
+  .overlay-video__icon{
+    color: white; 
+    font-size: 52px !important; 
+    transform: translate(-25px, -15px); 
+    cursor: pointer;
+  }
+  .img-thumbnail{
+    height: 70vh;
+  }
+</style>
 @endsection
 
 @section('js')
@@ -201,7 +267,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
     // triggers when user clicks on thumbnail
     var onThumbnailsClick = function(e) {
-
       e = e || window.event;
       e.preventDefault ? e.preventDefault() : e.returnValue = false;
 
@@ -226,6 +291,13 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
       numChildNodes = childNodes.length,
       nodeIndex = 0,
       index;
+
+      var thumbnailElement = parseThumbnailElements(clickedGallery);
+      if(thumbnailElement[0].src.includes("embed")) {
+        $('#modalVideo').modal('show');
+        $('#modalVideo .modal-body .img-thumbnail').attr('src', thumbnailElement[0].src);
+        return;
+      }
 
       for (var i = 0; i < numChildNodes; i++) {
         if(childNodes[i].nodeType !== 1) {
@@ -281,7 +353,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
       items;
 
       items = parseThumbnailElements(galleryElement);
-
       // define options (if needed)
       options = {
 

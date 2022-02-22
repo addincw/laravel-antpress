@@ -34,6 +34,22 @@ class DummySeeder extends Seeder
       \Storage::deleteDirectory('/testimoni');
       \Storage::deleteDirectory('/gallery');
 
+      if (!is_dir('storage/app/public/content')) {
+        \File::makeDirectory('storage/app/public/content', $mode = 0755, true, true);
+      }
+      if (!is_dir('storage/app/public/doctor')) {
+        \File::makeDirectory('storage/app/public/doctor', $mode = 0755, true, true);
+      }
+      if (!is_dir('storage/app/public/clinic')) {
+        \File::makeDirectory('storage/app/public/clinic', $mode = 0755, true, true);
+      }
+      if (!is_dir('storage/app/public/testimoni')) {
+        \File::makeDirectory('storage/app/public/testimoni', $mode = 0755, true, true);
+      }
+      if (!is_dir('storage/app/public/gallery')) {
+        \File::makeDirectory('storage/app/public/gallery', $mode = 0755, true, true);
+      }
+
       ContentCategory::insert([
         [
           'title' => 'kesehatan',
