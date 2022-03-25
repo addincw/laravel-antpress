@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: addincw
+        uuid: 1996
+      context: ./
+      dockerfile: Dockerfile
+    image: lcm
+    container_name: lcm-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - lcm_network
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: lcm-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - lcm_network
+  db:
+    image: mysql:5.7
+    container_name: lcm-db
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - lcm_network
+networks:
+  lcm_network:
+    driver: bridge
