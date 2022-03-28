@@ -18,14 +18,14 @@
     <form class="form" action="{{ url($route) }}" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
       @if($profile)
-      <input type="hidden" name="id" value="{{ $profile->id }}">
+      <!-- <input type="hidden" name="id" value="{{ $profile->id }}"> -->
       @endif
 			<div class="form-body">
         <div class="form-group">
           <label for="">Logo</label>
           <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
             @if(!empty($profile))
-            <a href="{{ asset('img/profile/' . $profile->logo) }}" itemprop="contentUrl">
+            <a href="{{ asset('storage/img/profile/' . $profile->logo) }}" itemprop="contentUrl">
               <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ $profile->logo_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
             </a>
             @else
@@ -42,7 +42,7 @@
           <label for="">Logo Full</label>
           <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
             @if(!empty($profile))
-            <a href="{{ asset('img/profile/' . $profile->logo_full) }}" itemprop="contentUrl">
+            <a href="{{ asset('storage/img/profile/' . $profile->logo_full) }}" itemprop="contentUrl">
               <img id="fieldPhotoPreviewFull" class="img-thumbnail img-fluid" src="{{ $profile->logo_full_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
             </a>
             @else
@@ -118,7 +118,7 @@
 				<div class="form-group">
 					<label for="fieldAddress">Address</label>
 					<div class="position-relative has-icon-left">
-						<input type="number" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $profile ? $profile->address : '' }}">
+						<input type="text" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $profile ? $profile->address : '' }}">
 						<div class="form-control-position">
 							<i class="ft-map-pin"></i>
 						</div>
