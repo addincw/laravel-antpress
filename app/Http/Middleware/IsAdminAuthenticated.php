@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Profile;
+use App\Models\Site\Configuration;
 
 class IsAdminAuthenticated
 {
@@ -19,7 +19,7 @@ class IsAdminAuthenticated
     {
         if (Auth::guard($guard)->check()) {
           $request->merge([
-            'profile' => Profile::first()
+            'profile' => Configuration::first()
           ]);
 
           return $next($request);

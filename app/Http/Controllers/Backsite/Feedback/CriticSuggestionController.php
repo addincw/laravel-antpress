@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\controllers\Backsite\Profile;
+namespace App\Http\controllers\Backsite\Feedback;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTestimoni;
-use App\Models\Testimoni;
+use App\Http\Requests\StoreCriticSuggestion;
+use App\Models\CriticSuggestion;
 
-class TestimoniController extends Controller
+class CriticSuggestionController extends Controller
 {
-    private $route = 'backsite/profile/testimoni';
-    private $routeView = 'backsite.profiles.testimoni';
+    private $route = 'backsite/feedback/critic-sugestion';
+    private $routeView = 'backsite.feedback.critic-suggestion';
     private $params = [];
 
     public function __construct ()
     {
-      $this->model = new Testimoni();
+      $this->model = new CriticSuggestion();
       $this->params['route'] = $this->route;
       $this->params['routeView'] = $this->routeView;
     }
@@ -26,7 +26,7 @@ class TestimoniController extends Controller
      */
     public function index()
     {
-      $this->params['testimonis'] = $this->model->get();
+      $this->params['criticSuggestions'] = $this->model->get();
       return view($this->routeView . '.index', $this->params);
     }
 
@@ -46,37 +46,32 @@ class TestimoniController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTestimoni $request)
+    public function store(StoreCriticSuggestion $request)
     {
       $validated = (object) $request->validated();
-      $thumbnail = null;
 
       try {
-        if ($request->hasFile('thumbnail')) {
-          $thumbnail = $request->file('thumbnail')->store('testimoni', 'public');
-        }
 
         $this->model->create([
           'name' => $validated->name,
-          'from' => $validated->from,
-          'body' => $validated->description,
-          'thumbnail' => $thumbnail
+          'email' => $validated->email,
+          'critic_suggestion' => $validated->critic_suggestion
         ]);
 
         $request->session()->flash('status', [
           'code' => 'success',
-          'message' => 'Testimoni berhasil di tambahkan',
+          'message' => 'kritik dan saran berhasil di tambahkan',
         ]);
       } catch (\Exception $e) {
         $request->session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menyimpan testimoni : <br>' . $e->getMessage(),
+          'message' => 'gagal menyimpan kritik dan saran : <br>' . $e->getMessage(),
         ]);
 
         return redirect()->back();
       }
 
-      return redirect($this->route);
+      return redirect('/');
     }
 
     /**
@@ -98,7 +93,7 @@ class TestimoniController extends Controller
      */
     public function edit($id)
     {
-        $this->params['testimoni'] = $this->model->find($id);
+        $this->params['CriticSuggestion'] = $this->model->find($id);
         return view($this->routeView . '.edit', $this->params);
     }
 
@@ -109,36 +104,26 @@ class TestimoniController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreTestimoni $request, $id)
+    public function update(StoreCriticSuggestion $request, $id)
     {
       $validated = (object) $request->validated();
-      $testimoni = $this->model->where('id', $id)->first();
-      $thumbnail = $testimoni->thumbnail;
+      $criticSuggestion = $this->model->where('id', $id)->first();
 
       try {
-        if ($request->hasFile('thumbnail')) {
-          if ($thumbnail) {
-            \Storage::disk('public')->delete($testimoni->thumbnail);
-          }
-
-          $thumbnail = $request->file('thumbnail')->store('testimoni', 'public');
-        }
-
-        $testimoni->update([
+        $criticSuggestion->update([
           'name' => $validated->name,
-          'from' => $validated->from,
-          'body' => $validated->description,
-          'thumbnail' => $thumbnail
+          'email' => $validated->email,
+          'critic_suggestion' => $validated->critic_suggestion
         ]);
 
         $request->session()->flash('status', [
           'code' => 'success',
-          'message' => 'Testimoni berhasil di perbarui',
+          'message' => 'kritik dan saran berhasil di perbarui',
         ]);
       } catch (\Exception $e) {
         $request->session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menyimpan testimoni : <br>' . $e->getMessage(),
+          'message' => 'gagal menyimpan kritik dan saran : <br>' . $e->getMessage(),
         ]);
 
         return redirect()->back();
@@ -155,21 +140,20 @@ class TestimoniController extends Controller
      */
     public function destroy($id)
     {
-      $testimoni = $this->model->find($id);
-      $name = $testimoni->name;
+      $criticSuggestion = $this->model->find($id);
+      $name = $criticSuggestion->name;
 
       try {
-        \Storage::disk('public')->delete($testimoni->thumbnail);
-        $testimoni->delete();
+        $criticSuggestion->delete();
 
         session()->flash('status', [
           'code' => 'success',
-          'message' => 'Testimoni dari <strong>'.$name.'</strong> berhasil di hapus',
+          'message' => 'kritik dan saran dari <strong>'.$name.'</strong> berhasil di hapus',
         ]);
       } catch (\Exception $e) {
         session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menghapus testimoni dari <strong>'.$name.'</strong> : <br>' . $e->getMessage(),
+          'message' => 'gagal menghapus CriticSuggestion dari <strong>'.$name.'</strong> : <br>' . $e->getMessage(),
         ]);
 
         return redirect()->back();

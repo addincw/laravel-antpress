@@ -33,7 +33,7 @@
 <body class="visitor horizontal-layout horizontal-menu 2-columns menu-expanded" data-open="hover"
 data-menu="horizontal-menu" data-col="2-columns">
   <!-- fixed-top-->
-  @include('frontsite.layout.navbar')
+  @include('frontsite.layout.header')
 
   <div class="app-content content">
     <div class="content-wrapper">
@@ -69,7 +69,7 @@ data-menu="horizontal-menu" data-col="2-columns">
   </div>
   <!-- footer-->
   @section('footer')
-    @include('layouts.footer')
+    @include('components.copyright')
   @show
   <!-- BEGIN VENDOR JS-->
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>

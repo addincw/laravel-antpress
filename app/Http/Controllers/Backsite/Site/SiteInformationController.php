@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\controllers\Backsite\Profile;
+namespace App\Http\controllers\Backsite\Site;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Profile;
+use App\Models\Site\Configuration;
 
-class ProfileController extends Controller
+class ConfigurationController extends Controller
 {
-  private $route = 'backsite/profile/profile';
+  private $route = 'backsite/site/configuration';
 
   public function index ()
   {
     $params['route'] = $this->route;
-    $params['profile'] = Profile::first();
-    return view('backsite.profiles.profile', $params);
+    $params['profile'] = Configuration::first();
+    return view('backsite.site.configuration', $params);
   }
 
   public function store (Request $request)
   {
     try {
-      $profile = Profile::find($request->id);
+      $profile = Configuration::find($request->id);
       $logo = !empty($profile) ? $profile->logo : null;
       $logoFull = !empty($profile) ? $profile->logo_full : null;
 
@@ -31,10 +31,10 @@ class ProfileController extends Controller
 
 
       if ($request->hasFile('logo')) {
-        $logo = $request->file('logo')->store('profile', 'public');
+        $logo = $request->file('logo')->store('site', 'public');
       }
       if ($request->hasFile('logo_full')) {
-        $logoFull = $request->file('logo_full')->store('profile', 'public');
+        $logoFull = $request->file('logo_full')->store('site', 'public');
       }
 
       if (!empty($profile)) {
@@ -57,7 +57,7 @@ class ProfileController extends Controller
         return redirect($this->route);
       }
 
-      Profile::create([
+      Configuration::create([
         'title' => $request->name,
         'description' => $request->description,
         'phone' => $request->phone,

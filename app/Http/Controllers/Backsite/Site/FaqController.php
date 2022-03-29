@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\controllers\Backsite\Profile;
+namespace App\Http\controllers\Backsite\Site;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,7 @@ use App\Models\Faq;
 class FaqController extends Controller
 {
     private $route = 'backsite/profile/faq';
-    private $routeView = 'backsite.profiles.faq';
+    private $routeView = 'backsite.site.faq';
     private $params = [];
 
     public function __construct ()

@@ -5,14 +5,14 @@ namespace App\Http\controllers\Frontsite;
 use Illuminate\Http\Request;
 use App\Http\controllers\Frontsite\MainController;
 
-use App\Models\Profile;
+use App\Models\Site\Configuration;
 use App\Models\Testimoni;
 use App\Models\Contents\ContentFile;
 use App\Models\Contents\Content;
 
-class ProfileController extends MainController
+class ConfigurationController extends MainController
 {
-  protected $route = '/profile';
+  protected $route = '/site';
   protected $routeView = 'frontsite';
   private $types = [
     'image' => [

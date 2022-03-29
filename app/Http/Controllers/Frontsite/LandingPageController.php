@@ -31,9 +31,6 @@ class LandingPageController extends MainController
                                ->where('file_type', 'like', 'image%')
                                ->get();
 
-    // content: tentang kami
-    $this->params['aboutUs'] = Content::where('slug', 'sejarah')->first();
-
     // content: type blog
     $this->params['blogs'] = Content::where('is_published', true)
                              ->where('type', 'blog')
@@ -48,10 +45,6 @@ class LandingPageController extends MainController
     
     // faqs
     $this->params['faqs'] = Faq::limit(4)->get();
-
-    //filters
-    $this->params['filterSpecialist'] = '';
-    $this->params['filterName'] = '';
 
     return view($this->routeView . '.index', $this->params);
   }

@@ -155,7 +155,7 @@
 @endsection
 
 @section('footer')
-  @include('frontsite.layout.footer-complete')
+  @include('frontsite.layout.footer')
   @parent
 @endsection
 

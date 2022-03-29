@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Site;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Configuration extends Model
 {
-  protected $table = 'profiles';
   protected $guarded = [];
 
   protected $appends = ['logo_url', 'logo_full_url'];

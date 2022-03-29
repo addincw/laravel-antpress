@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\Admins\Profile;
+namespace Tests\Unit\Http\controllers\Backsite\Site;
 
 use App\User;
-use App\Models\Profile;
+use App\Models\Site\Configuration;
 
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
@@ -22,23 +22,22 @@ class ProfileControllerTest extends TestCase
     {
         $user = User::where("email", "inidokterku@gmail.com")->first();
 
-        $response = $this->actingAs($user)->get('/admin/profile/profile');
+        $response = $this->actingAs($user)->get('/backsite/site/configuration');
 
         $response->assertStatus(200);
     }
     public function testUpdateProfileFailed()
     {
         $user = User::where("email", "inidokterku@gmail.com")->first();
-        $userProfile = Profile::first();
+        $userProfile = Configuration::first();
 
-        $this->actingAs($user)->post('/admin/profile/profile', [
+        $this->actingAs($user)->post('/backsite/site/configuration', [
           'id' => $userProfile->id,
           'title' => $userProfile->title, //parameter no exist
           'description' => 'This is inidokterku website, website for sharing healty content',
           'phone' => '082232426655',
           'whatsapp' => '082232426655',
           'telegram' => '082232426655',
-          'emergency_call' => '14043',
           'address' => 'Griyo mapan raya jaya no. 14',
           'email' => 'inidokterku@gmail.com',
           'facebook' => 'inidokterku@facebook.com',
@@ -52,16 +51,15 @@ class ProfileControllerTest extends TestCase
     public function testUpdateProfileWithoutImageSuccess()
     {
         $user = User::where("email", "inidokterku@gmail.com")->first();
-        $userProfile = Profile::first();
+        $userProfile = Configuration::first();
 
-        $response = $this->actingAs($user)->post('/admin/profile/profile', [
+        $response = $this->actingAs($user)->post('/backsite/site/configuration', [
           'id' => $userProfile->id,
           'name' => $userProfile->title,
           'description' => 'This is inidokterku website, website for sharing healty content',
           'phone' => '082232426655',
           'whatsapp' => '082232426655',
           'telegram' => '082232426655',
-          'emergency_call' => '14043',
           'address' => 'Griyo mapan raya jaya no. 14',
           'email' => 'inidokterku@gmail.com',
           'facebook' => 'inidokterku@facebook.com',
@@ -71,7 +69,7 @@ class ProfileControllerTest extends TestCase
         ]);
 
         $response
-            ->assertRedirect('/admin/profile/profile')
+            ->assertRedirect('/backsite/site/configuration')
             ->assertSessionHas("status",[
                 "code" => "success",
                 "message" => "Kontak berhasil di perbarui"
@@ -84,16 +82,15 @@ class ProfileControllerTest extends TestCase
         $logoFull = UploadedFile::fake()->image('logo_full.png');
 
         $user = User::where("email", "inidokterku@gmail.com")->first();
-        $userProfile = Profile::first();
+        $userProfile = Configuration::first();
 
-        $response = $this->actingAs($user)->post('/admin/profile/profile', [
+        $response = $this->actingAs($user)->post('/backsite/site/configuration', [
           'id' => $userProfile->id,
           'name' => $userProfile->title,
           'description' => 'This is inidokterku website, website for sharing healty content',
           'phone' => '082232426655',
           'whatsapp' => '082232426655',
           'telegram' => '082232426655',
-          'emergency_call' => '14043',
           'address' => 'Griyo mapan raya jaya no. 14',
           'email' => 'inidokterku@gmail.com',
           'facebook' => 'inidokterku@facebook.com',
@@ -109,7 +106,7 @@ class ProfileControllerTest extends TestCase
         Storage::disk('public')->assertExists('profile/' . $logoFull->hashName());
 
         $response
-            ->assertRedirect('/admin/profile/profile')
+            ->assertRedirect('/backsite/site/configuration')
             ->assertSessionHas("status",[
                 "code" => "success",
                 "message" => "Kontak berhasil di perbarui"

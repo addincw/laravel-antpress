@@ -8,60 +8,54 @@
         </a>
       </li>
       <li class=" navigation-header">
-        <span>Konten</span>
+        <span>Content</span>
       </li>
       <li class=" nav-item">
         <a href="{{ url('backsite/konten/kategori') }}">
           <i class="ft-list"></i>
-          <span class="menu-title">Kategori</span>
+          <span class="menu-title">Category</span>
         </a>
       </li>
       <li class=" nav-item">
         <a href="{{ url('backsite/konten/konten') }}">
           <i class="ft-file-text"></i>
-          <span class="menu-title">Konten</span>
-        </a>
-      </li>
-      <li class=" nav-item">
-        <a href="{{ url('backsite/konten/konten?type=blog') }}">
-          <i class="la la-newspaper-o"></i>
-          <span class="menu-title">Blog</span>
+          <span class="menu-title">Content</span>
         </a>
       </li>
       <li class=" nav-item">
         <a href="{{ url('backsite/konten/galeri') }}">
           <i class="ft-image"></i>
-          <span class="menu-title">Galeri</span>
+          <span class="menu-title">Gallery</span>
         </a>
       </li>
       <li class=" navigation-header">
-        <span>Kritik dan Saran</span>
+        <span>Feedback's</span>
       </li>
       <li class="nav-item">
         <a href="{{ url('backsite/kritik-saran') }}">
           <i class="ft-mail"></i>
-          <span class="menu-title">Kritik dan Saran</span>
+          <span class="menu-title">criticism and suggestions</span>
+        </a>
+      </li>
+      <li class=" nav-item">
+        <a href="{{ url('backsite/site/testimoni') }}">
+          <i class="ft-message-circle"></i>
+          <span class="menu-title">Testimonies</span>
         </a>
       </li>
       <li class=" navigation-header">
-        <span>Profile</span>
+        <span>Site</span>
       </li>
       <li class=" nav-item">
-        <a href="{{ url('backsite/profile/testimoni') }}">
-          <i class="ft-message-circle"></i>
-          <span class="menu-title">Testimoni</span>
-        </a>
-      </li>
-      <li class=" nav-item">
-        <a href="{{ url('backsite/profile/faq') }}">
+        <a href="{{ url('backsite/site/faq') }}">
           <i class="ft-help-circle"></i>
           <span class="menu-title">FAQ</span>
         </a>
       </li>
       <li class=" nav-item">
-        <a href="{{ url('backsite/profile/profile') }}">
+        <a href="{{ url('backsite/site/profile') }}">
           <i class="ft-phone"></i>
-          <span class="menu-title">Kontak</span>
+          <span class="menu-title">Basic Information</span>
         </a>
       </li>
     </ul>

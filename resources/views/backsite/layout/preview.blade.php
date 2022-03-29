@@ -69,7 +69,7 @@ data-menu="horizontal-menu" data-col="2-columns">
   </div>
   <!-- footer-->
   @section('footer')
-    @include('layouts.footer')
+    @include('components.copyright')
   @show
   <!-- BEGIN VENDOR JS-->
   <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>

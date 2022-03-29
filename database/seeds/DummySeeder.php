@@ -4,15 +4,15 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
-use \App\Models\Profile;
 use \App\Models\Testimoni;
 use \App\Models\Contents\Content;
-use \App\Models\Contents\ContentCategory;
+use App\Models\Contents\ContentCategory;
 use \App\Models\Contents\ContentFile;
+use App\Models\Faq;
 
 class DummySeeder extends Seeder
 {
-    private $primaryContents = ['umum', 'sejarah', 'visi-misi', 'fasilitas', 'indikator-mutu', 'kontak-kami'];
+    // private $primaryContents = ['umum', 'sejarah', 'visi-misi', 'fasilitas', 'indikator-mutu', 'kontak-kami'];
     /**
      * Run the database seeds.
      *
@@ -21,6 +21,12 @@ class DummySeeder extends Seeder
     public function run(Faker $faker)
     {
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+      ContentCategory::truncate();
+      ContentFile::truncate();
+      Content::truncate();
+      Faq::truncate();
+      Testimoni::truncate();
 
       \Storage::deleteDirectory('/content');
       \Storage::deleteDirectory('/testimoni');
@@ -38,41 +44,47 @@ class DummySeeder extends Seeder
 
       ContentCategory::insert([
         [
-          'title' => 'kesehatan',
-          'slug' => 'kesehatan',
+          'title' => 'music',
+          'slug' => 'music',
+          'is_delete' => false
         ],
         [
-          'title' => 'pola makan',
-          'slug' => 'pola-makan',
+          'title' => 'culinary',
+          'slug' => 'culinary',
+          'is_delete' => false
         ],
         [
-          'title' => 'gaya hidup',
-          'slug' => 'gaya-hidup',
+          'title' => 'sports',
+          'slug' => 'sports',
+          'is_delete' => false
         ],
         [
-          'title' => 'tips',
-          'slug' => 'tips',
+          'title' => 'traveling',
+          'slug' => 'traveling',
+          'is_delete' => false
         ],
         [
-          'title' => 'tutorial',
-          'slug' => 'tutorial',
-        ]
+          'title' => 'general',
+          'slug' => 'general',
+          'is_delete' => false
+        ],
       ]);
 
+      factory(Faq::class, 4)->create();
+      factory(Testimoni::class, 4)->create();
       factory(Content::class, 10)->create();
       factory(ContentFile::class, 20)->create();
-      factory(Testimoni::class, 4)->create();
 
-      //primary content
-      foreach ($this->primaryContents as $primaryContent) {
-        $file = $faker->image('storage/app/public/content', 640, 480, null, true);
-        $file = str_replace('storage/app/public/content\\', '/content/', $file);
+      // //primary content
+      // foreach ($this->primaryContents as $primaryContent) {
+      //   $file = $faker->image('storage/app/public/content', 640, 480, null, true);
+      //   $file = str_replace('storage/app/public/content\\', '/content/', $file);
 
-        Content::where('slug', $primaryContent)->update([
-          'description' => $faker->randomHtml(2,3),
-          'thumbnail' => $file
-        ]);
-      }
+      //   Content::where('slug', $primaryContent)->update([
+      //     'description' => $faker->randomHtml(2,3),
+      //     'thumbnail' => $file
+      //   ]);
+      // }
 
       DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }

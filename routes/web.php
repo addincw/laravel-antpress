@@ -37,11 +37,11 @@ Route::group(['prefix' => '/backsite'], function () {
       Route::resource('/galeri', 'GalleryController');
     });
 
-    Route::resource('/kritik-saran', 'CriticSuggestionController');
+    Route::resource('/critic-suggestion', 'CriticSuggestionController');
 
-    Route::group(['prefix' => '/profile', 'namespace' => 'Profile'], function () {
-      Route::get('/profile', 'ProfileController@index');
-      Route::post('/profile', 'ProfileController@store');
+    Route::group(['prefix' => '/site', 'namespace' => 'Site'], function () {
+      Route::get('/configuration', 'ConfigurationController@index');
+      Route::post('/configuration', 'ConfigurationController@store');
 
       Route::resource('/testimoni', 'TestimoniController');
 
@@ -52,7 +52,9 @@ Route::group(['prefix' => '/backsite'], function () {
 
 Route::group(['namespace' => 'Frontsite'], function () {
   Route::get('/', 'LandingPageController@index');
-  Route::get('/profile/{slug}', 'ProfileController@show');
+
+  Route::get('/site/configuration', 'ConfigurationController@show');
+
   Route::get('/faq/{id}', 'FaqController@show');
 
   Route::group(['prefix' => '/event-blog'], function () {
@@ -65,4 +67,4 @@ Route::group(['namespace' => 'Frontsite'], function () {
   Route::get('/galeri', 'GalleryController@index');
 });
 
-Route::post('/kritik-saran', 'Backsite\CriticSuggestionController@store');
+Route::post('/critic-suggestion', 'Backsite\Feedback\CriticSuggestionController@store');

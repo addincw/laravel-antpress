@@ -9,8 +9,8 @@ $factory->define(App\Models\Contents\Content::class, function (Faker $faker) {
     $fileCreator = str_replace('storage/app/public/content\\', '/content/', $fileCreator);
 
     $category = App\Models\Contents\ContentCategory::inRandomOrder()
-                ->limit(10)
-                ->where('is_delete', true)
+                ->limit(5)
+                ->where('is_delete', false)
                 ->first();
 
     $title = $faker->title;

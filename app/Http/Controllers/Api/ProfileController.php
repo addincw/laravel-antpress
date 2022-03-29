@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Profile;
+use App\Models\Site\Configuration;
 
 class ProfileController extends Controller
 {
@@ -16,7 +16,7 @@ class ProfileController extends Controller
 
     public function __construct ()
     {
-        $this->model = new Profile();
+        $this->model = new Configuration();
     }
 
     /**

@@ -9,7 +9,7 @@ use App\Http\Requests\Contents\StoreContentComment;
 use App\Models\Contents\Content;
 use App\Models\Contents\ContentFile;
 use App\Models\Contents\ContentCategory;
-use App\Models\Profile;
+use App\Models\Site\Configuration;
 use App\Models\Testimoni;
 
 class BlogController extends MainController

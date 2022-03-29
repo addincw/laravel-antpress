@@ -102,7 +102,17 @@
         </div>
         <div class="col-md-4">
           <div class="maps-src">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.0435773165946!2d112.6311893147272!3d-7.99443699424258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6280fa073073d%3A0xd0690df2b7fa5b79!2sRS+Panti+Nirmala!5e0!3m2!1sid!2sid!4v1564907583109!5m2!1sid!2sid" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253292.42716058585!2d112.57259700215688!3d-7.27559793655625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbf8381ac47f%3A0x3027a76e352be40!2sSurabaya%2C%20Surabaya%20City%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1648529664651!5m2!1sen!2sid" 
+              width="100%" 
+              height="450" 
+              frameborder="0" 
+              style="border:0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
           </div>
         </div>
       </div>

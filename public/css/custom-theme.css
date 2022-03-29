@@ -9,8 +9,13 @@
   margin-right: 2.2rem;
 }
 
+.visitor .header-navbar .navbar-header .navbar-container,
+.visitor .header-navbar .navbar-header .navbar-container .nav-item,
 .visitor .header-navbar .navbar-header .navbar-brand {
-  padding: 0px 0px 17px;
+  height: inherit;
+}
+.visitor .header-navbar .navbar-header .navbar-brand img {
+  height: 100%;
 }
 
 .visitor .header-navbar .navbar-header .navbar-brand .brand-logo {
