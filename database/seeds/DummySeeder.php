@@ -5,10 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
 use \App\Models\Profile;
-use \App\Models\Doctor;
 use \App\Models\Testimoni;
-use \App\Models\Clinics\Clinic;
-use \App\Models\Clinics\ClinicDoctor;
 use \App\Models\Contents\Content;
 use \App\Models\Contents\ContentCategory;
 use \App\Models\Contents\ContentFile;
@@ -24,24 +21,13 @@ class DummySeeder extends Seeder
     public function run(Faker $faker)
     {
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-      ClinicDoctor::truncate();
-      Doctor::truncate();
-      Clinic::truncate();
 
       \Storage::deleteDirectory('/content');
-      \Storage::deleteDirectory('/doctor');
-      \Storage::deleteDirectory('/clinic');
       \Storage::deleteDirectory('/testimoni');
       \Storage::deleteDirectory('/gallery');
 
       if (!is_dir('storage/app/public/content')) {
         \File::makeDirectory('storage/app/public/content', $mode = 0755, true, true);
-      }
-      if (!is_dir('storage/app/public/doctor')) {
-        \File::makeDirectory('storage/app/public/doctor', $mode = 0755, true, true);
-      }
-      if (!is_dir('storage/app/public/clinic')) {
-        \File::makeDirectory('storage/app/public/clinic', $mode = 0755, true, true);
       }
       if (!is_dir('storage/app/public/testimoni')) {
         \File::makeDirectory('storage/app/public/testimoni', $mode = 0755, true, true);
@@ -76,10 +62,6 @@ class DummySeeder extends Seeder
       factory(Content::class, 10)->create();
       factory(ContentFile::class, 20)->create();
       factory(Testimoni::class, 4)->create();
-      factory(Clinic::class, 8)->create();
-      factory(Doctor::class, 20)->create()->each(function ($doctor) {
-          $doctor->clinics()->save(factory(ClinicDoctor::class)->make());
-      });
 
       //primary content
       foreach ($this->primaryContents as $primaryContent) {

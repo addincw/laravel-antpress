@@ -6,7 +6,6 @@ use Faker\Factory as FakerFactory;
 
 use \App\User;
 
-use \App\Models\Day;
 use \App\Models\Profile;
 use \App\Models\Contents\ContentFile;
 use \App\Models\Contents\ContentCategory;
@@ -24,22 +23,11 @@ class DatabaseSeeder extends Seeder
       $faker = FakerFactory::create();
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
-      Day::truncate();
       User::truncate();
       Profile::truncate();
       ContentFile::truncate();
       Content::truncate();
       ContentCategory::truncate();
-
-      Day::insert([
-        [ 'name' => 'Minggu'], 
-        [ 'name' => 'Senin'], 
-        [ 'name' => 'Selasa'], 
-        [ 'name' => 'Rabu'], 
-        [ 'name' => 'Kamis'], 
-        [ 'name' => 'Jumat'], 
-        [ 'name' => 'Sabtu']
-      ]);
 
       factory(User::class)->create();
       factory(Profile::class)->create();

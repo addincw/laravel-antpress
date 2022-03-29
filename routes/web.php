@@ -10,22 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => '/admin'], function () {
+Route::group(['prefix' => '/backsite'], function () {
   Route::get('/login', 'Auth\LoginController@index');
   Route::post('/login', 'Auth\LoginController@authenticate');
   
   // must login
-  Route::group(['namespace' => 'Admins', 'middleware' => 'IsAdminAuthenticated'], function () {
+  Route::group(['namespace' => 'Backsite', 'middleware' => 'IsAdminAuthenticated'], function () {
     Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     
     Route::get('/', function () {
-      return view('pages.admins.index');
+      return view('backsite.index');
     });
-
-    Route::resource('/dokter', 'DoctorController');
-    Route::resource('/klinik', 'ClinicController');
-    Route::resource('/jadwal-praktik', 'ScheduleController');
-    Route::resource('/ijin-dokter', 'DoctorAbsentController');
 
     Route::group(['prefix' => '/konten', 'namespace' => 'Content'], function () {
       Route::resource('/konten', 'ContentController');
@@ -42,12 +37,6 @@ Route::group(['prefix' => '/admin'], function () {
       Route::resource('/galeri', 'GalleryController');
     });
 
-    Route::group(['prefix' => '/registration', 'namespace' => 'Registration'], function () {
-      Route::resource('/debitur', 'DebiturController');
-      
-      Route::resource('/setting', 'SettingController');
-    });
-
     Route::resource('/kritik-saran', 'CriticSuggestionController');
 
     Route::group(['prefix' => '/profile', 'namespace' => 'Profile'], function () {
@@ -61,20 +50,10 @@ Route::group(['prefix' => '/admin'], function () {
   });
 });
 
-Route::group(['namespace' => 'Visitors'], function () {
+Route::group(['namespace' => 'Frontsite'], function () {
   Route::get('/', 'LandingPageController@index');
   Route::get('/profile/{slug}', 'ProfileController@show');
   Route::get('/faq/{id}', 'FaqController@show');
-
-  Route::group(['prefix' => '/layanan'], function () {
-    Route::get('/', 'ClinicController@index');
-    Route::get('/{slug}', 'ClinicController@show');
-  });
-
-  Route::group(['prefix' => '/dokter'], function () {
-    Route::get('/', 'DoctorController@index');
-    Route::get('/{slug}', 'DoctorController@show');
-  });
 
   Route::group(['prefix' => '/event-blog'], function () {
     Route::get('/', 'BlogController@index');
@@ -86,4 +65,4 @@ Route::group(['namespace' => 'Visitors'], function () {
   Route::get('/galeri', 'GalleryController@index');
 });
 
-Route::post('/kritik-saran', 'Admins\CriticSuggestionController@store');
+Route::post('/kritik-saran', 'Backsite\CriticSuggestionController@store');

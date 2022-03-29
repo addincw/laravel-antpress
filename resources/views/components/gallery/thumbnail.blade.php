@@ -180,7 +180,7 @@ type="text/javascript"></script>
 <script src="{{ asset('theme/modern-admin-1.0/app-assets/vendors/js/extensions/sweetalert.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 var baseUrl = "{{ url('/') }}";
-var targetUrl = "{{ url('admin/konten/galeri') }}";
+var targetUrl = "{{ url('backsite/konten/galeri') }}";
 
 $(document).ready(function () {
 

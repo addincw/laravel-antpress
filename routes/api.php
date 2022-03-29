@@ -27,9 +27,4 @@ Route::group(['namespace' => 'Api'], function () {
     Route::get('/content/{id}/comment', 'Contents\ContentController@commentsByContentId');
     Route::get('/content/all', 'Contents\ContentController@getAll');
     Route::apiResource('/content', 'Contents\ContentController');
-    
-    Route::apiResource('/doctor', 'DoctorController');
-
-    Route::get('/clinic/{clinic_id}/doctors', 'ClinicController@getClinicDoctors');
-    Route::apiResource('/clinic', 'ClinicController');
 });
