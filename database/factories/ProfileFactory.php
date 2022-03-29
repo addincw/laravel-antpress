@@ -10,7 +10,6 @@ $factory->define(App\Models\Profile::class, function (Faker $faker) {
       'phone' => '',
       'whatsapp' => '',
       'telegram' => '',
-      'emergency_call' => '',
       'address' => '',
       'email' => $name . '@gmail.com',
       'facebook' => $name . '@facebook',

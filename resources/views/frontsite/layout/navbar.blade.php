@@ -65,21 +65,6 @@ role="navigation" data-menu="menu-wrapper">
           </li>
         </ul>
       </li>
-      <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="ft-grid"></i><span>Fasilitas & Layanan</span></a>
-        <ul class="dropdown-menu">
-          <li class="">
-            <a class="dropdown-item" href="{{ url('/profile/fasilitas') }}">Fasilitas</a>
-          </li>
-          <li class="">
-            <a class="dropdown-item" href="{{ url('/layanan') }}">Layanan</a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('/blog') }}"><i class="ft-clipboard"></i>
-          <span>Pendaftaran Online</span>
-        </a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url('/event-blog') }}"><i class="la la-newspaper-o"></i>
           <span>Event & Berita</span>

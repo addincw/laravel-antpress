@@ -106,16 +106,6 @@
 				</div>
 
 				<div class="form-group">
-					<label for="fieldEmergency">Emergency Call</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldEmergency" class="form-control" placeholder="Emergency Call Perusahaan" name="emergency_call" value="{{ $profile ? $profile->emergency_call : '' }}">
-						<div class="form-control-position">
-							<i class="la la-ambulance"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
 					<label for="fieldAddress">Address</label>
 					<div class="position-relative has-icon-left">
 						<input type="text" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $profile ? $profile->address : '' }}">

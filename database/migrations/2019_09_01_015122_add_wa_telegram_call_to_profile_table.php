@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddWaTelegramEmergencycallToProfileTable extends Migration
+class AddWaTelegramcallToProfileTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,6 @@ class AddWaTelegramEmergencycallToProfileTable extends Migration
         Schema::table('profiles', function (Blueprint $table) {
             $table->string('whatsapp')->nullable();
             $table->string('telegram')->nullable();
-            $table->string('emergency_call')->nullable();
         });
     }
 
@@ -28,7 +27,7 @@ class AddWaTelegramEmergencycallToProfileTable extends Migration
     public function down()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->dropColumn(['whatsapp', 'telegram', 'emergency_call']);
+            $table->dropColumn(['whatsapp', 'telegram']);
         });
     }
 }

@@ -9,8 +9,6 @@ use App\Models\Testimoni;
 use App\Models\Faq;
 use App\Models\Contents\Content;
 use App\Models\Contents\ContentFile;
-use App\Models\Clinics\Clinic;
-use App\Models\Doctor;
 
 class LandingPageController extends MainController
 {
@@ -28,7 +26,6 @@ class LandingPageController extends MainController
 
   public function index ()
   {
-    $doctors = Doctor::query()->where('is_active', true);
     // content_files: is_highlight true, type image
     $this->params['banners'] = ContentFile::where('is_highlight', true)
                                ->where('file_type', 'like', 'image%')
@@ -48,9 +45,6 @@ class LandingPageController extends MainController
     $this->params['video'] = ContentFile::where('file_type', 'video')
                              ->where('is_highlight', true)
                              ->first();
-
-    // doctors
-    $this->params['doctors'] = $doctors->limit(4)->get();
     
     // faqs
     $this->params['faqs'] = Faq::limit(4)->get();
