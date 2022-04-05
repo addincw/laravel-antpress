@@ -1,8 +1,8 @@
 <?php
-namespace App\Http\controllers\Frontsite;
+namespace App\Http\Controllers\Frontsite;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\Frontsite\MainController;
+use App\Http\Controllers\Frontsite\MainController;
 
 use App\Http\Requests\Contents\StoreContentComment;
 

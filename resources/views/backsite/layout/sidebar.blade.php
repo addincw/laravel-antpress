@@ -32,13 +32,13 @@
         <span>Feedback's</span>
       </li>
       <li class="nav-item">
-        <a href="{{ url('backsite/kritik-saran') }}">
+        <a href="{{ url('backsite/feedback/critic-suggestions') }}">
           <i class="ft-mail"></i>
-          <span class="menu-title">criticism and suggestions</span>
+          <span class="menu-title">criticism & suggestions</span>
         </a>
       </li>
       <li class=" nav-item">
-        <a href="{{ url('backsite/site/testimoni') }}">
+        <a href="{{ url('backsite/feedback/testimoni') }}">
           <i class="ft-message-circle"></i>
           <span class="menu-title">Testimonies</span>
         </a>
@@ -53,9 +53,9 @@
         </a>
       </li>
       <li class=" nav-item">
-        <a href="{{ url('backsite/site/profile') }}">
+        <a href="{{ url('backsite/site/configuration') }}">
           <i class="ft-phone"></i>
-          <span class="menu-title">Basic Information</span>
+          <span class="menu-title">Configuration</span>
         </a>
       </li>
     </ul>

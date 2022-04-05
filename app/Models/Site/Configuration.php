@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Configuration extends Model
 {
+  protected $table = "site_configurations";
+  
   protected $guarded = [];
-
   protected $appends = ['logo_url', 'logo_full_url'];
 
   public function getLogoUrlAttribute ()

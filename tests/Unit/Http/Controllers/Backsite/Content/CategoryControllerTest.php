@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\controllers\Backsite\Content;
+namespace Tests\Unit\Http\Controllers\Backsite\Content;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

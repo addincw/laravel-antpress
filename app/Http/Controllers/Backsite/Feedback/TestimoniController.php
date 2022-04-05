@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\controllers\Backsite\Feedback;
+namespace App\Http\Controllers\Backsite\Feedback;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTestimoni;
-use App\Models\Testimoni;
+use App\Models\Feedback\Testimoni;
 
 class TestimoniController extends Controller
 {
@@ -112,10 +112,11 @@ class TestimoniController extends Controller
     public function update(StoreTestimoni $request, $id)
     {
       $validated = (object) $request->validated();
-      $testimoni = $this->model->where('id', $id)->first();
-      $thumbnail = $testimoni->thumbnail;
-
+      
       try {
+        $testimoni = $this->model->where('id', $id)->first();
+        $thumbnail = $testimoni->thumbnail;
+
         if ($request->hasFile('thumbnail')) {
           if ($thumbnail) {
             \Storage::disk('public')->delete($testimoni->thumbnail);
@@ -135,7 +136,7 @@ class TestimoniController extends Controller
           'code' => 'success',
           'message' => 'Testimoni berhasil di perbarui',
         ]);
-      } catch (\Exception $e) {
+      } catch (\ErrorException $e) {
         $request->session()->flash('status', [
           'code' => 'danger',
           'message' => 'gagal menyimpan testimoni : <br>' . $e->getMessage(),
@@ -155,10 +156,10 @@ class TestimoniController extends Controller
      */
     public function destroy($id)
     {
-      $testimoni = $this->model->find($id);
-      $name = $testimoni->name;
-
       try {
+        $testimoni = $this->model->find($id);
+        $name = $testimoni->name;
+
         \Storage::disk('public')->delete($testimoni->thumbnail);
         $testimoni->delete();
 
@@ -166,10 +167,10 @@ class TestimoniController extends Controller
           'code' => 'success',
           'message' => 'Testimoni dari <strong>'.$name.'</strong> berhasil di hapus',
         ]);
-      } catch (\Exception $e) {
+      } catch (\ErrorException $e) {
         session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menghapus testimoni dari <strong>'.$name.'</strong> : <br>' . $e->getMessage(),
+          'message' => 'gagal menghapus testimoni : <br>' . $e->getMessage(),
         ]);
 
         return redirect()->back();

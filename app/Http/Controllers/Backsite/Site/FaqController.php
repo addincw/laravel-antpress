@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\controllers\Backsite\Site;
+namespace App\Http\Controllers\Backsite\Site;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFaq;
-use App\Models\Faq;
+use App\Models\Site\Faq;
 
 class FaqController extends Controller
 {
-    private $route = 'backsite/profile/faq';
+    private $route = 'backsite/site/faq';
     private $routeView = 'backsite.site.faq';
     private $params = [];
 
@@ -109,7 +109,6 @@ class FaqController extends Controller
       $Faq = $this->model->where('id', $id)->first();
 
       try {
-
         $Faq->update([
           'question' => $validated->question,
           'answer' => $validated->answer
@@ -120,6 +119,13 @@ class FaqController extends Controller
           'message' => 'Faq berhasil di perbarui',
         ]);
       } catch (\Exception $e) {
+        $request->session()->flash('status', [
+          'code' => 'danger',
+          'message' => 'gagal menyimpan Faq : ' . $e->getMessage(),
+        ]);
+
+        return redirect()->back();
+      } catch (\Throwable $e) {
         $request->session()->flash('status', [
           'code' => 'danger',
           'message' => 'gagal menyimpan Faq : ' . $e->getMessage(),
@@ -139,10 +145,10 @@ class FaqController extends Controller
      */
     public function destroy($id)
     {
-      $faq = $this->model->find($id);
-      $name = $faq->name;
-
       try {
+        $faq = $this->model->find($id);
+        $name = $faq->name;
+        
         $faq->delete();
 
         session()->flash('status', [
@@ -152,7 +158,7 @@ class FaqController extends Controller
       } catch (\Exception $e) {
         session()->flash('status', [
           'code' => 'danger',
-          'message' => 'gagal menghapus Faq dari '.$name.' : ' . $e->getMessage(),
+          'message' => 'gagal menghapus Faq : ' . $e->getMessage(),
         ]);
 
         return redirect()->back();

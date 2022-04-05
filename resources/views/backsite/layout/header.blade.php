@@ -30,7 +30,7 @@
                 <img src="{{ asset('img/no-image.png') }}" alt="avatar"><i></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="{{ url('backsite/profile/profile') }}"><i class="ft-user"></i> Edit Profile / Kontak</a>
+              <a class="dropdown-item" href="{{ url('backsite/site/profile') }}"><i class="ft-user"></i> Edit Profile / Kontak</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url('backsite/logout') }}"><i class="ft-power"></i> Logout</a>
             </div>

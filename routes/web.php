@@ -39,11 +39,13 @@ Route::group(['prefix' => '/backsite'], function () {
 
     Route::resource('/critic-suggestion', 'CriticSuggestionController');
 
+    Route::group(['prefix' => '/feedback', 'namespace' => 'Feedback'], function () {
+       Route::resource('/testimoni', 'TestimoniController');
+    });
+
     Route::group(['prefix' => '/site', 'namespace' => 'Site'], function () {
       Route::get('/configuration', 'ConfigurationController@index');
       Route::post('/configuration', 'ConfigurationController@store');
-
-      Route::resource('/testimoni', 'TestimoniController');
 
       Route::resource('/faq', 'FaqController');
     });

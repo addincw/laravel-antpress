@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\controllers\Backsite\Feedback;
+namespace App\Http\Controllers\Backsite\Feedback;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
