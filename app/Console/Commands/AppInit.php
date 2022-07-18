@@ -50,14 +50,13 @@ class AppInit extends Command
         
         $this->line("");
         $this->line('3/4 create new database: ' . env('DB_DATABASE'));
-        // DB::statement('DROP DATABASE IF EXISTS ' . env('DB_DATABASE'));
         $this->_createDB();
         $this->line('database ' . env('DB_DATABASE') . ' created');
 
-        // $this->line("");
-        // $this->line('4/4 migrate database: ' . env('DB_DATABASE'));
-        // $this->call('migrate:fresh');
-        // $this->line('migrate database ' . env('DB_DATABASE') . ' success');
+        $this->line("");
+        $this->line('4/4 migrate database: ' . env('DB_DATABASE'));
+        $this->call('migrate:fresh');
+        $this->line('migrate database ' . env('DB_DATABASE') . ' success');
         
         $this->line("");
         $this->line("\u{2705} Initializing app done");
@@ -71,14 +70,16 @@ class AppInit extends Command
             '-p' . env('DB_PASSWORD'),
         ];
 
-        $processDropDB = Process::fromShellCommandline('mysql '.implode(" ", $config).' -e "DROP DATABASE IF EXISTS '.env('DB_DATABASE').'"');
+        $commandDropDB = array_merge($config, ['-e "DROP DATABASE IF EXISTS '.env('DB_DATABASE').'"']);
+        $processDropDB = Process::fromShellCommandline('mysql '.implode(" ", $commandDropDB));
         $processDropDB->run();
         if (!$processDropDB->isSuccessful()) {
             $this->line($processDropDB->getOutput());
             throw new ProcessFailedException($processDropDB);
         }
 
-        $processCreateDB = Process::fromShellCommandline('mysql '.implode(" ", $config).' -e "CREATE DATABASE IF NOT EXISTS '.env('DB_DATABASE').'"');
+        $commandCreateDB = array_merge($config, ['-e "CREATE DATABASE IF NOT EXISTS '.env('DB_DATABASE').'"']);
+        $processCreateDB = Process::fromShellCommandline('mysql '.implode(" ", $commandCreateDB));
         $processCreateDB->run();
         if (!$processCreateDB->isSuccessful()) {
             $this->line($processCreateDB->getOutput());

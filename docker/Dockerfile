@@ -2,7 +2,7 @@ FROM composer as composer
 COPY . /app
 RUN composer install --ignore-platform-reqs --no-scripts
 
-FROM php:7.1.33-fpm
+FROM php:7.4.30-fpm
 
 ARG user
 ARG uuid
