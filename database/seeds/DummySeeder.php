@@ -4,11 +4,14 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
+use \App\User;
+
 use \App\Models\Testimoni;
+use \App\Models\Site\Configuration;
+use App\Models\Site\Faq;
 use \App\Models\Contents\Content;
 use App\Models\Contents\ContentCategory;
 use \App\Models\Contents\ContentFile;
-use App\Models\Site\Faq;
 
 class DummySeeder extends Seeder
 {
@@ -21,6 +24,9 @@ class DummySeeder extends Seeder
     public function run(Faker $faker)
     {
       DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+      User::truncate();
+      Configuration::truncate();
 
       ContentCategory::truncate();
       ContentFile::truncate();
@@ -69,6 +75,9 @@ class DummySeeder extends Seeder
           'is_delete' => false
         ],
       ]);
+
+      factory(User::class)->create();
+      factory(Configuration::class)->create();
 
       factory(Faq::class, 4)->create();
       factory(Testimoni::class, 4)->create();

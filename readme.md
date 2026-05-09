@@ -66,4 +66,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 cp .env.example .env
 
-docker-compose --project-name antpress --project-directory ./docker --env-file ./.env up -d
+docker-compose --project-name antpress --project-directory ./docker/dev --env-file ./.env up -d

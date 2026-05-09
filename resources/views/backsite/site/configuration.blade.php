@@ -3,175 +3,168 @@
 <div class="card">
   <div class="card-header">
     <h4 class="card-title">
-      Kontak
+      Configuration
       <button id="editBtn" class="btn btn-md btn-info pull-right">
-        Perbarui Kontak
+        Edit
         <i class="ft-edit"></i>
       </button>
       <button id="cancelBtn" class="btn btn-md btn-warning pull-right" style="display: none">
-        Batalkan
+        Cancel
         <i class="ft-x-square"></i>
       </button>
     </h4>
   </div>
   <div class="card-body">
-    <form class="form" action="{{ url($route) }}" method="post" enctype="multipart/form-data">
-      {{ csrf_field() }}
-      @if($profile)
-      <!-- <input type="hidden" name="id" value="{{ $profile->id }}"> -->
-      @endif
+    <form class="form" action="{{ url($route . '/' . $data->id) }}" method="post" enctype="multipart/form-data">
+      @csrf
+			@method('PUT')
 			<div class="form-body">
-        <div class="form-group">
-          <label for="">Logo</label>
-          <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-            @if(!empty($profile))
-            <a href="{{ asset('storage/img/profile/' . $profile->logo) }}" itemprop="contentUrl">
-              <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ $profile->logo_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
-            </a>
-            @else
-            <img id="fieldPhotoPreview" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
-            @endif
-          </figure>
-        </div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="">Favicon</label>
+							<figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+								@if(!empty($data))
+								<a href="{{ asset('storage/site/' . $data->favicon) }}" itemprop="contentUrl">
+									<img id="fieldFaviconPreview" class="img-thumbnail img-fluid" src="{{ $data->favicon_url }}" itemprop="thumbnail" alt="Image {{ $data->name }}">
+								</a>
+								@else
+								<img id="fieldFaviconPreview" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
+								@endif
+							</figure>
+						</div>
+						<div class="form-group">
+							<input type="file" class="form-control" id="fieldFavicon" name="favicon" onchange="previewImage()">
+						</div>
 
-        <div class="form-group">
-          <input type="file" class="form-control" id="fieldPhoto" name="logo" onchange="previewImage()">
-        </div>
-
-        <div class="form-group">
-          <label for="">Logo Full</label>
-          <figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-            @if(!empty($profile))
-            <a href="{{ asset('storage/img/profile/' . $profile->logo_full) }}" itemprop="contentUrl">
-              <img id="fieldPhotoPreviewFull" class="img-thumbnail img-fluid" src="{{ $profile->logo_full_url }}" itemprop="thumbnail" alt="Image {{ $profile->name }}">
-            </a>
-            @else
-            <img id="fieldPhotoPreviewFull" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
-            @endif
-          </figure>
-        </div>
-
-        <div class="form-group">
-          <input type="file" class="form-control" id="fieldPhotoFull" name="logo_full" onchange="previewImageFull()">
-        </div>
-
-				<div class="form-group">
-					<label for="fieldName">Name</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldName" class="form-control" placeholder="Nama Perusahaan" name="name" value="{{ $profile ? $profile->title : '' }}">
-						<div class="form-control-position">
-							<i class="ft-briefcase"></i>
+						<div class="form-group">
+							<label for="">Logo</label>
+							<figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
+								@if(!empty($data))
+								<a href="{{ asset('storage/site/' . $data->logo) }}" itemprop="contentUrl">
+									<img id="fieldLogoPreview" class="img-thumbnail img-fluid" src="{{ $data->logo_url }}" itemprop="thumbnail" alt="Image {{ $data->name }}">
+								</a>
+								@else
+								<img id="fieldLogoPreview" class="img-thumbnail img-fluid" src="{{ asset('img/no-image.png') }}" itemprop="thumbnail" alt="No Image">
+								@endif
+							</figure>
+						</div>
+						<div class="form-group">
+							<input type="file" class="form-control" id="fieldLogo" name="logo" onchange="previewImageFull()">
 						</div>
 					</div>
-				</div>
+					<!-- endof .col-md-3 -->
+					<div class="col-md-9">
+						<div class="form-group">
+							<label for="fieldName">Name</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldName" class="form-control" placeholder="Nama Perusahaan" name="name" value="{{ $data ? $data->title : '' }}">
+								<div class="form-control-position">
+									<i class="ft-briefcase"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldDescription">Description</label>
+							<div class="position-relative has-icon-left">
+								<textarea id="fieldDescription" rows="5" class="form-control" name="description" placeholder="Deskripsi Perusahaan">{{ $data ? $data->description : '' }}</textarea>
+								<div class="form-control-position">
+									<i class="ft-file"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldPhone">Phone</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldPhone" class="form-control" placeholder="Telpon Perusahaan" name="phone" value="{{ $data ? $data->phone : '' }}">
+								<div class="form-control-position">
+									<i class="ft-phone"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldWA">Whatsapp</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldWA" class="form-control" placeholder="Whatsapp Perusahaan" name="whatsapp" value="{{ $data ? $data->whatsapp : '' }}">
+								<div class="form-control-position">
+									<i class="la la-whatsapp"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldTele">Telegram</label>
+							<div class="position-relative has-icon-left">
+								<input type="number" id="fieldTele" class="form-control" placeholder="Telegram Perusahaan" name="telegram" value="{{ $data ? $data->telegram : '' }}">
+								<div class="form-control-position">
+									<i class="ft-navigation"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldAddress">Address</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $data ? $data->address : '' }}">
+								<div class="form-control-position">
+									<i class="ft-map-pin"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldEmail">Email</label>
+							<div class="position-relative has-icon-left">
+								<input type="email" id="fieldEmail" class="form-control" placeholder="Email Perusahaan" name="email" value="{{ $data ? $data->email : '' }}">
+								<div class="form-control-position">
+									<i class="la la-briefcase"></i>
+								</div>
+							</div>
+						</div>
 
-				<div class="form-group">
-					<label for="fieldDescription">Description</label>
-					<div class="position-relative has-icon-left">
-						<textarea id="fieldDescription" rows="5" class="form-control" name="description" placeholder="Deskripsi Perusahaan">{{ $profile ? $profile->description : '' }}</textarea>
-						<div class="form-control-position">
-							<i class="ft-file"></i>
+						<h4 class="form-section"><i class="ft-globe"></i> Social Media</h4>
+						<div class="form-group">
+							<label for="fieldFacebook">Facebook</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldFacebook" class="form-control" placeholder="Facebook Perusahaan" name="facebook" value="{{ $data ? $data->facebook : '' }}">
+								<div class="form-control-position">
+									<i class="ft-facebook"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldTwitter">Twitter</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldTwitter" class="form-control" placeholder="Twitter Perusahaan" name="twitter" value="{{ $data ? $data->twitter : '' }}">
+								<div class="form-control-position">
+									<i class="ft-twitter"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldInstagram">Instagram</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldInstagram" class="form-control" placeholder="Instagram Perusahaan" name="instagram" value="{{ $data ? $data->instagram : '' }}">
+								<div class="form-control-position">
+									<i class="ft-instagram"></i>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="fieldYoutube">Youtube</label>
+							<div class="position-relative has-icon-left">
+								<input type="text" id="fieldYoutube" class="form-control" placeholder="Youtube Perusahaan" name="youtube" value="{{ $data ? $data->youtube : '' }}">
+								<div class="form-control-position">
+									<i class="ft-play"></i>
+								</div>
+							</div>
 						</div>
 					</div>
+					<!-- endof .col-md-9 -->
 				</div>
-
-				<div class="form-group">
-					<label for="fieldPhone">Phone</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldPhone" class="form-control" placeholder="Telpon Perusahaan" name="phone" value="{{ $profile ? $profile->phone : '' }}">
-						<div class="form-control-position">
-							<i class="ft-phone"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldWA">Whatsapp</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldWA" class="form-control" placeholder="Whatsapp Perusahaan" name="whatsapp" value="{{ $profile ? $profile->whatsapp : '' }}">
-						<div class="form-control-position">
-							<i class="la la-whatsapp"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldTele">Telegram</label>
-					<div class="position-relative has-icon-left">
-						<input type="number" id="fieldTele" class="form-control" placeholder="Telegram Perusahaan" name="telegram" value="{{ $profile ? $profile->telegram : '' }}">
-						<div class="form-control-position">
-							<i class="ft-navigation"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldAddress">Address</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldAddress" class="form-control" placeholder="Alamat Perusahaan" name="address" value="{{ $profile ? $profile->address : '' }}">
-						<div class="form-control-position">
-							<i class="ft-map-pin"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldEmail">Email</label>
-					<div class="position-relative has-icon-left">
-						<input type="email" id="fieldEmail" class="form-control" placeholder="Email Perusahaan" name="email" value="{{ $profile ? $profile->email : '' }}">
-						<div class="form-control-position">
-							<i class="la la-briefcase"></i>
-						</div>
-					</div>
-				</div>
-
-        <h4 class="form-section"><i class="ft-globe"></i> Social Media</h4>
-				<div class="form-group">
-					<label for="fieldFacebook">Facebook</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldFacebook" class="form-control" placeholder="Facebook Perusahaan" name="facebook" value="{{ $profile ? $profile->facebook : '' }}">
-						<div class="form-control-position">
-							<i class="ft-facebook"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldTwitter">Twitter</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldTwitter" class="form-control" placeholder="Twitter Perusahaan" name="twitter" value="{{ $profile ? $profile->twitter : '' }}">
-						<div class="form-control-position">
-							<i class="ft-twitter"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldInstagram">Instagram</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldInstagram" class="form-control" placeholder="Instagram Perusahaan" name="instagram" value="{{ $profile ? $profile->instagram : '' }}">
-						<div class="form-control-position">
-							<i class="ft-instagram"></i>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="fieldYoutube">Youtube</label>
-					<div class="position-relative has-icon-left">
-						<input type="text" id="fieldYoutube" class="form-control" placeholder="Youtube Perusahaan" name="youtube" value="{{ $profile ? $profile->youtube : '' }}">
-						<div class="form-control-position">
-							<i class="ft-play"></i>
-						</div>
-					</div>
-				</div>
-
+				<!-- endof .row -->
 			</div>
-
   </div>
   <div class="card-footer">
       <div class="form-actions">
-        <button type="submit" class="btn btn-block btn-success">
+        <button type="submit" class="btn btn-block btn-success" name="save_configuration">
           <i class="la la-check-square-o"></i> Save
         </button>
       </div>
@@ -182,7 +175,10 @@
 
 @section('css')
 <style type="text/css">
-.img-thumbnail{ width: 30%; }
+.img-thumbnail{ width: 100%; }
+.card-title .btn i{
+	margin-left: 5px;
+}
 </style>
 @endsection
 
@@ -190,18 +186,18 @@
 <script type="text/javascript">
   function previewImage() {
     var oFReader = new FileReader();
-     oFReader.readAsDataURL(document.getElementById("fieldPhoto").files[0]);
+     oFReader.readAsDataURL(document.getElementById("fieldFavicon").files[0]);
 
     oFReader.onload = function(oFREvent) {
-      document.getElementById("fieldPhotoPreview").src = oFREvent.target.result;
+      document.getElementById("fieldFaviconPreview").src = oFREvent.target.result;
     };
   };
   function previewImageFull() {
     var oFReader = new FileReader();
-     oFReader.readAsDataURL(document.getElementById("fieldPhotoFull").files[0]);
+     oFReader.readAsDataURL(document.getElementById("fieldLogo").files[0]);
 
     oFReader.onload = function(oFREvent) {
-      document.getElementById("fieldPhotoPreviewFull").src = oFREvent.target.result;
+      document.getElementById("fieldLogoPreview").src = oFREvent.target.result;
     };
   };
 

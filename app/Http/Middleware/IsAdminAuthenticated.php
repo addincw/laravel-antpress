@@ -19,7 +19,7 @@ class IsAdminAuthenticated
     {
         if (Auth::guard($guard)->check()) {
           $request->merge([
-            'profile' => Configuration::first()
+            'siteConfig' => Configuration::first()
           ]);
 
           return $next($request);

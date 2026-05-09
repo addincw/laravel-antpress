@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="">
     <meta name="keywords" content="Custom CMS, Hospitality Website, Website Rumah Sakit, Company Profile">
-    <meta name="author" content="inidokterku">
-    <title>Ini Dokterku</title>
+    <meta name="author" content="antpress">
+    <title>Antpress</title>
     <link rel="apple-touch-icon" href="{{ url('img/logo-sm-blue.jpeg') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/logo-sm-blue.jpeg') }}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -68,9 +68,9 @@
                 @endif
                 <div class="card-header border-0">
                     <div class="card-title text-center">
-                        <div class="p-1"><img src="{{ url('img/logo-full.jpeg') }}" width="60%" alt="inidokterku logo"></div>
+                        Antpress
+                        <!-- <div class="p-1"><img src="{{ url('img/logo-full.jpeg') }}" width="60%" alt="antpress logo"></div> -->
                     </div>
-                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login with Inidokterku</span></h6>
                 </div>
                 <div class="card-content">
                     <div class="card-body">

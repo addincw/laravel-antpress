@@ -5,13 +5,13 @@ services:
       args:
         user: addincw
         uuid: 1996
-      context: ../
-      dockerfile: ./docker/Dockerfile
+      context: ../../
+      dockerfile: ./docker/dev/Dockerfile
     image: antpress
     container_name: antpress-app
     restart: unless-stopped
     volumes:
-      - ../:/var/www
+      - ../../:/var/www
     networks:
       - antpress_network
   nginx:
@@ -21,8 +21,8 @@ services:
     ports:
       - "${PUBLISH_APP_PORT}:80"
     volumes:
-      - ../:/var/www
-      - ./conf/nginx:/etc/nginx/conf.d
+      - ../../:/var/www
+      - ../conf/nginx:/etc/nginx/conf.d
     networks:
       - antpress_network
   db:
@@ -35,13 +35,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
       - antpress_network
-  composer:
-    restart: 'no'
-    image: composer:latest
-    container_name: antpress-composer
-    command: install --ignore-platform-reqs --no-scripts
-    volumes:
-      - ../:/app
 networks:
   antpress_network:
     driver: bridge

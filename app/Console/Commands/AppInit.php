@@ -41,22 +41,27 @@ class AppInit extends Command
      */
     public function handle()
     {
-        $this->line('1/4 generate app key');
+        $this->line('1/5 generate app key');
         $this->call('key:generate');
         
         $this->line("");
-        $this->line('2/4 create app storage link');
+        $this->line('2/5 create app storage link');
         $this->call('storage:link');
         
         $this->line("");
-        $this->line('3/4 create new database: ' . env('DB_DATABASE'));
+        $this->line('3/5 create new database: ' . env('DB_DATABASE'));
         $this->_createDB();
         $this->line('database ' . env('DB_DATABASE') . ' created');
 
         $this->line("");
-        $this->line('4/4 migrate database: ' . env('DB_DATABASE'));
+        $this->line('4/5 migrate database: ' . env('DB_DATABASE'));
         $this->call('migrate:fresh');
         $this->line('migrate database ' . env('DB_DATABASE') . ' success');
+        
+        $this->line("");
+        $this->line('5/5 seed master table (user)');
+        $this->call('db:seed');
+        $this->line('seed master table success');
         
         $this->line("");
         $this->line("\u{2705} Initializing app done");
@@ -65,8 +70,8 @@ class AppInit extends Command
     private function _createDB()
     {
         $config = [
-            '-h ' . env('DB_HOST'),
             '-u ' . env('DB_USERNAME'),
+            '-h ' . env('DB_HOST'),
             '-p' . env('DB_PASSWORD'),
         ];
 

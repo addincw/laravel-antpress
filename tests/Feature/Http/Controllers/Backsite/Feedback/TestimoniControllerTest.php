@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\Backsite\Feedback;
+namespace Tests\Feature\Http\Controllers\Backsite\Feedback;
 
 use App\Models\Feedback\Testimoni;
 use App\User;

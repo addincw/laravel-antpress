@@ -5,11 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <meta name="description" content="{{ request()->profile->description }}">
-  <meta name="keywords" content="{{ str_replace(" ", "-", request()->profile->title) }}">
-  <meta name="author" content="{{ request()->profile->title }}">
-  <title>Admin | {{ request()->profile->title }}</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{ request()->profile->logo_url }}">
+  <meta name="description" content="{{ site_config()->description }}">
+  <meta name="keywords" content="{{ str_replace(" ", "-", site_config()->title) }}">
+  <meta name="author" content="{{ site_config()->title }}">
+  <title>Admin | {{ site_config()->title }}</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{{ site_config()->logo_url }}">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
   rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url('theme/modern-admin-1.0/app-assets/fonts/line-awesome/css/line-awesome.min.css') }}">
@@ -89,7 +89,16 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   if (status || status === 'true') { $("#alert-notification").focus() }
 
   $("button[type='submit']").on("click", function (e) {
-    $(this).html(`<span class="ft-loader spinner spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)
+    e.preventDefault();
+
+    $(this)
+      .attr('disabled', true)
+      .addClass('disabled')
+      .html(`<span class="ft-loader spinner spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> loading...`)
+    
+    console.log(document.getElementsByClassName('form')[0])
+    console.log(document.querySelector('button[type=\'submit\']').closest('.form'));
+    // document.getElementsByClassName('form')[0].submit();
   })
   </script>
   <!-- END PAGE LEVEL JS-->

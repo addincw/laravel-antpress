@@ -5,8 +5,8 @@
         <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         <li class="nav-item mr-auto">
           <a class="navbar-brand" href="index.html">
-            <h3 class="brand-text" data-tooltip="{{ request()->profile->title }}">
-              {!! html_entity_decode(str_limit(strip_tags(request()->profile->title), 15)) !!}
+            <h3 class="brand-text" data-tooltip="{{ site_config()->title }}">
+              {!! html_entity_decode(str_limit(strip_tags(site_config()->title), 15)) !!}
             </h3>
           </a>
         </li>

@@ -9,27 +9,20 @@ class Configuration extends Model
   protected $table = "site_configurations";
   
   protected $guarded = [];
-  protected $appends = ['logo_url', 'logo_full_url'];
+  protected $appends = ['logo_url', 'favicon_url'];
 
-  public function getLogoUrlAttribute ()
+  public function getFaviconUrlAttribute ()
   {
     try {
-      return asset($this->attributes['logo'] ? "/storage/".$this->attributes['logo'] : "/img/no-image.png");
+      return asset($this->attributes['favicon'] ? "/storage/".$this->attributes['favicon'] : "/img/no-image.png");
     } catch (\Exception $e) {
       return asset("/img/no-image.png");
     }
   }
-  public function getLogoFullUrlAttribute ()
+  public function getLogoUrlAttribute ()
   {
-    $assetLink = "/img/no-image.png";
     try {
-      if ($this->attributes['logo_full']) {
-        $assetLink = "/storage/".$this->attributes['logo_full'];
-      }else if($this->attributes['logo']) {
-        $assetLink = "/storage/".$this->attributes['logo'];
-      }
-
-      return asset($assetLink);
+      return asset($this->attributes['logo'] ? "/storage/".$this->attributes['logo'] : "/img/no-image.png");
     } catch (\Exception $e) {
       return asset("/img/no-image.png");
     }

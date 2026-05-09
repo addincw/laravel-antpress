@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\Backsite\Site;
+namespace Tests\Feature\Http\Controllers\Backsite\Site;
 
 use App\User;
 use App\Models\Site\Configuration;

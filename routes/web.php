@@ -45,7 +45,7 @@ Route::group(['prefix' => '/backsite'], function () {
 
     Route::group(['prefix' => '/site', 'namespace' => 'Site'], function () {
       Route::get('/configuration', 'ConfigurationController@index');
-      Route::post('/configuration', 'ConfigurationController@store');
+      Route::put('/configuration/{configurationId}', 'ConfigurationController@update');
 
       Route::resource('/faq', 'FaqController');
     });
